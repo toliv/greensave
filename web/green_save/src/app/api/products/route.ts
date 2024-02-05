@@ -1,4 +1,8 @@
+import { ProductData } from "../utils/readProductFile";
+
 export async function GET(request: Request) {
-  
-  return Response.json({ id: "123" })
+  const instance = ProductData.getInstance()
+  await instance.setup();
+  const products = instance.getProductData();
+  return new Response(products);
 }
