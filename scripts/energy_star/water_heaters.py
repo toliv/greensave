@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+import json
 from dotenv import dotenv_values
 from home_depot.tank_water_heaters import get_tank_water_heaters
 import requests
@@ -19,10 +20,22 @@ class WaterHeater:
     model_name: str
     model_number: str
     tax_credit_eligible: str
+    heater_type: str
+    fuel_type: str
+    raw_json_data: str
 
     @classmethod
     def from_dict(cls, d: dict):
-        return WaterHeater(d['pd_id'], d['brand_name'], d['model_name'], d['model_number'], d['tax_credit_eligible'])
+        return WaterHeater(
+            pd_id=d['pd_id'], 
+            brand_name=d['brand_name'], 
+            model_name=d['model_name'], 
+            model_number=d['model_number'], 
+            tax_credit_eligible=d['tax_credit_eligible'],
+            heater_type=d['type'], 
+            fuel_type=d['fuel'],
+            raw_json_data=json.dumps(d)
+        )
 
     def __str__(self):
         return f"{self.brand_name} - {self.model_name} - {self.model_number}"

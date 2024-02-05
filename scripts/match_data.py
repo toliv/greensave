@@ -3,6 +3,7 @@ import json
 import typer
 from home_depot.all_water_heaters_energy_star import get_all_products
 from energy_star.water_heaters import get_energystar_data
+from model.sku_data import sku_data_payload
 
 from datetime import datetime
 
@@ -31,6 +32,7 @@ def match_data():
                 "raw_home_depot_product_response": product,
                 "energy_star_id": energy_star_row.pd_id,
                 "model_number": model_number,
+                "sku_data": asdict(sku_data_payload(energy_star_row, product)),
             })
 
     print(f"{hits} number of matches")
