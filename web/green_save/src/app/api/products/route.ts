@@ -4,5 +4,5 @@ export async function GET(request: Request) {
   const instance = ProductData.getInstance()
   await instance.setup();
   const products = instance.getProductData();
-  return new Response(products);
+  return new Response(JSON.stringify(products));
 }
