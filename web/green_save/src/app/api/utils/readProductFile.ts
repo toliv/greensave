@@ -72,7 +72,10 @@ export class ProductData {
     }
     if (ProductData.productData) {
       const products = ProductData.productData.data;
+      console.log(products.length);
       products.forEach((product) => {
+        console.log(`Adding ${product.energy_star_id}`);
+        console.log(product.sku_data);
         ProductData.keyedProductData.set(product.energy_star_id, {
           energyStarData: product.energy_star_data,
           rawHomeDepotProductResponse: product.raw_home_depot_product_response,
@@ -93,6 +96,7 @@ export class ProductData {
 
   public static getAllProducts(): Product[] {
     // return all the parsed values from the
+    console.log(ProductData.keyedProductData.keys());
     return Array.from(ProductData.keyedProductData.values());
   }
 
@@ -104,7 +108,7 @@ export class ProductData {
     // process.cwd() -> root dir
     const jsonDirectory = path.join(process.cwd(), "src/app/api/data");
     const fileContents = await fs.readFile(
-      jsonDirectory + "/2024_02_05-01_06_53.json",
+      jsonDirectory + "/2024_02_06-08_30_34.json",
       "utf8",
     );
     return JSON.parse(fileContents);

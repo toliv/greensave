@@ -21,7 +21,7 @@ export default function Page() {
       <div>
         <div>Number of Products: {products.length}</div>
         {products.map((product: Product) => {
-          return <div>product.skuData.energyStarId</div>;
+          return <div key={product.energyStarId}>{product.energyStarId}</div>;
         })}
       </div>
     )
