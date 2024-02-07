@@ -1,4 +1,4 @@
-import { ProductData } from "../utils/readProductFile";
+import { ProductData } from "../utils/productData";
 
 export async function GET(request: Request) {
   const instance = await ProductData.getInstance();

@@ -104,7 +104,7 @@ export class ProductData {
     // process.cwd() -> root dir
     const jsonDirectory = path.join(process.cwd(), "src/app/api/data");
     const fileContents = await fs.readFile(
-      jsonDirectory + "/2024_02_06-08_30_34.json",
+      jsonDirectory + "/products.json",
       "utf8",
     );
     return JSON.parse(fileContents);
