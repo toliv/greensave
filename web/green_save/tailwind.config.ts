@@ -8,7 +8,7 @@ const config: Config = {
   ],
   theme: {
     colors: {
-      "green": {
+      green: {
         50: "#EEFFD6",
         100: "#DEFFB3",
         200: "#BAFD68",
@@ -19,8 +19,8 @@ const config: Config = {
         700: "#366105",
         800: "#305601",
         900: "#2B4D00",
-        950: "#274200"
-      }
+        950: "#274200",
+      },
     },
     extend: {
       backgroundImage: {
