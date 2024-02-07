@@ -72,10 +72,7 @@ export class ProductData {
     }
     if (ProductData.productData) {
       const products = ProductData.productData.data;
-      console.log(products.length);
       products.forEach((product) => {
-        console.log(`Adding ${product.energy_star_id}`);
-        console.log(product.sku_data);
         ProductData.keyedProductData.set(product.energy_star_id, {
           energyStarData: product.energy_star_data,
           rawHomeDepotProductResponse: product.raw_home_depot_product_response,
@@ -96,7 +93,6 @@ export class ProductData {
 
   public static getAllProducts(): Product[] {
     // return all the parsed values from the
-    console.log(ProductData.keyedProductData.keys());
     return Array.from(ProductData.keyedProductData.values());
   }
 
