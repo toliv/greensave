@@ -1,6 +1,7 @@
 from collections import defaultdict
 from dataclasses import asdict
 import json
+import shutil
 import typer
 from home_depot.all_water_heaters_energy_star import get_all_products
 from energy_star.water_heaters import get_energystar_data
@@ -47,16 +48,22 @@ def match_data():
 # Function to write appliance data to a file
 def dump_data_to_file(all_data: list):
     file_name = datetime.now().strftime("%Y_%m_%d-%I_%M_%S")
-    with open(f"./data/{file_name}.json", "w") as f:
-        payload = {"data": all_data}
+    file_path = f"./data/{file_name}.json"
+    with open(file_path, "w") as f:
+        payload = {"data": all_data, "metadata": {"time_generated": file_name}}
         f.write(json.dumps(payload))
+    return file_path
 
 
 ## CLI entrypoint
-def main(dump_data: bool = False):
+def main(dump_data: bool = False, promote_to_app: bool = False):
     all_data = match_data()
     if dump_data:
-        dump_data_to_file(all_data)
+        file_path = dump_data_to_file(all_data)
+    # If set, promote this to live copy living in the Next app
+    if promote_to_app:
+        path_to_next_data_dir = "../web/green_save/src/app/api/data/products.json"
+        shutil.copy(file_path, path_to_next_data_dir)
 
 
 # Get CLI for free
