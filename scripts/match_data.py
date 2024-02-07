@@ -1,3 +1,4 @@
+from collections import defaultdict
 from dataclasses import asdict
 import json
 import typer
@@ -17,43 +18,47 @@ def match_data():
     model_number_keyed_data = {}
     for e_heater in energy_star_data:
         model_number_keyed_data[e_heater.model_number] = e_heater
-    all_data=[]
+    all_data = []
     # Try to match up the Home Depot data with Energy Star
     hits = 0
+    seen = defaultdict(int)
     for product in products:
-        model_number = product['identifiers']['modelNumber']
+        model_number = product["identifiers"]["modelNumber"]
         if model_number in model_number_keyed_data:
+            seen[model_number] += 1
             hits += 1
             energy_star_row = model_number_keyed_data[model_number]
-            print(energy_star_row)
-            print(f"Cost: {product['pricing']['value']}")
-            all_data.append({
-                "energy_star_data": asdict(energy_star_row),
-                "raw_home_depot_product_response": product,
-                "energy_star_id": energy_star_row.pd_id,
-                "model_number": model_number,
-                "sku_data": asdict(sku_data_payload(energy_star_row, product)),
-            })
+            if seen[model_number] == 1:
+                all_data.append(
+                    {
+                        "energy_star_data": asdict(energy_star_row),
+                        "raw_home_depot_product_response": product,
+                        "energy_star_id": energy_star_row.pd_id,
+                        "model_number": model_number,
+                        "sku_data": asdict(sku_data_payload(energy_star_row, product)),
+                    }
+                )
 
     print(f"{hits} number of matches")
+    print(f"Counts: {seen}")
     return all_data
 
+
 # Function to write appliance data to a file
-def dump_data_to_file(all_data:list):
+def dump_data_to_file(all_data: list):
     file_name = datetime.now().strftime("%Y_%m_%d-%I_%M_%S")
-    with open(f"./data/{file_name}.json", 'w') as f:
-        payload = {
-            "data": all_data
-        }
+    with open(f"./data/{file_name}.json", "w") as f:
+        payload = {"data": all_data}
         f.write(json.dumps(payload))
 
+
 ## CLI entrypoint
-def main(dump_data:bool = False):
+def main(dump_data: bool = False):
     all_data = match_data()
     if dump_data:
         dump_data_to_file(all_data)
 
-# Get CLI for free
-if __name__=="__main__":
-    typer.run(main)
 
+# Get CLI for free
+if __name__ == "__main__":
+    typer.run(main)
