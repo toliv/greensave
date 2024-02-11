@@ -1,5 +1,5 @@
 "use client";
-import { Product } from "@/app/api/utils/readProductFile";
+import { Product } from "@/app/api/utils/productData";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 
@@ -17,24 +17,26 @@ export default function Page({ params }: { params: { productId: string } }) {
 
   const imageLoader = () => {
     const url = query.data?.skuData.mediaJson.images[0].url;
-    return `${url}_600.jpg`;
+    return `${url}_1000.jpg`;
   };
 
   return (
     query.data && (
-      <div>
-        <div>Product ID: {query.data.energyStarId}</div>
-        <div>Price: {query.data.skuData.priceInCents / 100}</div>
-        <div>Model Name: {query.data.skuData.modelName}</div>
-        <div>Power Source: {query.data.skuData.powerSource}</div>
+      <div className="flex justify-around ">
         <div>
           <Image
             loader={imageLoader}
             src="me.png"
             alt="Picture of the author"
-            width={600}
-            height={600}
+            width={1000}
+            height={1000}
           />
+        </div>
+        <div>
+          <div>Product ID: {query.data.energyStarId}</div>
+          <div>Price: {query.data.skuData.priceInCents / 100}</div>
+          <div>Model Name: {query.data.skuData.modelName}</div>
+          <div>Power Source: {query.data.skuData.powerSource}</div>
         </div>
       </div>
     )

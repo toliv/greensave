@@ -4,6 +4,7 @@ import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 import Providers from "./providers";
+import TopBarNav from "@/components/TopNavBar";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,8 +18,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Providers>{children}</Providers>
+      <body
+        className={`${inter.className} bg-gradient-to-r from-green-500 to-green-700 relative overflow-hidden`}
+      >
+        <Providers>
+          <TopBarNav></TopBarNav>
+          {children}
+        </Providers>
       </body>
     </html>
   );

@@ -1,5 +1,5 @@
 "use client";
-import { Product } from "@/app/api/utils/readProductFile";
+import { Product } from "@/app/api/utils/productData";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 
