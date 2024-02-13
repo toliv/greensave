@@ -16,10 +16,10 @@ export default function TopBarNav() {
         <a href="#home">Home</a>
       </div>
       <div>
-        <a href="#news">News</a>
+        <a href="#news">Browse Appliances</a>
       </div>
       <div>
-        <a href="#contact">Contact</a>
+        <a href="#contact">About</a>
       </div>
     </div>
   );
