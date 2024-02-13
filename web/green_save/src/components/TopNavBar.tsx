@@ -10,7 +10,7 @@ export default function TopBarNav() {
   return (
     <div
       id="navbar"
-      className="fixed top-0 left-0 right-0 bg-slate-950 min-h-16 lg:min-h-20 flex justify-left gap-12 items-center px-8 lg:px-16 text-xl lg:text-3xl font-bold"
+      className="fixed top-0 left-0 right-0 bg-slate-950 min-h-16 lg:min-h-20 flex justify-left gap-12 items-center px-8 lg:px-16 text-xl lg:text-3xl font-bold z-50"
     >
       <div className="hover:bg-slate-700 p-2 rounded-md">
         <a href="#home">Home</a>
