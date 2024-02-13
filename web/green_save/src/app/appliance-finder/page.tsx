@@ -5,7 +5,7 @@ import ZipCodeQuestion from "@/components/ZipCodeQuestion";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input } from "@material-tailwind/react";
 import { setDefaultAutoSelectFamilyAttemptTimeout } from "net";
-import { useRef, useState } from "react";
+import { MutableRefObject, useEffect, useRef, useState } from "react";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -54,33 +54,51 @@ export default function ApplianceFinder() {
     console.log("HELLO");
   };
 
-  const [questionIdx, setQuestionIdx] = useState<number>(0);
-  const [currentExtraQuestion, setCurrentExtraQuestion] = useState<
-    string | null
-  >(null);
+  const supportedEnergyTypes = methods.watch("supportedEnergyTypes");
+  // console.log(supportedEnergyTypes);
 
+  // Use state to track the current question we're on
+  const [questionIdx, setQuestionIdx] = useState<number>(0);
+  // Create a ref for each question so we can navigate between them
   const question1Ref = useRef<null | HTMLDivElement>(null);
   const question2Ref = useRef<null | HTMLDivElement>(null);
   const question3Ref = useRef<null | HTMLDivElement>(null);
-  const propaneExtraQuestionRef = useRef<null | HTMLDivElement>(null);
-
   const question4Ref = useRef<null | HTMLDivElement>(null);
 
-  const questions = [question1Ref, question2Ref, question3Ref];
+  const naturalGasHeaterQuestionRef = useRef<null | HTMLDivElement>(null);
+  const electricitySetupQuestionRef = useRef<null | HTMLDivElement>(null);
 
-  // Contains logic to move to the necessary question ref
-  const moveToQuestion = (questionNumber: number) => {
-    if (questionNumber >= 1 && questionNumber <= questions.length) {
-      questions[questionNumber - 1].current?.scrollIntoView({
-        behavior: "smooth",
-      });
-      setQuestionIdx(questionNumber);
+  const [questionRefs, setQuestionRefs] = useState<
+    MutableRefObject<HTMLDivElement | null>[]
+  >([question1Ref, question2Ref, question3Ref]);
+
+  // by default
+  useEffect(() => {
+    console.log("CHANGING stuff");
+    // If the user selects a particular energy type, we may need to ask extra questions
+    // Start by resetting the questions in case things have been unchecked
+    const defaultQuestions = [question1Ref, question2Ref, question3Ref];
+    const userHasGas =
+      supportedEnergyTypes.includes("Natural Gas") ||
+      supportedEnergyTypes.includes("Propane");
+    const userHasElectricity = supportedEnergyTypes.includes("Electricity");
+    if (userHasGas && userHasElectricity) {
+      setQuestionRefs([
+        ...defaultQuestions,
+        naturalGasHeaterQuestionRef,
+        electricitySetupQuestionRef,
+      ]);
+    } else if (userHasGas) {
+      setQuestionRefs([...defaultQuestions, naturalGasHeaterQuestionRef]);
+    } else if (userHasElectricity) {
+      setQuestionRefs([...defaultQuestions, electricitySetupQuestionRef]);
     }
-  };
+    setQuestionRefs(defaultQuestions);
+  }, [supportedEnergyTypes]);
 
   const moveToNextQuestion = () => {
-    if (questionIdx + 1 < questions.length) {
-      const nextQuestion = questions[questionIdx + 1];
+    if (questionIdx + 1 < questionRefs.length) {
+      const nextQuestion = questionRefs[questionIdx + 1];
       nextQuestion.current?.scrollIntoView({
         behavior: "smooth",
       });
@@ -89,9 +107,8 @@ export default function ApplianceFinder() {
   };
 
   const moveToPreviousQuestion = () => {
-    console.log("move to prev question");
     if (questionIdx - 1 >= 0) {
-      const prevQuestion = questions[questionIdx - 1];
+      const prevQuestion = questionRefs[questionIdx - 1];
       prevQuestion.current?.scrollIntoView({
         behavior: "smooth",
       });
