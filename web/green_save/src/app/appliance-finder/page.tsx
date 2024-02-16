@@ -1,6 +1,10 @@
 "use client";
 import EnergyTypesQuestion from "@/components/EnergyTypesQuestion";
 import HouseholdSizeQuestion from "@/components/HouseholdSizeQuestion";
+import {
+  ApplianceFinder,
+  ApplianceFinderSchema,
+} from "@/schema/questionsSchema";
 import ZipCodeQuestion from "@/components/ZipCodeQuestion";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input } from "@material-tailwind/react";
@@ -8,35 +12,6 @@ import { setDefaultAutoSelectFamilyAttemptTimeout } from "net";
 import { MutableRefObject, useEffect, useRef, useState } from "react";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
-
-export const HouseholdSizeEnumSchema = z.enum(["1-2", "2-4", "5-6", "7+"]);
-export const EnergyTypeEnumSchema = z.enum([
-  "Electricity",
-  "Natural Gas",
-  "Propane",
-  "Solar Panels",
-  "Other",
-]);
-const PropaneVentEnumSchema = z.enum([
-  "Traditional Atmospheric Vent",
-  "Direct Vent",
-  "Power Vent",
-  "Power Direct Vent",
-  "Unknown/Other",
-]);
-
-export type HouseholdSizeEnum = z.infer<typeof HouseholdSizeEnumSchema>;
-export type EnergyTypeEnum = z.infer<typeof EnergyTypeEnumSchema>;
-type PropaneVentEnumSchema = z.infer<typeof PropaneVentEnumSchema>;
-
-const ApplianceFinderSchema = z.object({
-  zipcode: z.string().min(5).max(5),
-  householdSize: HouseholdSizeEnumSchema.nullable(),
-  supportedEnergyTypes: z.array(EnergyTypeEnumSchema),
-  ventType: PropaneVentEnumSchema.nullable(),
-});
-
-type ApplianceFinder = z.infer<typeof ApplianceFinderSchema>;
 
 export default function ApplianceFinder() {
   const methods = useForm<ApplianceFinder>({
