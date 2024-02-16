@@ -9,6 +9,7 @@ import ZipCodeQuestion from "@/components/ZipCodeQuestion";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MutableRefObject, useEffect, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import PropaneVentQuestion from "@/components/PropaneVentQuestion";
 
 export default function ApplianceFinder() {
   const methods = useForm<ApplianceFinder>({
@@ -30,6 +31,9 @@ export default function ApplianceFinder() {
 
   // Use state to track the current question we're on
   const [questionIdx, setQuestionIdx] = useState<number>(0);
+  const [propaneExtraQuestionEnabled, setPropaneExtraQuestionEnabled] =
+    useState<boolean>(false);
+
   // Create a ref for each question so we can navigate between them
   const question1Ref = useRef<null | HTMLDivElement>(null);
   const question2Ref = useRef<null | HTMLDivElement>(null);
@@ -42,8 +46,6 @@ export default function ApplianceFinder() {
   const [questionRefs, setQuestionRefs] = useState<
     MutableRefObject<HTMLDivElement | null>[]
   >([question1Ref, question2Ref, question3Ref]);
-
-  console.log(questionRefs.length);
 
   useEffect(() => {
     // If the user selects a particular energy type, we may need to ask extra questions
@@ -59,37 +61,18 @@ export default function ApplianceFinder() {
         naturalGasHeaterQuestionRef,
         electricitySetupQuestionRef,
       ]);
+      setPropaneExtraQuestionEnabled(true);
     } else if (userHasGas) {
       setQuestionRefs([...defaultQuestions, naturalGasHeaterQuestionRef]);
+      setPropaneExtraQuestionEnabled(true);
     } else if (userHasElectricity) {
       setQuestionRefs([...defaultQuestions, electricitySetupQuestionRef]);
+      setPropaneExtraQuestionEnabled(false);
     } else {
       setQuestionRefs(defaultQuestions);
+      setPropaneExtraQuestionEnabled(false);
     }
   }, [supportedEnergyTypes]);
-
-  const dynamicAdjustQuestions = () => {
-    // If the user selects a particular energy type, we may need to ask extra questions
-    // Start by resetting the questions in case things have been unchecked
-    const defaultQuestions = [question1Ref, question2Ref, question3Ref];
-    const userHasGas =
-      supportedEnergyTypes.includes("Natural Gas") ||
-      supportedEnergyTypes.includes("Propane");
-    const userHasElectricity = supportedEnergyTypes.includes("Electricity");
-    if (userHasGas && userHasElectricity) {
-      setQuestionRefs([
-        ...defaultQuestions,
-        naturalGasHeaterQuestionRef,
-        electricitySetupQuestionRef,
-      ]);
-    } else if (userHasGas) {
-      setQuestionRefs([...defaultQuestions, naturalGasHeaterQuestionRef]);
-    } else if (userHasElectricity) {
-      setQuestionRefs([...defaultQuestions, electricitySetupQuestionRef]);
-    } else {
-      setQuestionRefs(defaultQuestions);
-    }
-  };
 
   const moveToNextQuestion = () => {
     // Use this as a trigger to reconsider questions
@@ -136,6 +119,17 @@ export default function ApplianceFinder() {
                   moveToPreviousQuestion={moveToPreviousQuestion}
                 />
               </div>
+              {propaneExtraQuestionEnabled && (
+                <div
+                  id="gas-heater-extra-question"
+                  ref={naturalGasHeaterQuestionRef}
+                >
+                  <PropaneVentQuestion
+                    moveToNextQuestion={moveToNextQuestion}
+                    moveToPreviousQuestion={moveToPreviousQuestion}
+                  />
+                </div>
+              )}
             </form>
           </FormProvider>
         </div>
