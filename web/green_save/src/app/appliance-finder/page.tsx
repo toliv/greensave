@@ -94,7 +94,7 @@ export default function ApplianceFinder() {
   return (
     <main className="bg-gray-600 ">
       <div className="flex">
-        <div className="lg:bg-gray-600 lg:min-w-[1500px]" />
+        <div className="lg:bg-gray-600 lg:min-w-[700px]" />
         <div className="p-8 lg:p-16 bg-gray-200 min-h-screen grow ">
           <FormProvider {...methods}>
             <form onSubmit={methods.handleSubmit(onSubmit)}>

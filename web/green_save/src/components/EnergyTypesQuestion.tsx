@@ -35,13 +35,13 @@ export default function EnergyTypesQuestion({
   return (
     <div
       id="question3"
-      className="flex flex-col justify-center gap-8 min-h-screen"
+      className="flex flex-col justify-center gap-8 min-h-screen mt-6"
     >
-      <div className="flex text-3xl lg:text-4xl font-bold text-gray-600">
+      <div className="flex p-4 text-2xl justify-center text-center font-bold text-gray-600">
         What types of energy does your house have? (Select all)
       </div>
-      <div className="flex flex-col text-3xl font-semibold text-gray-600">
-        <div className="w-full lg:w-1/3 h-full">
+      <div className="flex flex-col text-xl font-semibold text-gray-600">
+        <div className="w-full h-full">
           <Controller
             name="supportedEnergyTypes"
             control={control}
@@ -87,15 +87,15 @@ export default function EnergyTypesQuestion({
           />
         </div>
       </div>
-      <div className="flex gap-4 lg:w-1/3 justify-center">
+      <div className="flex gap-4 justify-center">
         <div className="">
           <Button
             variant="filled"
             placeholder="something"
             onClick={() => moveToPreviousQuestion()}
-            className={`h-12 w-full bg-white text-gray-800 p-4`}
+            className={`h-14 w-full bg-white text-gray-800 p-4`}
           >
-            Go Back
+            Back
           </Button>
         </div>
         <div className="">
@@ -104,7 +104,7 @@ export default function EnergyTypesQuestion({
             placeholder="something"
             onClick={() => moveToNextQuestion()}
             disabled={getFieldState("supportedEnergyTypes").invalid}
-            className={`h-12 w-full bg-white text-gray-800 p-4 ${getFieldState("supportedEnergyTypes").invalid ? "hover:cursor-not-allowed" : ""}`}
+            className={`h-14 w-full bg-white text-gray-800 p-4 ${getFieldState("supportedEnergyTypes").invalid ? "hover:cursor-not-allowed" : ""}`}
           >
             Next
           </Button>

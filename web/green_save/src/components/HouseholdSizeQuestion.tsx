@@ -28,11 +28,11 @@ export default function HouseholdSizeQuestion({
       id="question2"
       className="flex flex-col justify-center gap-8 min-h-screen"
     >
-      <div className="flex text-3xl lg:text-4xl font-bold text-gray-600">
+      <div className="flex justify-center text-2xl lg:text-2xl font-bold text-gray-600">
         How many people live in your house?
       </div>
-      <div className="flex flex-col text-3xl font-semibold text-gray-600">
-        <div className="w-full lg:w-1/3 h-full">
+      <div className="flex flex-col text-3xl font-semibold text-gray-600 justify-center">
+        <div className="w-full h-full">
           <Controller
             name="householdSize"
             control={control}
@@ -71,15 +71,15 @@ export default function HouseholdSizeQuestion({
           />
         </div>
       </div>
-      <div className="flex gap-4 lg:w-1/3 justify-center">
+      <div className="flex gap-4 w-full justify-center">
         <div className="">
           <Button
             variant="filled"
             placeholder="something"
             onClick={() => moveToPreviousQuestion()}
-            className={`h-12 w-full bg-white text-gray-800 p-4`}
+            className={`h-14 w-full bg-white text-gray-800 p-4`}
           >
-            Go Back
+            Back
           </Button>
         </div>
         <div className="">
@@ -88,7 +88,7 @@ export default function HouseholdSizeQuestion({
             placeholder="something"
             onClick={() => moveToNextQuestion()}
             disabled={getFieldState("householdSize").invalid}
-            className={`h-12 w-full bg-white text-gray-800 p-4 ${getFieldState("householdSize").invalid ? "hover:cursor-not-allowed" : ""}`}
+            className={`h-14 w-full bg-white text-gray-800 p-4 ${getFieldState("householdSize").invalid ? "hover:cursor-not-allowed" : ""}`}
           >
             Next
           </Button>

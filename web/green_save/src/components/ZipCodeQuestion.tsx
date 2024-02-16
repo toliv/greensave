@@ -14,11 +14,11 @@ export default function ZipCodeQuestion({
 
   return (
     <div className="flex flex-col justify-center gap-8 min-h-screen ">
-      <div className="flex text-3xl lg:text-4xl font-bold text-gray-600">
+      <div className="flex text-3xl justify-center lg:text-4xl font-bold text-gray-600">
         What is your zip code?
       </div>
       <div className="flex flex-col text-3xl font-semibold text-gray-600">
-        <div className="w-full lg:w-1/3 h-full">
+        <div className="w-full h-full">
           <Controller
             name="zipcode"
             control={control}
@@ -37,7 +37,7 @@ export default function ZipCodeQuestion({
           />
         </div>
       </div>
-      <div className="w-1/3">
+      <div className="">
         <div className="flex items-center text-center">
           <Button
             variant="filled"
