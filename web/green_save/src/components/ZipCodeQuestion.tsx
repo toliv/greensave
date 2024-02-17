@@ -1,7 +1,7 @@
 import { Button, Input } from "@material-tailwind/react";
 import { Controller, useFormContext } from "react-hook-form";
 
-export default function ZipCodeQuestion({
+export function ZipCodeQuestion({
   moveToNextQuestion,
 }: {
   moveToNextQuestion: any;

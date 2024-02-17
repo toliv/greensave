@@ -5,7 +5,7 @@ import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 import Providers from "./providers";
-import TopBarNav from "@/components/TopNavBar";
+import { TopBarNav } from "@/components/TopNavBar";
 
 export const metadata: Metadata = {
   title: "Create Next App",

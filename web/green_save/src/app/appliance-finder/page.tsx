@@ -1,17 +1,17 @@
 "use client";
-import EnergyTypesQuestion from "@/components/EnergyTypesQuestion";
-import HouseholdSizeQuestion from "@/components/HouseholdSizeQuestion";
+import { EnergyTypesQuestion } from "@/components/EnergyTypesQuestion";
+import { HouseholdSizeQuestion } from "@/components/HouseholdSizeQuestion";
 import {
   ApplianceFinder,
   ApplianceFinderSchema,
 } from "@/schema/questionsSchema";
-import ZipCodeQuestion from "@/components/ZipCodeQuestion";
+import { ZipCodeQuestion } from "@/components/ZipCodeQuestion";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MutableRefObject, useEffect, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import PropaneVentQuestion from "@/components/PropaneVentQuestion";
-import ElectricitySupplyQuestion from "@/components/ElectricitySupplyQuestion";
-import HeaterSizeQuestion from "@/components/HeaterSizeQuestion";
+import { PropaneVentQuestion } from "@/components/PropaneVentQuestion";
+import { ElectricitySupplyQuestion } from "@/components/ElectricitySupplyQuestion";
+import { HeaterSizeQuestion } from "@/components/HeaterSizeQuestion";
 
 export default function ApplianceFinder() {
   const methods = useForm<ApplianceFinder>({

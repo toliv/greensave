@@ -2,7 +2,7 @@ import { HouseholdSizeEnum } from "@/schema/questionsSchema";
 import { Button } from "@material-tailwind/react";
 import { Controller, useFormContext } from "react-hook-form";
 
-export default function HouseholdSizeQuestion({
+export function HouseholdSizeQuestion({
   moveToNextQuestion,
   moveToPreviousQuestion,
 }: {

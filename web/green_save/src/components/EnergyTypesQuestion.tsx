@@ -2,7 +2,7 @@ import { EnergyTypeEnum } from "@/schema/questionsSchema";
 import { Button } from "@material-tailwind/react";
 import { Controller, useFormContext } from "react-hook-form";
 
-export default function EnergyTypesQuestion({
+export function EnergyTypesQuestion({
   moveToNextQuestion,
   moveToPreviousQuestion,
 }: {

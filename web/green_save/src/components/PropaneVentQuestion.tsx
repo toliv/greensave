@@ -2,7 +2,7 @@ import { HouseholdSizeEnum, PropaneVentEnum } from "@/schema/questionsSchema";
 import { Button } from "@material-tailwind/react";
 import { Controller, useFormContext } from "react-hook-form";
 
-export default function PropaneVentQuestion({
+export function PropaneVentQuestion({
   moveToNextQuestion,
   moveToPreviousQuestion,
 }: {
@@ -84,7 +84,7 @@ export default function PropaneVentQuestion({
                   placeholder="unknown"
                   className={`p-4 hover:shadow-xl ${ventType === "Unknown/Other" ? "bg-green-500 text-white" : "bg-gray-50 text-gray-700"}`}
                 >
-                  I don't know / I don't have this type of water heater.
+                  {`I don't know / I don't have this type of water heater.`}
                 </Button>
               </div>
             )}

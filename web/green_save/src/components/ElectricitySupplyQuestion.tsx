@@ -2,7 +2,7 @@ import { ElectricitySupplyEnum } from "@/schema/questionsSchema";
 import { Button } from "@material-tailwind/react";
 import { Controller, useFormContext } from "react-hook-form";
 
-export default function ({
+export function ElectricitySupplyQuestion({
   moveToNextQuestion,
   moveToPreviousQuestion,
 }: {
@@ -60,7 +60,7 @@ export default function ({
                   placeholder="Propane"
                   className={`py-4 hover:shadow-xl ${supportedEnergySupply === "Unknown" ? "bg-green-500 text-white" : "bg-gray-50 text-gray-700"}`}
                 >
-                  I don't know / I don't have an electric water heater
+                  {`I don't know / I don't have an electric water heater`}
                 </Button>
               </div>
             )}
