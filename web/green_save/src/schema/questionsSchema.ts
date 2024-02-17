@@ -19,7 +19,7 @@ export const PropaneVentEnumSchema = z.enum([
 export const ElectricitySupplyEnumSchema = z.enum([
   "120V",
   "LargerVoltage",
-  "Unknonwn",
+  "Unknown",
 ]);
 
 export const WaterHeaterSpaceRestrictionsEnumSchema = z.enum([
@@ -31,6 +31,7 @@ export const WaterHeaterSpaceRestrictionsEnumSchema = z.enum([
 export type HouseholdSizeEnum = z.infer<typeof HouseholdSizeEnumSchema>;
 export type EnergyTypeEnum = z.infer<typeof EnergyTypeEnumSchema>;
 export type PropaneVentEnum = z.infer<typeof PropaneVentEnumSchema>;
+export type ElectricitySupplyEnum = z.infer< typeof ElectricitySupplyEnumSchema>;
 export type WaterHeaterSpaceRestrictionsEnum = z.infer<typeof WaterHeaterSpaceRestrictionsEnumSchema>;
 
 export const ApplianceFinderSchema = z.object({
@@ -38,6 +39,8 @@ export const ApplianceFinderSchema = z.object({
   householdSize: HouseholdSizeEnumSchema.nullable(),
   supportedEnergyTypes: z.array(EnergyTypeEnumSchema),
   ventType: PropaneVentEnumSchema.nullable(),
+  supportedEnergySupply: ElectricitySupplyEnumSchema.nullable(),
+  heaterSpaceRestrictions: z.array(WaterHeaterSpaceRestrictionsEnumSchema),
 });
 
 export type ApplianceFinder = z.infer<typeof ApplianceFinderSchema>;

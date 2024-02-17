@@ -10,6 +10,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { MutableRefObject, useEffect, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import PropaneVentQuestion from "@/components/PropaneVentQuestion";
+import ElectricitySupplyQuestion from "@/components/ElectricitySupplyQuestion";
+import HeaterSizeQuestion from "@/components/HeaterSizeQuestion";
 
 export default function ApplianceFinder() {
   const methods = useForm<ApplianceFinder>({
@@ -20,6 +22,8 @@ export default function ApplianceFinder() {
       householdSize: null,
       supportedEnergyTypes: [],
       ventType: null,
+      supportedEnergySupply: null,
+      heaterSpaceRestrictions: [],
     },
   });
 
@@ -39,18 +43,25 @@ export default function ApplianceFinder() {
   const question2Ref = useRef<null | HTMLDivElement>(null);
   const question3Ref = useRef<null | HTMLDivElement>(null);
   const question4Ref = useRef<null | HTMLDivElement>(null);
+  const question5Ref = useRef<null | HTMLDivElement>(null);
 
   const naturalGasHeaterQuestionRef = useRef<null | HTMLDivElement>(null);
   const electricitySetupQuestionRef = useRef<null | HTMLDivElement>(null);
 
   const [questionRefs, setQuestionRefs] = useState<
     MutableRefObject<HTMLDivElement | null>[]
-  >([question1Ref, question2Ref, question3Ref]);
+  >([question1Ref, question2Ref, question3Ref, question4Ref, question5Ref]);
 
   useEffect(() => {
     // If the user selects a particular energy type, we may need to ask extra questions
     // Start by resetting the questions in case things have been unchecked
-    const defaultQuestions = [question1Ref, question2Ref, question3Ref];
+    const defaultQuestions = [
+      question1Ref,
+      question2Ref,
+      question3Ref,
+      question4Ref,
+      question5Ref,
+    ];
     const userHasGas =
       supportedEnergyTypes.includes("Natural Gas") ||
       supportedEnergyTypes.includes("Propane");
@@ -115,6 +126,18 @@ export default function ApplianceFinder() {
               </div>
               <div id="question3" ref={question3Ref}>
                 <EnergyTypesQuestion
+                  moveToNextQuestion={moveToNextQuestion}
+                  moveToPreviousQuestion={moveToPreviousQuestion}
+                />
+              </div>
+              <div id="electricity-supply-question" ref={question4Ref}>
+                <ElectricitySupplyQuestion
+                  moveToNextQuestion={moveToNextQuestion}
+                  moveToPreviousQuestion={moveToPreviousQuestion}
+                />
+              </div>
+              <div id="heater-size-question" ref={question5Ref}>
+                <HeaterSizeQuestion
                   moveToNextQuestion={moveToNextQuestion}
                   moveToPreviousQuestion={moveToPreviousQuestion}
                 />

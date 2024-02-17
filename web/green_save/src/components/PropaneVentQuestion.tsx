@@ -32,7 +32,7 @@ export default function PropaneVentQuestion({
         If you have a natural gas or propane water heater today, which type of
         vent does it have?
       </div>
-      <div className="flex flex-col text-sm xl:text-3xl font-light text-gray-600 justify-center">
+      <div className="flex flex-col text-xs xl:text-3xl font-light text-gray-600 justify-center">
         <div className="w-full h-full">
           <Controller
             name="ventType"
@@ -44,7 +44,7 @@ export default function PropaneVentQuestion({
                     handleVentTypeClick("Traditional Atmospheric Vent")
                   }
                   placeholder="atmospheric"
-                  className={`p-6 hover:shadow-xl ${ventType === "Traditional Atmospheric Vent" ? "bg-green-500 text-white" : "bg-gray-50 text-gray-600"}`}
+                  className={`p-4 hover:shadow-xl ${ventType === "Traditional Atmospheric Vent" ? "bg-green-500 text-white" : "bg-gray-50 text-gray-600"}`}
                 >
                   Traditional Atomspheric Vent - Typically seen with{" "}
                   <b>one vertical, metallic duct</b> coming out of the top of
@@ -53,7 +53,7 @@ export default function PropaneVentQuestion({
                 <Button
                   onClick={() => handleVentTypeClick("Direct Vent")}
                   placeholder="direct"
-                  className={`p-6 hover:shadow-xl ${ventType === "Direct Vent" ? "bg-green-500 text-white" : "bg-gray-50 text-gray-600"}`}
+                  className={`p-4 hover:shadow-xl ${ventType === "Direct Vent" ? "bg-green-500 text-white" : "bg-gray-50 text-gray-600"}`}
                 >
                   Direct Vent - Typically seen with{" "}
                   <b>one or two horizontal, metallic ducts</b> coming out of the
@@ -62,7 +62,7 @@ export default function PropaneVentQuestion({
                 <Button
                   onClick={() => handleVentTypeClick("Power Vent")}
                   placeholder="power"
-                  className={`p-6 hover:shadow-xl ${ventType === "Power Vent" ? "bg-green-500 text-white" : "bg-gray-50 text-gray-600"}`}
+                  className={`p-4 hover:shadow-xl ${ventType === "Power Vent" ? "bg-green-500 text-white" : "bg-gray-50 text-gray-600"}`}
                 >
                   Power Vent - Typically seen with a{" "}
                   <b>
@@ -72,7 +72,7 @@ export default function PropaneVentQuestion({
                 <Button
                   onClick={() => handleVentTypeClick("Power Direct Vent")}
                   placeholder="power-direct"
-                  className={`p-6 hover:shadow-xl ${ventType === "Power Direct Vent" ? "bg-green-500 text-white" : "bg-gray-50 text-gray-600"}`}
+                  className={`p-4 hover:shadow-xl ${ventType === "Power Direct Vent" ? "bg-green-500 text-white" : "bg-gray-50 text-gray-600"}`}
                 >
                   Power Direct Vent - Typically seen with a{" "}
                   <b>
@@ -82,7 +82,7 @@ export default function PropaneVentQuestion({
                 <Button
                   onClick={() => handleVentTypeClick("Unknown/Other")}
                   placeholder="unknown"
-                  className={`p-6 hover:shadow-xl ${ventType === "Unknown/Other" ? "bg-green-500 text-white" : "bg-gray-50 text-gray-700"}`}
+                  className={`p-4 hover:shadow-xl ${ventType === "Unknown/Other" ? "bg-green-500 text-white" : "bg-gray-50 text-gray-700"}`}
                 >
                   I don't know / I don't have this type of water heater.
                 </Button>
