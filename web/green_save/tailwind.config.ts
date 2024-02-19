@@ -8,7 +8,7 @@ const config: Config = {
   ],
   theme: {
     fontFamily: {
-      sans: ['"Source Sans Pro"', 'sans-serif']
+      sans: ['"Futura"', 'sans-serif']
     },
     extend: {
       backgroundImage: {
@@ -30,6 +30,13 @@ const config: Config = {
           900: "#2B4D00",
           950: "#274200",
         },
+        'standard-green': '#229943',
+        'light-green': '#2EC745',
+        'dark-green': '#1B7428',
+        'indigo': '#432299',
+        'burgundy': '#994322',
+        'black': "#000000",
+        'default-gray': '#D1D1D1'
       },
     },
   },

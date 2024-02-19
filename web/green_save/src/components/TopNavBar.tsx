@@ -10,16 +10,21 @@ export function TopBarNav() {
   return (
     <div
       id="navbar"
-      className="fixed top-0 left-0 right-0 bg-slate-950 min-h-16 xl:min-h-20 flex justify-left gap-12 items-center px-8 xl:px-16 text-xl :text-3xl font-bold z-50"
+      className="fixed top-0 left-0 right-0 bg-white min-h-20 xl:min-h-25 flex justify-between items-center text-black px-4"
     >
-      <div className="hover:bg-slate-700 p-2 rounded-md">
-        <a href="#home">Home</a>
+      <div className="text-2xl lg:text-4xl">
+        Green<span className="text-standard-green">$ave</span>
       </div>
-      <div className="hover:bg-slate-700 p-2 rounded-md">
-        <a href="#news ">Browse Appliances</a>
-      </div>
-      <div className="hover:bg-slate-700 p-2 rounded-md">
-        <a href="#contact">About</a>
+      <div className="flex justify-right items-center px-2 lg:px-4 xl:px-16 text-md lg:text-xl">
+        <div className="hover:bg-light-green p-2 lg:p-4 rounded-md">
+          <a href="#home">Home</a>
+        </div>
+        <div className="hover:bg-light-green p-2 lg:p-4 rounded-md">
+          <a href="#news ">Questionnaire</a>
+        </div>
+        <div className="hover:bg-light-green p-2 lg:p-4 rounded-md">
+          <a href="#contact">About</a>
+        </div>
       </div>
     </div>
   );

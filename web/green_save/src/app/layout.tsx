@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+// const inter = Inter({ subsets: ["latin"] });
 import Providers from "./providers";
 import { TopBarNav } from "@/components/TopNavBar";
 
@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} bg-gradient-to-r from-green-500 to-green-700 relative overflow-hidden`}
+        className={` bg-gradient-to-r from-green-500 to-green-700 relative overflow-hidden`}
       >
         <Providers>
           <TopBarNav></TopBarNav>
