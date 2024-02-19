@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-white text-black mt-20 p-8 lg:p-16">
       <div className="text-2xl lg:text-4xl py-2">
-        Looking for a new water heater, but don't know where to start?
+        {`Looking for a new water heater, but don't know where to start?`}
       </div>
       <div className="text-lg lg:text-2xl py-2">
         Our simple questionnaire will recommend the right water heater for you
@@ -22,10 +22,10 @@ export default function Home() {
       </div>
       <div className="flex text-sm lg:text-xl mt-4">
         <div>
-          We'll help you take into account for the following factors:
+          {`We'll help you take into account for the following factors:`}
           <ul className="list-disc ml-6 mt-2">
             <li className="py-1 lg:py-2 font-thin">
-              How much hot water you'll need at any given time
+              {` How much hot water you'll need at any given time`}
             </li>
             <li className="py-1 lg:py-2 font-thin">
               What fuel types you already use
