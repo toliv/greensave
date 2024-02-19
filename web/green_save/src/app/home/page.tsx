@@ -15,7 +15,7 @@ export default function Home() {
       <div className="text-md lg:text-2xl py-6 min-w-[200px]">
         <Button
           placeholder="Get started"
-          className={`w-32 h-12 text-standard-green bg-white font-light hover:bg-standard-green hover:text-white`}
+          className={`cursor-pointer w-32 h-12 text-standard-green bg-white font-light hover:bg-standard-green hover:text-white`}
         >
           Get Started
         </Button>
@@ -43,7 +43,7 @@ export default function Home() {
           </ul>
           <Button
             placeholder="Get started"
-            className={`mt-6 w-32 h-12 text-standard-green bg-white font-light hover:bg-standard-green hover:text-white`}
+            className={`cursor-pointer mt-6 w-32 h-12 text-standard-green bg-white font-light hover:bg-standard-green hover:text-white`}
           >
             Get Started
           </Button>
