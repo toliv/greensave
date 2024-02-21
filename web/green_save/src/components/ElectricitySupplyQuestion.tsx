@@ -44,25 +44,25 @@ export function ElectricitySupplyQuestion({
             name="supportedEnergySupply"
             control={control}
             render={({ field }) => (
-              <div className="flex flex-col justify-around gap-4 p-4 ">
+              <div className="flex flex-col justify-around gap-4 py-4 ">
                 <Button
                   onClick={() => handleElectricityChoice("120V")}
                   placeholder="120V"
-                  className={`py-4 hover:shadow-xl ${supportedEnergySupply === "120V" ? "bg-green-500 text-white" : "bg-gray-50 text-gray-700"}`}
+                  className={`py-4 hover:shadow-xl ${supportedEnergySupply === "120V" ? "bg-standard-green text-white" : "bg-stone-50 text-black"}`}
                 >
                   {`A standard 3 prong power outlet like I use for normal appliances`}
                 </Button>
                 <Button
                   onClick={() => handleElectricityChoice("LargerVoltage")}
                   placeholder="LargerVoltage"
-                  className={`py-4 hover:shadow-xl ${supportedEnergySupply === "LargerVoltage" ? "bg-green-500 text-white" : "bg-gray-50 text-gray-700"}`}
+                  className={`py-4 hover:shadow-xl ${supportedEnergySupply === "LargerVoltage" ? "bg-standard-green text-white" : "bg-stone-50 text-black"}`}
                 >
                   {`A special, larger power outlet that has more than 3 prongs`}
                 </Button>
                 <Button
                   onClick={() => handleElectricityChoice("Unknown")}
                   placeholder="Propane"
-                  className={`py-4 hover:shadow-xl ${supportedEnergySupply === "Unknown" ? "bg-green-500 text-white" : "bg-gray-50 text-gray-700"}`}
+                  className={`py-4 hover:shadow-xl ${supportedEnergySupply === "Unknown" ? "bg-standard-green text-white" : "bg-stone-50 text-black"}`}
                 >
                   {`I don't know / I don't have an electric water heater`}
                 </Button>

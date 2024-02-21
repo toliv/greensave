@@ -46,25 +46,25 @@ export function HeaterSizeQuestion({
             name="tank-size-restrictions"
             control={control}
             render={({ field }) => (
-              <div className="flex flex-col justify-around gap-4 p-4 ">
+              <div className="flex flex-col justify-around gap-4 py-4 ">
                 <Button
                   onClick={() => handleSpaceRestrictionsClick(["NONE"])}
                   placeholder="none"
-                  className={`p-4 hover:shadow-xl ${spaceRestrictions.includes("NONE") ? "bg-green-500 text-white" : "bg-gray-50 text-gray-600"}`}
+                  className={`p-4 hover:shadow-xl ${spaceRestrictions.includes("NONE") ? "bg-standard-green text-white" : "bg-stone-50 text-black"}`}
                 >
                   {`My space is unconstrained (most common for basements)`}
                 </Button>
                 <Button
                   onClick={() => handleSpaceRestrictionsClick(["LOW_CEILINGS"])}
                   placeholder="low-ceilings"
-                  className={`p-4 hover:shadow-xl ${spaceRestrictions.includes("LOW_CEILINGS") && spaceRestrictions.length === 1 ? "bg-green-500 text-white" : "bg-gray-50 text-gray-600"}`}
+                  className={`p-4 hover:shadow-xl ${spaceRestrictions.includes("LOW_CEILINGS") && spaceRestrictions.length === 1 ? "bg-standard-green text-white" : "bg-stone-50 text-black"}`}
                 >
                   {`My space has low ceilings`}
                 </Button>
                 <Button
                   onClick={() => handleSpaceRestrictionsClick(["NARROW_WIDTH"])}
                   placeholder="narrow-width"
-                  className={`p-4 hover:shadow-xl ${spaceRestrictions.includes("NARROW_WIDTH") && spaceRestrictions.length === 1 ? "bg-green-500 text-white" : "bg-gray-50 text-gray-600"}`}
+                  className={`p-4 hover:shadow-xl ${spaceRestrictions.includes("NARROW_WIDTH") && spaceRestrictions.length === 1 ? "bg-standard-green text-white" : "bg-stone-50 text-black"}`}
                 >
                   {`My space has a narrow width`}
                 </Button>
@@ -77,7 +77,7 @@ export function HeaterSizeQuestion({
                   }
                   placeholder="power"
                   //   Assumptions baked in here w length, but tolerable for now
-                  className={`p-4 hover:shadow-xl ${spaceRestrictions.length === 2 ? "bg-green-500 text-white" : "bg-gray-50 text-gray-600"}`}
+                  className={`p-4 hover:shadow-xl ${spaceRestrictions.length === 2 ? "bg-standard-green text-white" : "bg-stone-50 text-black"}`}
                 >
                   {`My space has both low ceilings and a narrow width`}
                 </Button>

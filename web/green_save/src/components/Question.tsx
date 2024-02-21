@@ -38,15 +38,15 @@ export function Question({
         <div className="flex flex-col text-3xl font-semibold text-black justify-center">
           <div className="">{children}</div>
         </div>
-        <div className="flex gap-4 w-full justify-center mt-12 ">
+        <div className="flex gap-4 w-full justify-around mt-12 ">
           {moveToPreviousQuestion && (
             <Button
               variant="filled"
               placeholder="something"
               onClick={() => moveToPreviousQuestion()}
-              className={`h-14 w-1/3 bg-white text-gray-800 p-4 `}
+              className={`h-14 w-1/3 bg-default-gray text-black p-4 `}
             >
-              Previous
+              Back
             </Button>
           )}
           {moveToNextQuestion && (
@@ -55,7 +55,7 @@ export function Question({
               placeholder="something"
               onClick={() => moveToNextQuestion()}
               disabled={!moveToNextQuestionEnabled()}
-              className={`h-14 w-1/3 bg-white text-gray-800 p-4 ${!moveToNextQuestionEnabled ? "hover:cursor-not-allowed" : ""}`}
+              className={`h-14 w-1/3 bg-standard-green text-black p-4 ${!moveToNextQuestionEnabled ? "hover:cursor-not-allowed" : ""}`}
             >
               Next
             </Button>
