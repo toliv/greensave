@@ -107,7 +107,7 @@ export default function ApplianceFinder() {
   };
 
   return (
-    <div className="pt-20">
+    <div className="">
       <div className="h-screen">
         <main className="bg-white">
           <div className="p-8 lg:p-16 grow ">

@@ -26,9 +26,9 @@ export function Question({
   return (
     <div
       id={questionId}
-      className="flex flex-col gap-8 min-h-screen mt-20 items-start w-full lg:w-5/6 text-center"
+      className="flex flex-col gap-8 min-h-screen mt-20 items-start w-full lg:w-3/5 text-left"
     >
-      <div className="text-2xl lg:text-2xl font-thin text-black">
+      <div className="text-2xl lg:text-2xl font-ultralight text-black">
         {questionHeading}
       </div>
       <div className="text-lg lg:text-xl font-thin text-black">
@@ -44,7 +44,7 @@ export function Question({
               variant="filled"
               placeholder="something"
               onClick={() => moveToPreviousQuestion()}
-              className={`h-14 w-full bg-white text-gray-800 p-4 `}
+              className={`h-14 w-1/3 bg-white text-gray-800 p-4 `}
             >
               Previous
             </Button>
@@ -55,7 +55,7 @@ export function Question({
               placeholder="something"
               onClick={() => moveToNextQuestion()}
               disabled={!moveToNextQuestionEnabled}
-              className={`h-14 w-full bg-white text-gray-800 p-4 ${!moveToNextQuestionEnabled ? "hover:cursor-not-allowed" : ""}`}
+              className={`h-14 w-1/3 bg-white text-gray-800 p-4 ${!moveToNextQuestionEnabled ? "hover:cursor-not-allowed" : ""}`}
             >
               Next
             </Button>
