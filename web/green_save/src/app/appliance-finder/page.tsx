@@ -107,40 +107,40 @@ export default function ApplianceFinder() {
   };
 
   return (
-    <main className="bg-gray-600 ">
+    <main className="bg-white ">
       <div className="flex">
-        <div className="lg:bg-gray-600 lg:min-w-[700px]" />
-        <div className="p-8 lg:p-16 bg-gray-200 min-h-screen grow ">
+        <div className="p-8 lg:p-16 bg-white min-h-screen grow ">
           <FormProvider {...methods}>
             <form onSubmit={methods.handleSubmit(onSubmit)}>
-              <div ref={question1Ref}>
-                <ZipCodeQuestion
-                  moveToNextQuestion={moveToNextQuestion}
-                ></ZipCodeQuestion>
-              </div>
-              <div id="question2" ref={question2Ref}>
+              <div id="question1" ref={question1Ref}>
                 <HouseholdSizeQuestion
                   moveToNextQuestion={moveToNextQuestion}
                   moveToPreviousQuestion={moveToPreviousQuestion}
                 ></HouseholdSizeQuestion>
               </div>
-              <div id="question3" ref={question3Ref}>
+              <div id="question2" ref={question2Ref}>
                 <EnergyTypesQuestion
                   moveToNextQuestion={moveToNextQuestion}
                   moveToPreviousQuestion={moveToPreviousQuestion}
                 />
               </div>
-              <div id="electricity-supply-question" ref={question4Ref}>
+              <div id="electricity-supply-question" ref={question3Ref}>
                 <ElectricitySupplyQuestion
                   moveToNextQuestion={moveToNextQuestion}
                   moveToPreviousQuestion={moveToPreviousQuestion}
                 />
               </div>
-              <div id="heater-size-question" ref={question5Ref}>
+              <div id="heater-size-question" ref={question4Ref}>
                 <HeaterSizeQuestion
                   moveToNextQuestion={moveToNextQuestion}
                   moveToPreviousQuestion={moveToPreviousQuestion}
                 />
+              </div>
+              <div id="question5" ref={question5Ref}>
+                <ZipCodeQuestion
+                  moveToNextQuestion={moveToNextQuestion}
+                  moveToPreviousQuestion={moveToPreviousQuestion}
+                ></ZipCodeQuestion>
               </div>
               {propaneExtraQuestionEnabled && (
                 <div

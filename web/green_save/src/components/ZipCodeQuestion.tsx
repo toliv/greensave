@@ -3,8 +3,10 @@ import { Controller, useFormContext } from "react-hook-form";
 
 export function ZipCodeQuestion({
   moveToNextQuestion,
+  moveToPreviousQuestion,
 }: {
   moveToNextQuestion: any;
+  moveToPreviousQuestion: any;
 }) {
   const {
     control,
@@ -37,8 +39,18 @@ export function ZipCodeQuestion({
           />
         </div>
       </div>
-      <div className="">
-        <div className="flex items-center text-center">
+      <div className="flex gap-4 w-full justify-center">
+        <div className="">
+          <Button
+            variant="filled"
+            placeholder="something"
+            onClick={() => moveToPreviousQuestion()}
+            className={`h-14 w-full bg-white text-gray-800 p-4`}
+          >
+            Back
+          </Button>
+        </div>
+        <div className="">
           <Button
             variant="filled"
             placeholder="something"
