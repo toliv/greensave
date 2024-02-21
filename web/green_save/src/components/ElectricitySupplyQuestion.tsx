@@ -1,6 +1,7 @@
 import { ElectricitySupplyEnum } from "@/schema/questionsSchema";
 import { Button } from "@material-tailwind/react";
 import { Controller, useFormContext } from "react-hook-form";
+import { Question } from "./Question";
 
 export function ElectricitySupplyQuestion({
   moveToNextQuestion,
@@ -26,16 +27,19 @@ export function ElectricitySupplyQuestion({
   };
 
   return (
-    <div
-      id="question4"
-      className="flex flex-col justify-center gap-8 min-h-screen mt-6"
-    >
-      <div className="flex p-4 text-2xl justify-center text-center font-bold text-gray-600">
-        If you have an electric water heater today, which type of power outlet
-        does it use ?
-      </div>
-      <div className="flex flex-col text-xl font-semibold text-gray-600">
-        <div className="w-full h-full">
+    <div className="flex flex-col">
+      {/* hack */}
+      <div className="h-20"></div>
+      <div>
+        <Question
+          moveToNextQuestion={moveToNextQuestion}
+          moveToPreviousQuestion={moveToPreviousQuestion}
+          moveToNextQuestionEnabled={() =>
+            !getFieldState("householdSize").invalid
+          }
+          questionHeading={`If you have an electric water heater today, which type of power outlet does it use?`}
+          questionSubheading={`This will help us keep installation costs down by using your existing electrical setup.`}
+        >
           <Controller
             name="supportedEnergySupply"
             control={control}
@@ -46,14 +50,14 @@ export function ElectricitySupplyQuestion({
                   placeholder="120V"
                   className={`py-4 hover:shadow-xl ${supportedEnergySupply === "120V" ? "bg-green-500 text-white" : "bg-gray-50 text-gray-700"}`}
                 >
-                  120V (standard 3-prong)
+                  {`A standard 3 prong power outlet like I use for normal appliances`}
                 </Button>
                 <Button
                   onClick={() => handleElectricityChoice("LargerVoltage")}
                   placeholder="LargerVoltage"
                   className={`py-4 hover:shadow-xl ${supportedEnergySupply === "LargerVoltage" ? "bg-green-500 text-white" : "bg-gray-50 text-gray-700"}`}
                 >
-                  Larger outlet with more than 3 prongs (e.g. 240V)
+                  {`A special, larger power outlet that has more than 3 prongs`}
                 </Button>
                 <Button
                   onClick={() => handleElectricityChoice("Unknown")}
@@ -65,30 +69,7 @@ export function ElectricitySupplyQuestion({
               </div>
             )}
           />
-        </div>
-      </div>
-      <div className="flex gap-4 justify-center">
-        <div className="">
-          <Button
-            variant="filled"
-            placeholder="something"
-            onClick={() => moveToPreviousQuestion()}
-            className={`h-14 w-full bg-white text-gray-800 p-4`}
-          >
-            Back
-          </Button>
-        </div>
-        <div className="">
-          <Button
-            variant="filled"
-            placeholder="something"
-            onClick={() => moveToNextQuestion()}
-            disabled={getFieldState("supportedEnergySupply").invalid}
-            className={`h-14 w-full bg-white text-gray-800 p-4 ${getFieldState("supportedEnergySupply").invalid ? "hover:cursor-not-allowed" : ""}`}
-          >
-            Next
-          </Button>
-        </div>
+        </Question>
       </div>
     </div>
   );

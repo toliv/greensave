@@ -54,7 +54,7 @@ export function Question({
               variant="filled"
               placeholder="something"
               onClick={() => moveToNextQuestion()}
-              disabled={!moveToNextQuestionEnabled}
+              disabled={!moveToNextQuestionEnabled()}
               className={`h-14 w-1/3 bg-white text-gray-800 p-4 ${!moveToNextQuestionEnabled ? "hover:cursor-not-allowed" : ""}`}
             >
               Next

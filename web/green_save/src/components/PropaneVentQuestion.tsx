@@ -1,6 +1,7 @@
 import { HouseholdSizeEnum, PropaneVentEnum } from "@/schema/questionsSchema";
 import { Button } from "@material-tailwind/react";
 import { Controller, useFormContext } from "react-hook-form";
+import { Question } from "./Question";
 
 export function PropaneVentQuestion({
   moveToNextQuestion,
@@ -24,16 +25,17 @@ export function PropaneVentQuestion({
   const ventType = watch("ventType");
 
   return (
-    <div
-      id="question2"
-      className="flex flex-col justify-center gap-4 min-h-screen"
-    >
-      <div className="mt-12 flex justify-center text-lg xl:text-2xl font-bold text-gray-600 text-center">
-        If you have a natural gas or propane water heater today, which type of
-        vent does it have?
-      </div>
-      <div className="flex flex-col text-xs xl:text-3xl font-light text-gray-600 justify-center">
-        <div className="w-full h-full">
+    <div className="flex flex-col">
+      {/* hack */}
+      <div className="h-20"></div>
+      <div>
+        <Question
+          moveToNextQuestion={moveToNextQuestion}
+          moveToPreviousQuestion={moveToPreviousQuestion}
+          moveToNextQuestionEnabled={() => !getFieldState("ventType").invalid}
+          questionHeading={`If you have a gas water heater today, which type of vent does it have?`}
+          questionSubheading={`This will help us help us keep installation costs down by using your existing electrical setup.`}
+        >
           <Controller
             name="ventType"
             control={control}
@@ -89,30 +91,7 @@ export function PropaneVentQuestion({
               </div>
             )}
           />
-        </div>
-      </div>
-      <div className="flex gap-4 w-full justify-center">
-        <div className="">
-          <Button
-            variant="filled"
-            placeholder="something"
-            onClick={() => moveToPreviousQuestion()}
-            className={`h-14 w-full bg-white text-gray-800 p-4`}
-          >
-            Back
-          </Button>
-        </div>
-        <div className="">
-          <Button
-            variant="filled"
-            placeholder="something"
-            onClick={() => moveToNextQuestion()}
-            disabled={getFieldState("householdSize").invalid}
-            className={`h-14 w-full bg-white text-gray-800 p-4 ${getFieldState("householdSize").invalid ? "hover:cursor-not-allowed" : ""}`}
-          >
-            Next
-          </Button>
-        </div>
+        </Question>
       </div>
     </div>
   );
