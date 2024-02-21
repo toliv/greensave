@@ -1,6 +1,7 @@
 import { EnergyTypeEnum } from "@/schema/questionsSchema";
 import { Button } from "@material-tailwind/react";
 import { Controller, useFormContext } from "react-hook-form";
+import { Question } from "./Question";
 
 export function EnergyTypesQuestion({
   moveToNextQuestion,
@@ -33,15 +34,19 @@ export function EnergyTypesQuestion({
   };
 
   return (
-    <div
-      id="question3"
-      className="flex flex-col justify-center gap-8 min-h-screen mt-6"
-    >
-      <div className="flex p-4 text-2xl justify-center text-center font-bold text-gray-600">
-        What types of energy does your house have? (Select all)
-      </div>
-      <div className="flex flex-col text-xl font-semibold text-gray-600">
-        <div className="w-full h-full">
+    <div className="flex flex-col">
+      {/* hack */}
+      <div className="h-20"></div>
+      <div>
+        <Question
+          moveToNextQuestion={moveToNextQuestion}
+          moveToPreviousQuestion={moveToPreviousQuestion}
+          moveToNextQuestionEnabled={() =>
+            !getFieldState("supportedEnergyTypes").invalid
+          }
+          questionHeading={`What types of energy does your house have? (Select all)`}
+          questionSubheading={`This will help us ensure that our recommendations can handle your expected fuel type.`}
+        >
           <Controller
             name="supportedEnergyTypes"
             control={control}
@@ -85,30 +90,7 @@ export function EnergyTypesQuestion({
               </div>
             )}
           />
-        </div>
-      </div>
-      <div className="flex gap-4 justify-center">
-        <div className="">
-          <Button
-            variant="filled"
-            placeholder="something"
-            onClick={() => moveToPreviousQuestion()}
-            className={`h-14 w-full bg-white text-gray-800 p-4`}
-          >
-            Back
-          </Button>
-        </div>
-        <div className="">
-          <Button
-            variant="filled"
-            placeholder="something"
-            onClick={() => moveToNextQuestion()}
-            disabled={getFieldState("supportedEnergyTypes").invalid}
-            className={`h-14 w-full bg-white text-gray-800 p-4 ${getFieldState("supportedEnergyTypes").invalid ? "hover:cursor-not-allowed" : ""}`}
-          >
-            Next
-          </Button>
-        </div>
+        </Question>
       </div>
     </div>
   );
