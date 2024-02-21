@@ -1,5 +1,6 @@
 import { Button, Input } from "@material-tailwind/react";
 import { Controller, useFormContext } from "react-hook-form";
+import { Question } from "./Question";
 
 export function ZipCodeQuestion({
   moveToNextQuestion,
@@ -15,12 +16,17 @@ export function ZipCodeQuestion({
   } = useFormContext();
 
   return (
-    <div className="flex flex-col justify-center gap-8 min-h-screen ">
-      <div className="flex text-3xl justify-center lg:text-4xl font-bold text-gray-600">
-        What is your zip code?
-      </div>
-      <div className="flex flex-col text-3xl font-semibold text-gray-600">
-        <div className="w-full h-full">
+    <div className="flex flex-col">
+      {/* hack */}
+      <div className="h-20"></div>
+      <div>
+        <Question
+          moveToNextQuestion={moveToNextQuestion}
+          moveToPreviousQuestion={moveToPreviousQuestion}
+          moveToNextQuestionEnabled={() => !getFieldState("zipcode").invalid}
+          questionHeading={`What is your zip code?`}
+          questionSubheading={`This will help us localize your results`}
+        >
           <Controller
             name="zipcode"
             control={control}
@@ -37,30 +43,7 @@ export function ZipCodeQuestion({
               />
             )}
           />
-        </div>
-      </div>
-      <div className="flex gap-4 w-full justify-center">
-        <div className="">
-          <Button
-            variant="filled"
-            placeholder="something"
-            onClick={() => moveToPreviousQuestion()}
-            className={`h-14 w-full bg-white text-gray-800 p-4`}
-          >
-            Back
-          </Button>
-        </div>
-        <div className="">
-          <Button
-            variant="filled"
-            placeholder="something"
-            onClick={() => moveToNextQuestion()}
-            disabled={getFieldState("zipcode").invalid}
-            className={`h-12 w-full bg-white text-gray-800 p-4 ${getFieldState("zipcode").invalid ? "hover:cursor-not-allowed" : ""}`}
-          >
-            Next
-          </Button>
-        </div>
+        </Question>
       </div>
     </div>
   );

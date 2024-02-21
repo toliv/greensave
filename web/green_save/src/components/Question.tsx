@@ -26,7 +26,7 @@ export function Question({
   return (
     <div
       id={questionId}
-      className="flex flex-col gap-8 min-h-screen mt-20 items-start w-full lg:w-3/5 text-left"
+      className="flex flex-col gap-8 min-h-screen mt-20 items-start w-full text-left"
     >
       <div className="text-2xl lg:text-2xl font-ultralight text-black">
         {questionHeading}
