@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@material-tailwind/react";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -13,12 +14,14 @@ export default function Home() {
         in 2 minutes or less.
       </div>
       <div className="text-md lg:text-2xl py-6 min-w-[200px]">
-        <Button
-          placeholder="Get started"
-          className={`cursor-pointer w-32 h-12 text-standard-green bg-white font-light hover:bg-standard-green hover:text-white`}
-        >
-          Get Started
-        </Button>
+        <Link href={`/appliance-finder`}>
+          <Button
+            placeholder="Get started"
+            className={`cursor-pointer w-32 h-12 text-standard-green bg-white font-light hover:bg-standard-green hover:text-white`}
+          >
+            Get Started
+          </Button>
+        </Link>
       </div>
       <div className="flex text-sm lg:text-xl mt-4">
         <div>
@@ -41,12 +44,14 @@ export default function Home() {
               And any tax rebates that may be available to you
             </li>
           </ul>
-          <Button
-            placeholder="Get started"
-            className={`cursor-pointer mt-6 w-32 h-12 text-standard-green bg-white font-light hover:bg-standard-green hover:text-white`}
-          >
-            Get Started
-          </Button>
+          <Link href={`/appliance-finder`}>
+            <Button
+              placeholder="Get started"
+              className={`cursor-pointer mt-6 w-32 h-12 text-standard-green bg-white font-light hover:bg-standard-green hover:text-white`}
+            >
+              Get Started
+            </Button>
+          </Link>
         </div>
 
         <div>{/* picture goes here */}</div>
