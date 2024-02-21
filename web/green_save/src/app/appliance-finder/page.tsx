@@ -72,9 +72,25 @@ export default function ApplianceFinder() {
         naturalGasHeaterQuestionRef,
         electricitySetupQuestionRef,
       ]);
+
+      setQuestionRefs([
+        question1Ref,
+        question2Ref,
+        question3Ref,
+        naturalGasHeaterQuestionRef,
+        question4Ref,
+        question5Ref,
+      ]);
       setPropaneExtraQuestionEnabled(true);
     } else if (userHasGas) {
-      setQuestionRefs([...defaultQuestions, naturalGasHeaterQuestionRef]);
+      setQuestionRefs([
+        question1Ref,
+        question2Ref,
+        question3Ref,
+        naturalGasHeaterQuestionRef,
+        question4Ref,
+        question5Ref,
+      ]);
       setPropaneExtraQuestionEnabled(true);
     } else if (userHasElectricity) {
       setQuestionRefs([...defaultQuestions, electricitySetupQuestionRef]);
@@ -131,6 +147,17 @@ export default function ApplianceFinder() {
                     moveToPreviousQuestion={moveToPreviousQuestion}
                   />
                 </div>
+                {propaneExtraQuestionEnabled && (
+                  <div
+                    id="gas-heater-extra-question"
+                    ref={naturalGasHeaterQuestionRef}
+                  >
+                    <PropaneVentQuestion
+                      moveToNextQuestion={moveToNextQuestion}
+                      moveToPreviousQuestion={moveToPreviousQuestion}
+                    />
+                  </div>
+                )}
                 <div id="heater-size-question" ref={question4Ref}>
                   <HeaterSizeQuestion
                     moveToNextQuestion={moveToNextQuestion}
@@ -143,17 +170,6 @@ export default function ApplianceFinder() {
                     moveToPreviousQuestion={moveToPreviousQuestion}
                   ></ZipCodeQuestion>
                 </div>
-                {propaneExtraQuestionEnabled && (
-                  <div
-                    id="gas-heater-extra-question"
-                    ref={naturalGasHeaterQuestionRef}
-                  >
-                    <PropaneVentQuestion
-                      moveToNextQuestion={moveToNextQuestion}
-                      moveToPreviousQuestion={moveToPreviousQuestion}
-                    />
-                  </div>
-                )}
               </form>
             </FormProvider>
           </div>

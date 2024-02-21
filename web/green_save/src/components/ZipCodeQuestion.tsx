@@ -38,7 +38,7 @@ export function ZipCodeQuestion({
                 size="lg"
                 placeholder="Enter zipcode"
                 autoComplete="off"
-                className={`font-thin rounded-lg p-4 text-center border-1 ${errors.zipcode ? "border-rose-500" : ""} shadow-md `}
+                className={`text-black font-thin rounded-lg p-4 text-center border-1 ${errors.zipcode ? "border-rose-500" : ""} shadow-md `}
                 error={errors.zipcode ? true : false}
               />
             )}
