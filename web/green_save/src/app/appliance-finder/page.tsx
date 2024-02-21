@@ -107,56 +107,58 @@ export default function ApplianceFinder() {
   };
 
   return (
-    <main className="bg-white ">
-      <div className="flex">
-        <div className="p-8 lg:p-16 bg-white min-h-screen grow ">
-          <FormProvider {...methods}>
-            <form onSubmit={methods.handleSubmit(onSubmit)}>
-              <div id="question1" ref={question1Ref}>
-                <HouseholdSizeQuestion
-                  moveToNextQuestion={moveToNextQuestion}
-                  moveToPreviousQuestion={moveToPreviousQuestion}
-                ></HouseholdSizeQuestion>
-              </div>
-              <div id="question2" ref={question2Ref}>
-                <EnergyTypesQuestion
-                  moveToNextQuestion={moveToNextQuestion}
-                  moveToPreviousQuestion={moveToPreviousQuestion}
-                />
-              </div>
-              <div id="electricity-supply-question" ref={question3Ref}>
-                <ElectricitySupplyQuestion
-                  moveToNextQuestion={moveToNextQuestion}
-                  moveToPreviousQuestion={moveToPreviousQuestion}
-                />
-              </div>
-              <div id="heater-size-question" ref={question4Ref}>
-                <HeaterSizeQuestion
-                  moveToNextQuestion={moveToNextQuestion}
-                  moveToPreviousQuestion={moveToPreviousQuestion}
-                />
-              </div>
-              <div id="question5" ref={question5Ref}>
-                <ZipCodeQuestion
-                  moveToNextQuestion={moveToNextQuestion}
-                  moveToPreviousQuestion={moveToPreviousQuestion}
-                ></ZipCodeQuestion>
-              </div>
-              {propaneExtraQuestionEnabled && (
-                <div
-                  id="gas-heater-extra-question"
-                  ref={naturalGasHeaterQuestionRef}
-                >
-                  <PropaneVentQuestion
+    <div className="pt-20">
+      <div className="h-screen">
+        <main className="bg-white">
+          <div className="p-8 lg:p-16 grow ">
+            <FormProvider {...methods}>
+              <form onSubmit={methods.handleSubmit(onSubmit)}>
+                <div id="question1" ref={question1Ref}>
+                  <HouseholdSizeQuestion
+                    moveToNextQuestion={moveToNextQuestion}
+                    moveToPreviousQuestion={moveToPreviousQuestion}
+                  ></HouseholdSizeQuestion>
+                </div>
+                <div id="question2" ref={question2Ref}>
+                  <EnergyTypesQuestion
                     moveToNextQuestion={moveToNextQuestion}
                     moveToPreviousQuestion={moveToPreviousQuestion}
                   />
                 </div>
-              )}
-            </form>
-          </FormProvider>
-        </div>
+                <div id="electricity-supply-question" ref={question3Ref}>
+                  <ElectricitySupplyQuestion
+                    moveToNextQuestion={moveToNextQuestion}
+                    moveToPreviousQuestion={moveToPreviousQuestion}
+                  />
+                </div>
+                <div id="heater-size-question" ref={question4Ref}>
+                  <HeaterSizeQuestion
+                    moveToNextQuestion={moveToNextQuestion}
+                    moveToPreviousQuestion={moveToPreviousQuestion}
+                  />
+                </div>
+                <div id="question5" ref={question5Ref}>
+                  <ZipCodeQuestion
+                    moveToNextQuestion={moveToNextQuestion}
+                    moveToPreviousQuestion={moveToPreviousQuestion}
+                  ></ZipCodeQuestion>
+                </div>
+                {propaneExtraQuestionEnabled && (
+                  <div
+                    id="gas-heater-extra-question"
+                    ref={naturalGasHeaterQuestionRef}
+                  >
+                    <PropaneVentQuestion
+                      moveToNextQuestion={moveToNextQuestion}
+                      moveToPreviousQuestion={moveToPreviousQuestion}
+                    />
+                  </div>
+                )}
+              </form>
+            </FormProvider>
+          </div>
+        </main>
       </div>
-    </main>
+    </div>
   );
 }

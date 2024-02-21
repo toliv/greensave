@@ -10,7 +10,7 @@ export function TopBarNav() {
   return (
     <div
       id="navbar"
-      className="fixed top-0 left-0 right-0 bg-stone-50 min-h-20 xl:min-h-25 flex justify-between items-center text-black px-4 border-b-2 border-default-gray"
+      className="fixed top-0 left-0 w-full bg-stone-50 min-h-20 xl:min-h-25 flex justify-between items-center text-black px-4 border-b-2 border-default-gray"
     >
       <div className="text-2xl lg:text-4xl">
         Green<span className="text-standard-green">$ave</span>
