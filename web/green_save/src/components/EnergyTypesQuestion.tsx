@@ -51,13 +51,13 @@ export function EnergyTypesQuestion({
             name="supportedEnergyTypes"
             control={control}
             render={({ field }) => (
-              <div className="flex flex-col justify-around gap-4 py-4 ">
+              <div className="flex flex-col justify-around gap-4 py-4 text-xs font-sans font-thin ">
                 <Button
                   onClick={() => toggleEnergyType("Electricity")}
                   placeholder="Electricity"
                   className={`py-4 hover:shadow-xl ${supportedEnergyTypes.includes("Electricity") ? "bg-standard-green text-white" : "bg-gray-50 text-gray-700"}`}
                 >
-                  Electricity
+                  What types Electricity
                 </Button>
                 <Button
                   onClick={() => toggleEnergyType("Natural Gas")}

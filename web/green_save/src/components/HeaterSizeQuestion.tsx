@@ -46,7 +46,7 @@ export function HeaterSizeQuestion({
             name="tank-size-restrictions"
             control={control}
             render={({ field }) => (
-              <div className="flex flex-col justify-around gap-4 py-4 ">
+              <div className="flex flex-col justify-around gap-4 py-4 font-thin ">
                 <Button
                   onClick={() => handleSpaceRestrictionsClick(["NONE"])}
                   placeholder="none"

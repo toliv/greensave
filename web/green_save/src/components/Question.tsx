@@ -35,7 +35,7 @@ export function Question({
         {questionSubheading}
       </div>
       <div className="w-full lg:w-1/2">
-        <div className="flex flex-col text-3xl font-semibold text-black justify-center">
+        <div className="flex flex-col justify-center">
           <div className="">{children}</div>
         </div>
         <div className="flex gap-4 w-full justify-around mt-12 ">
