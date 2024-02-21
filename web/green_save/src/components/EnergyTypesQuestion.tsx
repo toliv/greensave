@@ -55,35 +55,35 @@ export function EnergyTypesQuestion({
                 <Button
                   onClick={() => toggleEnergyType("Electricity")}
                   placeholder="Electricity"
-                  className={`py-4 hover:shadow-xl ${supportedEnergyTypes.includes("Electricity") ? "bg-standard-green text-white" : "bg-gray-50 text-gray-700"}`}
+                  className={`border-2 text-black py-4 hover:shadow-xl ${supportedEnergyTypes.includes("Electricity") ? " border-standard-green " : "bg-stone-50 border-transparent"}`}
                 >
                   Electricity
                 </Button>
                 <Button
                   onClick={() => toggleEnergyType("Natural Gas")}
                   placeholder="Natural Gas"
-                  className={`py-4 hover:shadow-xl ${supportedEnergyTypes.includes("Natural Gas") ? "bg-standard-green text-white" : "bg-gray-50 text-gray-700"}`}
+                  className={`border-2 text-black py-4 hover:shadow-xl ${supportedEnergyTypes.includes("Natural Gas") ? " border-standard-green " : "bg-stone-50 border-transparent"}`}
                 >
                   Natural Gas
                 </Button>
                 <Button
                   onClick={() => toggleEnergyType("Propane")}
                   placeholder="Propane"
-                  className={`py-4 hover:shadow-xl ${supportedEnergyTypes.includes("Propane") ? "bg-standard-green text-white" : "bg-gray-50 text-gray-700"}`}
+                  className={`border-2 text-black py-4 hover:shadow-xl ${supportedEnergyTypes.includes("Propane") ? " border-standard-green " : "bg-stone-50 border-transparent"}`}
                 >
                   Propane
                 </Button>
                 <Button
                   onClick={() => toggleEnergyType("Solar Panels")}
                   placeholder="Solar Panels"
-                  className={`py-4 hover:shadow-xl ${supportedEnergyTypes.includes("Solar Panels") ? "bg-standard-green text-white" : "bg-gray-50 text-gray-700"}`}
+                  className={`border-2 text-black py-4 hover:shadow-xl ${supportedEnergyTypes.includes("Solar Panels") ? " border-standard-green " : "bg-stone-50 border-transparent"}`}
                 >
                   Solar Panels
                 </Button>
                 <Button
                   onClick={() => toggleEnergyType("Other")}
                   placeholder="7+"
-                  className={`py-4 hover:shadow-xl ${supportedEnergyTypes.includes("Other") ? "bg-standard-green text-white" : "bg-gray-50 text-gray-700"}`}
+                  className={`border-2 text-black py-4 hover:shadow-xl ${supportedEnergyTypes.includes("Other") ? " border-standard-green " : "bg-stone-50 border-transparent"}`}
                 >
                   Other
                 </Button>
