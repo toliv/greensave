@@ -57,7 +57,7 @@ export function EnergyTypesQuestion({
                   placeholder="Electricity"
                   className={`py-4 hover:shadow-xl ${supportedEnergyTypes.includes("Electricity") ? "bg-standard-green text-white" : "bg-gray-50 text-gray-700"}`}
                 >
-                  What types Electricity
+                  Electricity
                 </Button>
                 <Button
                   onClick={() => toggleEnergyType("Natural Gas")}

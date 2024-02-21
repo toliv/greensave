@@ -8,7 +8,7 @@ const config: Config = {
   ],
   theme: {
     fontFamily: {
-      sans: ['"Futura"', 'sans-serif']
+      sans: ['"Futura"', 'sans-serif'],
     },
     extend: {
       backgroundImage: {
