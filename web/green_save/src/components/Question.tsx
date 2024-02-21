@@ -1,27 +1,27 @@
-import { HouseholdSizeEnum } from "@/schema/questionsSchema";
 import { Button } from "@material-tailwind/react";
-import { Controller, useFormContext } from "react-hook-form";
-import { string } from "zod";
 
 export interface QuestionHeading {
   heading: string;
   subheading: string;
 }
 
+// Purpose of this component is to consolidate styling
 export function Question({
   moveToNextQuestion,
   moveToPreviousQuestion,
   questionHeading,
-  children,
+  questionSubheading,
   moveToNextQuestionEnabled,
   questionId,
+  children,
 }: {
-  moveToNextQuestion: any;
-  moveToPreviousQuestion: any;
-  questionHeading: QuestionHeading;
-  children: React.ReactNode;
+  moveToNextQuestion: () => void;
+  moveToPreviousQuestion?: () => void;
+  questionHeading: string;
+  questionSubheading: string;
   moveToNextQuestionEnabled: () => boolean;
   questionId?: string;
+  children: React.ReactNode;
 }) {
   return (
     <div
@@ -29,10 +29,10 @@ export function Question({
       className="flex flex-col gap-8 min-h-screen mt-20 items-start w-full lg:w-2/3 text-center"
     >
       <div className="flex justify-center text-2xl lg:text-2xl font-thin text-black">
-        {questionHeading.heading}
+        {questionHeading}
       </div>
       <div className="flex justify-center text-lg lg:text-xl font-thin text-black">
-        {questionHeading.subheading}
+        {questionSubheading}
       </div>
       <div className="w-full lg:w-1/2">
         <div className="flex flex-col text-3xl font-semibold text-black justify-center">
