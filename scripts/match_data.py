@@ -36,7 +36,6 @@ def regex_match_data():
             escaped_model_number = re.escape(model_number)
             # Create regex pattern to match exactly the input string
             regex = f"^{escaped_model_number}$"
-
             all_regexes.append(re.compile(regex))
 
     print(f"With star: {with_star}, without star: {without_star}")
@@ -66,16 +65,19 @@ def match_data():
     energy_star_data = get_energystar_data()
     # Home Depot data
     products = get_all_products()
+    d = defaultdict(int)
     # Convert these into k-v map keyed on manufacturer and model name
     model_number_keyed_data = {}
     for e_heater in energy_star_data:
         model_number_keyed_data[e_heater.model_number] = e_heater
+
     all_data = []
     # Try to match up the Home Depot data with Energy Star
     hits = 0
     seen = defaultdict(int)
     for product in products:
         model_number = product["identifiers"]["modelNumber"]
+        d[model_number] += 1
         if model_number in model_number_keyed_data:
             seen[model_number] += 1
             hits += 1
@@ -91,8 +93,8 @@ def match_data():
                     }
                 )
 
+    print(len(d.keys()))
     print(f"{hits} number of matches")
-    # print(f"Counts: {seen}")
     return all_data
 
 
