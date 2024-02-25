@@ -1,42 +1,26 @@
 "use client";
-import { Product } from "@/app/api/utils/productData";
+import { WaterHeater } from "@/app/api/utils/productData";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import Image from "next/image";
 
-async function getProductById(id: string): Promise<Product | undefined> {
+async function getProductById(id: string): Promise<WaterHeater | undefined> {
   const response = await fetch(`/api/products/${id}`);
   return response.json();
 }
 
 export default function Page({ params }: { params: { productId: string } }) {
   const queryClient = useQueryClient();
-  const query = useQuery({
+  const { data: waterHeater } = useQuery({
     queryKey: [`products/${params.productId}`],
     queryFn: () => getProductById(params.productId),
   });
 
-  const imageLoader = () => {
-    const url = query.data?.skuData.mediaJson.images[0].url;
-    return `${url}_1000.jpg`;
-  };
-
   return (
-    query.data && (
-      <div className="flex justify-around ">
+    waterHeater && (
+      <div className="mt-40 text-white flex justify-around ">
         <div>
-          <Image
-            loader={imageLoader}
-            src="me.png"
-            alt="Picture of the author"
-            width={1000}
-            height={1000}
-          />
-        </div>
-        <div>
-          <div>Product ID: {query.data.energyStarId}</div>
-          <div>Price: {query.data.skuData.priceInCents / 100}</div>
-          <div>Model Name: {query.data.skuData.modelName}</div>
-          <div>Power Source: {query.data.skuData.powerSource}</div>
+          <div>Product ID: {waterHeater.id}</div>
+          <div>Model Name: {waterHeater.modelName}</div>
+          <div>Power Source: {waterHeater.heaterType}</div>
         </div>
       </div>
     )

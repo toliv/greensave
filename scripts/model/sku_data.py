@@ -1,6 +1,6 @@
 from dataclasses import dataclass
-from energy_star.water_heaters import WaterHeater
 import json
+from energy_star.water_heaters import WaterHeater
 
 
 # V0 of payload

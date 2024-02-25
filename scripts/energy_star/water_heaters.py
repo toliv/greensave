@@ -4,6 +4,8 @@ from dotenv import dotenv_values
 from home_depot.tank_water_heaters import get_tank_water_heaters
 import requests
 
+from typing import Optional, List
+
 config = dotenv_values(".env")
 
 ENERGY_STAR_APP_TOKEN = config["ENERGY_STAR_APP_TOKEN"]
@@ -22,8 +24,13 @@ class WaterHeater:
     model_number: str
     tax_credit_eligible: str
     heater_type: str
-    fuel_type: str
-    raw_json_data: str
+    fuel_types: List[str]
+    vent_type: str
+    first_hour_rating: Optional[int]
+    maximum_gallons_per_minute: Optional[int]
+    input_volts_for_hpwh: Optional[int]
+    tank_height_inches: Optional[int]
+    tank_diameter_inches: Optional[int]
 
     @classmethod
     def from_dict(cls, d: dict):
@@ -34,8 +41,14 @@ class WaterHeater:
             model_number=d["model_number"],
             tax_credit_eligible=d["tax_credit_eligible"],
             heater_type=d["type"],
-            fuel_type=d["fuel"],
-            raw_json_data=json.dumps(d),
+            fuel_types=[p.strip() for p in d["fuel"].split(",")],
+            vent_type=d["vent_type"],
+            # The following fields are not guaranteed to be present
+            first_hour_rating=d.get("first_hour_rating"),
+            maximum_gallons_per_minute=d.get("maximum_gallons_per_minute"),
+            input_volts_for_hpwh=d.get("input_volts_for_hpwh"),
+            tank_height_inches=d.get("tank_height_inches"),
+            tank_diameter_inches=d.get("tank_diameter_inches"),
         )
 
     def __str__(self):
@@ -46,5 +59,4 @@ def get_energystar_data():
     # List of rows of water heaters
     raw_data = requests.get(ENERGY_STAR_API_BASE_URL + WATER_HEATERS_FILE_NAME).json()
     structured_data = [WaterHeater.from_dict(row) for row in raw_data]
-    print(f"{len(structured_data)} structured Energy Star water heaters")
     return structured_data
