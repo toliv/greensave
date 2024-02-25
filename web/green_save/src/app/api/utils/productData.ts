@@ -10,6 +10,8 @@ export type Product = {
   skuData: SkuData;
 };
 
+
+
 export type ImageLink = {
   url: string;
   type: string;
@@ -31,8 +33,8 @@ export type SkuData = {
 };
 
 // Internal types only used for reading in from file
-type RawProducts = {
-  data: RawProductData[];
+type RawWaterHeaters = {
+  data: RawWaterHeater[];
 };
 
 type RawProductData = {
@@ -52,10 +54,41 @@ type RawSkuData = {
   product_type: string;
 };
 
+export type WaterHeater = {
+  id: string;
+  brandName: string;
+  modelName: string;
+  taxCreditEligible: string;
+  heaterType: string;
+  fuelTypes: string[];
+  ventType: string;
+  firstHourRating: number | null;
+  maximumGallonsPerMinute: number | null;
+  inputVoltsForHpwh: number | null;
+  tankHeightInches: number | null;
+  tankDiameterInches: number | null;
+}
+
+// This reflects the WaterHeater class from Python
+type RawWaterHeater = {
+  pd_id: string;
+  brand_name: string;
+  model_name: string;
+  tax_credit_eligible: string;
+  heater_type: string;
+  fuel_types: string[];
+  vent_type: string;
+  first_hour_rating: number | null;
+  maximum_gallons_per_minute: number | null;
+  input_volts_for_hpwh: number | null;
+  tank_height_inches: number | null;
+  tank_diameter_inches: number | null;
+}
+
 export class ProductData {
   private static instance: ProductData;
-  private static productData: RawProducts | undefined = undefined;
-  private static keyedProductData: Map<string, Product> = new Map();
+  private static productData: RawWaterHeaters | undefined = undefined;
+  private static keyedProductData: Map<string, WaterHeater> = new Map();
   private constructor() {}
 
   public static async getInstance(): Promise<ProductData> {
@@ -72,31 +105,31 @@ export class ProductData {
     }
     if (ProductData.productData) {
       const products = ProductData.productData.data;
-      products.forEach((product) => {
-        ProductData.keyedProductData.set(product.energy_star_id, {
-          energyStarData: product.energy_star_data,
-          rawHomeDepotProductResponse: product.raw_home_depot_product_response,
-          energyStarId: product.energy_star_id,
-          modelNumber: product.model_number,
-          skuData: {
-            brandName: product.sku_data.brand_name,
-            mediaJson: JSON.parse(product.sku_data.media_json),
-            modelName: product.sku_data.model_name,
-            powerSource: product.sku_data.power_source,
-            priceInCents: product.sku_data.price_in_cents,
-            productType: product.sku_data.product_type,
-          },
+      products.forEach((waterHeater) => {
+        ProductData.keyedProductData.set(waterHeater.pd_id, {
+          id: waterHeater.pd_id,
+          brandName: waterHeater.brand_name,
+          modelName: waterHeater.model_name,
+          taxCreditEligible: waterHeater.tax_credit_eligible,
+          heaterType: waterHeater.heater_type,
+          fuelTypes: waterHeater.fuel_types,
+          ventType: waterHeater.vent_type,
+          firstHourRating: waterHeater.first_hour_rating,
+          maximumGallonsPerMinute: waterHeater.maximum_gallons_per_minute,
+          inputVoltsForHpwh: waterHeater.input_volts_for_hpwh,
+          tankHeightInches: waterHeater.tank_height_inches,
+          tankDiameterInches: waterHeater.tank_diameter_inches,
         });
       });
     }
   }
 
-  public static getAllProducts(): Product[] {
+  public static getAllProducts(): WaterHeater[] {
     // return all the parsed values from the
     return Array.from(ProductData.keyedProductData.values());
   }
 
-  public static getProduct(id: string): Product | undefined {
+  public static getProduct(id: string): WaterHeater | undefined {
     return ProductData.keyedProductData.get(id);
   }
 
