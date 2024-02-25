@@ -1,59 +1,12 @@
 import path from "path";
 import { promises as fs } from "fs";
 
-// External facing types
-export type Product = {
-  energyStarData: object;
-  rawHomeDepotProductResponse: object;
-  energyStarId: string;
-  modelNumber: string;
-  skuData: SkuData;
-};
-
-
-
-export type ImageLink = {
-  url: string;
-  type: string;
-  subType: string;
-  sizes: string[];
-};
-
-export type MediaJson = {
-  images: ImageLink[];
-};
-
-export type SkuData = {
-  brandName: string;
-  mediaJson: MediaJson; // This is actually JSON,
-  modelName: string;
-  powerSource: string;
-  priceInCents: number;
-  productType: string;
-};
-
 // Internal types only used for reading in from file
 type RawWaterHeaters = {
   data: RawWaterHeater[];
 };
 
-type RawProductData = {
-  energy_star_data: object;
-  raw_home_depot_product_response: object;
-  energy_star_id: string;
-  model_number: string;
-  sku_data: RawSkuData;
-};
-
-type RawSkuData = {
-  brand_name: string;
-  media_json: string; // This is actually JSON, need to convert
-  model_name: string;
-  power_source: string;
-  price_in_cents: number;
-  product_type: string;
-};
-
+// External type describing WaterHeater
 export type WaterHeater = {
   id: string;
   brandName: string;
