@@ -46,7 +46,7 @@ export default function Page({ params }: { params: { productId: string } }) {
           </div>
 
           <div className="text-black text-md">
-            Why you'll love it:
+            {`Why you'll love it:`}
             <ul className="list-disc ml-6 mt-2">
               <li>Comfortably serves your 2-shower household</li>
               <li>Comfortably serves your 2-shower household</li>
