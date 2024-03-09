@@ -20,6 +20,7 @@ model WaterHeater {
   brandName              String  @map("brand_name")
   modelName              String  @map("model_name")
   modelNumber            String  @map("model_number")
+  // TODO: Make an enum
   heaterType             String  @map("heater_type")
   uniformEnergyFactor    Float   @map("uniform_energy_factor")
   upc                    String? @map("upc")
