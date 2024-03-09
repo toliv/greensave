@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model WaterHeater {
+  id                     String  @id @default(uuid()) @map("id")
+  energyStarUniqueId     String  @unique @map("energy_star_unique_id")
+  energyStarPartner      String  @map("energy_star_partner")
+  brandName              String  @map("brand_name")
+  modelName              String  @map("model_name")
+  modelNumber            String  @map("model_number")
+  heaterType             String  @map("heater_type")
+  uniformEnergyFactor    Float   @map("uniform_energy_factor")
+  upc                    String? @map("upc")
+  ratingOutOf5           Float?  @map("rating_out_of_5")
+  reviewCount            Int?    @map("review_count")
+  heatPumpType           String? @map("heat_pump_type")
+  // TODO: Can this become required? Rows missing this seem to all be solar 
+  fuelType               String? @map("fuel_type")
+  ventType               String? @map("vent_type")
+  storageVolumeGallons   Int?    @map("storage_volume_gallons")
+  firstHourRatingGallons Int?    @map("first_hour_rating_gallons")
+  maxGallonsPerMinute    Float?  @map("max_gallons_per_minute")
+  // Some water heaters are duplicates, make sure we store this relationship
+  parentEnergyStarId     String? @map("parent_energy_star_id")
+  // TODO: Make this into an enum ?
+  inputVoltageHPWH       Int?    @map("input_voltage_hpwh")
+  tankHeightInches       Float?  @map("tank_height_inches")
+  tankDiameterInches     Float?  @map("tank_diameter_inches")
+
+  priceRecords WaterHeaterPriceRecord[]
+
+  @@map("water_heaters")
+}
+
+model WaterHeaterPriceRecord {
+  id            String      @id @default(uuid()) @map("id")
+  waterHeaterId String      @map("water_heater_id")
+  waterHeater   WaterHeater @relation(fields: [waterHeaterId], references: [id])
+  priceInCents  Int         @map("price_in_cents")
+  sourceUrl     String?     @map("source_url")
+  dateRecorded  DateTime    @map("date_recorded")
+
+  @@map("water_heater_price_records")
+}
