@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import { rejects } from "assert";
 import fetch from "node-fetch";
 import Papa from "papaparse";
 

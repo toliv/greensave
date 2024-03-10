@@ -55,3 +55,16 @@ model WaterHeaterPriceRecord {
 
   @@map("water_heater_price_records")
 }
+
+model ZipCodeReference {
+  id                String  @id @default(uuid()) @map("id")
+  zipCode           String  @unique @map("zip_code")
+  latitude          Decimal @map("latitude") @db.Decimal(9, 6)
+  longitude         Decimal @map("longitude") @db.Decimal(9, 6)
+  cityName          String  @map("city_name")
+  stateAbbreviation String  @map("state_abbreviation")
+  stateName         String  @map("state_name")
+  isSunBeltLocation Boolean @map("is_sun_belt_location")
+
+  @@map("zip_code_references")
+}
