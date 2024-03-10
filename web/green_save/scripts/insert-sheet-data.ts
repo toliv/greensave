@@ -100,8 +100,8 @@ export const main = async () => {
       const failedCount = results.filter(
         (result) => result.status === "rejected",
       ).length;
-      console.log(`Successful: ${successfulCount}`);
-      console.log(`Failed: ${failedCount}`);
+      console.log(`Successfully inserted records: ${successfulCount}`);
+      console.log(`Failed to insert: ${failedCount}`);
     });
   } catch (error) {
     console.error("Failed to download the sheet:", error);
