@@ -10,7 +10,6 @@
     "insert-water-heater-data": "npx tsx ./scripts/insert-water-heater-data.ts",
     "insert-zip-code-data": "npx tsx ./scripts/insert-zip-code-data.ts"
   },
-  "type": "module",
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
     "@material-tailwind/react": "^2.1.9",
