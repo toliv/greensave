@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "insert-water-heater-data": "npx tsx ./scripts/insert-water-heater-data.ts",
-    "insert-zip-code-data": "npx tsx ./scripts/insert-zip-code-data.ts"
+    "insert-zip-code-data": "npx tsx ./scripts/insert-zip-code-data.ts",
+    "insert-state-factor-data": "npx tsx ./scripts/insert-state-factor-data.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",

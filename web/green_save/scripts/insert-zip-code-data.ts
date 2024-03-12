@@ -37,6 +37,8 @@ export const main = async () => {
     await prisma.zipCodeReference.createMany({
       data: recordsToInsert,
     });
+    const ct = prisma.zipCodeReference.count();
+    console.log(`${ct} records inserted`);
   } catch (error) {
     console.error("Failed to download the sheet:", error);
   }

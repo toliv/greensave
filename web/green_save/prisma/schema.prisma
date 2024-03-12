@@ -68,3 +68,19 @@ model ZipCodeReference {
 
   @@map("zip_code_references")
 }
+
+model StateInputFactor {
+  id                                String @id @default(uuid())
+  state                             String @unique @map("state")
+  // Assumed Fahrenheit
+  groundwaterTemperature            Int    @map("groundwater_temperature")
+  averageWinterTemperature          Int    @map("average_winter_temperature")
+  solarTankVolumeFactor             Float  @map("solar_tank_volume_factor")
+  monthlyElectricityBillCents       Int?   @map("monthly_electricity_bill_cents")
+  monthlyGasBillCents               Int?   @map("monthly_gas_bill_cents")
+  electricityPriceCentsPerKwh       Int    @map("electricity_price_cents_per_kwh")
+  gasPricePerThousandCubicFeetCents Int    @map("gas_price_per_thousand_cubic_feet_cents")
+  propanePricePerGallonCents        Int    @map("propane_price_per_gallon_cents")
+
+  @@map("state_input_factors")
+}

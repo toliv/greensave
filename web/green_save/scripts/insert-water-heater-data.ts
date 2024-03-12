@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import fetch from "node-fetch";
 import Papa from "papaparse";
+import { convertDollarStrToCents } from "./utils";
 
 const prisma = new PrismaClient();
 
@@ -106,15 +107,6 @@ export const main = async () => {
     console.error("Failed to download the sheet:", error);
   }
 };
-
-function convertDollarStrToCents(dollarStr: string): number {
-  // This handles the price we have in CSV
-  // Remove the dollar sign and commas, then convert to a float
-  const amountInDollars = parseFloat(dollarStr.replace(/[$,]/g, ""));
-  // Convert dollars to cents
-  const amountInCents = Math.round(amountInDollars * 100);
-  return amountInCents;
-}
 
 function convertDateStringToDate(input: string): Date {
   // This handles the dates we have in CSV e.g. 3/6/24
