@@ -4,6 +4,7 @@ import "./globals.css";
 
 import Providers from "./providers";
 import { TopBarNav } from "@/components/TopNavBar";
+import Provider from "./_trpc/Provider";
 
 export const metadata: Metadata = {
   title: "GreenSave",
@@ -19,11 +20,11 @@ export default function RootLayout({
     <html lang="en">
       <link rel="icon" href="/favicon.ico" sizes="any" />
       <body className={`relative`}>
-        <Providers>
+        <Provider>
           <TopBarNav></TopBarNav>
           {children}
           <Analytics />
-        </Providers>
+        </Provider>
       </body>
     </html>
   );
