@@ -7,8 +7,8 @@ import { trpc } from "./client";
 
 export default function Provider({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => new QueryClient({}));
-  const baseUrl = process.env.VERCEL_ENV
-    ? process.env.VERCEL_ENV
+  const baseUrl = process.env.VERCEL_URL
+    ? process.env.VERCEL_URL
     : "http://localhost:3000";
   const [trpcClient] = useState(() =>
     trpc.createClient({
