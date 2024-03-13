@@ -30,10 +30,10 @@ export default function ApplianceFinderForm() {
     mode: "all",
     defaultValues: {
       zipcode: "",
-      householdSize: null,
+      householdSize: "1-2",
       supportedEnergyTypes: [],
       ventType: null,
-      supportedEnergySupply: null,
+      supportedEnergySupply: "120V",
       heaterSpaceRestrictions: [],
     },
   });

@@ -38,10 +38,10 @@ export type WaterHeaterSpaceRestrictionsEnum = z.infer<
 
 export const ApplianceFinderSchema = z.object({
   zipcode: z.string().min(5).max(5),
-  householdSize: HouseholdSizeEnumSchema.nullable(),
+  householdSize: HouseholdSizeEnumSchema,
   supportedEnergyTypes: z.array(EnergyTypeEnumSchema),
   ventType: PropaneVentEnumSchema.nullable(),
-  supportedEnergySupply: ElectricitySupplyEnumSchema.nullable(),
+  supportedEnergySupply: ElectricitySupplyEnumSchema,
   heaterSpaceRestrictions: z.array(WaterHeaterSpaceRestrictionsEnumSchema),
 });
 
