@@ -84,3 +84,17 @@ model StateInputFactor {
 
   @@map("state_input_factors")
 }
+
+model UserFormSubmission {
+  // NOTE: this matches zod schema, we're using strings for now
+  id                      String   @id @default(uuid())
+  zipcode                 String   @map("zipcode")
+  householdSize           String   @map("household_size")
+  supportedEnergyTypes    String[] @default([]) @map("supported_energy_types")
+  ventType                String?  @map("vent_type")
+  supportedEnergySupply   String   @map("supported_energy_supply")
+  heaterSpaceRestrictions String[] @map("heater_space_restrictions")
+  createdAt               DateTime @map("created_at")
+
+  @@map("user_form_submission")
+}
