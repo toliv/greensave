@@ -2,19 +2,30 @@
 import { EnergyTypesQuestion } from "@/components/EnergyTypesQuestion";
 import { HouseholdSizeQuestion } from "@/components/HouseholdSizeQuestion";
 import {
-  ApplianceFinder,
+  ApplianceFinderType,
   ApplianceFinderSchema,
 } from "@/schema/questionsSchema";
 import { ZipCodeQuestion } from "@/components/ZipCodeQuestion";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MutableRefObject, useEffect, useRef, useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { PropaneVentQuestion } from "@/components/PropaneVentQuestion";
 import { ElectricitySupplyQuestion } from "@/components/ElectricitySupplyQuestion";
 import { HeaterSizeQuestion } from "@/components/HeaterSizeQuestion";
+import { trpc } from "../_trpc/client";
 
-export default function ApplianceFinder() {
-  const methods = useForm<ApplianceFinder>({
+export default function ApplianceFinderForm() {
+  const { data } = trpc.greeting.useQuery();
+  const mutationFn = trpc.submitUserFormSubmission.useMutation({
+    onError: () => {
+      console.log("error");
+    },
+    onSuccess: (data) => {
+      console.log(data);
+    },
+  });
+
+  const methods = useForm<ApplianceFinderType>({
     resolver: zodResolver(ApplianceFinderSchema),
     mode: "all",
     defaultValues: {
@@ -27,8 +38,8 @@ export default function ApplianceFinder() {
     },
   });
 
-  const onSubmit = () => {
-    console.log("HELLO");
+  const onSubmit: SubmitHandler<ApplianceFinderType> = (data) => {
+    mutationFn.mutate(data);
   };
 
   const supportedEnergyTypes = methods.watch("supportedEnergyTypes");

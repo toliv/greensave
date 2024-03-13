@@ -26,6 +26,7 @@ export function ZipCodeQuestion({
           moveToNextQuestionEnabled={() => !getFieldState("zipcode").invalid}
           questionHeading={`What is your zip code?`}
           questionSubheading={`This will help us localize your results`}
+          isLastQuestion={true}
         >
           <Controller
             name="zipcode"

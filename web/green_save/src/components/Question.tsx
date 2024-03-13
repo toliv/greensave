@@ -14,6 +14,7 @@ export function Question({
   moveToNextQuestionEnabled,
   questionId,
   children,
+  isLastQuestion,
 }: {
   moveToNextQuestion: () => void;
   moveToPreviousQuestion?: () => void;
@@ -22,6 +23,7 @@ export function Question({
   moveToNextQuestionEnabled: () => boolean;
   questionId?: string;
   children: React.ReactNode;
+  isLastQuestion?: boolean;
 }) {
   return (
     <div
@@ -51,13 +53,14 @@ export function Question({
           )}
           {moveToNextQuestion && (
             <Button
+              type={isLastQuestion ? "submit" : undefined}
               variant="filled"
               placeholder="something"
               onClick={() => moveToNextQuestion()}
               disabled={!moveToNextQuestionEnabled()}
               className={`h-14 w-1/3 bg-standard-green text-black p-4 ${!moveToNextQuestionEnabled ? "hover:cursor-not-allowed" : ""}`}
             >
-              Next
+              {isLastQuestion ? "Submit" : "Next"}
             </Button>
           )}
         </div>

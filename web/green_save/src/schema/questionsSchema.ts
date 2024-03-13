@@ -26,13 +26,15 @@ export const WaterHeaterSpaceRestrictionsEnumSchema = z.enum([
   "NONE",
   "LOW_CEILINGS",
   "NARROW_WIDTH",
-])
+]);
 
 export type HouseholdSizeEnum = z.infer<typeof HouseholdSizeEnumSchema>;
 export type EnergyTypeEnum = z.infer<typeof EnergyTypeEnumSchema>;
 export type PropaneVentEnum = z.infer<typeof PropaneVentEnumSchema>;
-export type ElectricitySupplyEnum = z.infer< typeof ElectricitySupplyEnumSchema>;
-export type WaterHeaterSpaceRestrictionsEnum = z.infer<typeof WaterHeaterSpaceRestrictionsEnumSchema>;
+export type ElectricitySupplyEnum = z.infer<typeof ElectricitySupplyEnumSchema>;
+export type WaterHeaterSpaceRestrictionsEnum = z.infer<
+  typeof WaterHeaterSpaceRestrictionsEnumSchema
+>;
 
 export const ApplianceFinderSchema = z.object({
   zipcode: z.string().min(5).max(5),
@@ -43,4 +45,4 @@ export const ApplianceFinderSchema = z.object({
   heaterSpaceRestrictions: z.array(WaterHeaterSpaceRestrictionsEnumSchema),
 });
 
-export type ApplianceFinder = z.infer<typeof ApplianceFinderSchema>;
+export type ApplianceFinderType = z.infer<typeof ApplianceFinderSchema>;
