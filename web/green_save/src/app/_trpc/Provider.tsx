@@ -7,6 +7,7 @@ import { trpc } from "./client";
 
 export default function Provider({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => new QueryClient({}));
+  // Use the environment variable if defined
   const baseUrl = process.env.VERCEL_URL
     ? process.env.VERCEL_URL
     : "http://localhost:3000";
