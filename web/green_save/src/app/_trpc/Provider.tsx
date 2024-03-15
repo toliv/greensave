@@ -20,6 +20,7 @@ export default function Provider({ children }: { children: React.ReactNode }) {
             return fetch(url, {
               ...options,
               credentials: "include",
+              mode: "no-cors",
             });
           },
         }),
