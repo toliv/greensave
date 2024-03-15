@@ -16,6 +16,7 @@ import { trpc } from "../_trpc/client";
 
 export default function ApplianceFinderForm() {
   const { data } = trpc.greeting.useQuery();
+  console.log(data);
   const mutationFn = trpc.submitUserFormSubmission.useMutation({
     onError: () => {
       console.log("error");
