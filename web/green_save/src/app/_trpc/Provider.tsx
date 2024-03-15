@@ -6,6 +6,12 @@ import React, { useState } from "react";
 import { trpc } from "./client";
 
 export default function Provider({ children }: { children: React.ReactNode }) {
+  if (typeof window !== "undefined") {
+    console.log(window.location.origin);
+  } else {
+    console.log("WINDOW UNDEFINED :(* ");
+  }
+
   const [queryClient] = useState(() => new QueryClient({}));
   // Use the environment variable if defined
   const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
