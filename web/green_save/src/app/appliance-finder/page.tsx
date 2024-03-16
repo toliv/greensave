@@ -16,7 +16,6 @@ import { trpc } from "../_trpc/client";
 
 export default function ApplianceFinderForm() {
   const { data } = trpc.greeting.useQuery();
-  console.log(data);
   const mutationFn = trpc.submitUserFormSubmission.useMutation({
     onError: (err) => {
       console.log(err);
@@ -26,15 +25,6 @@ export default function ApplianceFinderForm() {
       console.log(data);
     },
   });
-  // const mutationFn = trpc.testMutation.useMutation({
-  //   onError: (err) => {
-  //     console.log(err);
-  //     console.log("error");
-  //   },
-  //   onSuccess: (data) => {
-  //     console.log(data);
-  //   },
-  // });
 
   const methods = useForm<ApplianceFinderType>({
     resolver: zodResolver(ApplianceFinderSchema),
@@ -63,7 +53,6 @@ export default function ApplianceFinderForm() {
   // Create a ref for each question so we can navigate between them
   const question1Ref = useRef<null | HTMLDivElement>(null);
   const question2Ref = useRef<null | HTMLDivElement>(null);
-  const question3Ref = useRef<null | HTMLDivElement>(null);
   const question4Ref = useRef<null | HTMLDivElement>(null);
   const question5Ref = useRef<null | HTMLDivElement>(null);
 
@@ -72,7 +61,7 @@ export default function ApplianceFinderForm() {
 
   const [questionRefs, setQuestionRefs] = useState<
     MutableRefObject<HTMLDivElement | null>[]
-  >([question1Ref, question2Ref, question3Ref, question4Ref, question5Ref]);
+  >([question1Ref, question2Ref, question4Ref, question5Ref]);
 
   useEffect(() => {
     // If the user selects a particular energy type, we may need to ask extra questions
@@ -80,7 +69,6 @@ export default function ApplianceFinderForm() {
     const defaultQuestions = [
       question1Ref,
       question2Ref,
-      question3Ref,
       question4Ref,
       question5Ref,
     ];
@@ -98,7 +86,6 @@ export default function ApplianceFinderForm() {
       setQuestionRefs([
         question1Ref,
         question2Ref,
-        question3Ref,
         naturalGasHeaterQuestionRef,
         question4Ref,
         question5Ref,
@@ -108,7 +95,6 @@ export default function ApplianceFinderForm() {
       setQuestionRefs([
         question1Ref,
         question2Ref,
-        question3Ref,
         naturalGasHeaterQuestionRef,
         question4Ref,
         question5Ref,
@@ -159,12 +145,6 @@ export default function ApplianceFinderForm() {
                 </div>
                 <div id="question2" ref={question2Ref}>
                   <EnergyTypesQuestion
-                    moveToNextQuestion={moveToNextQuestion}
-                    moveToPreviousQuestion={moveToPreviousQuestion}
-                  />
-                </div>
-                <div id="electricity-supply-question" ref={question3Ref}>
-                  <ElectricitySupplyQuestion
                     moveToNextQuestion={moveToNextQuestion}
                     moveToPreviousQuestion={moveToPreviousQuestion}
                   />

@@ -8,7 +8,6 @@ export default function ApplianceFinderResults({
 }) {
   let { id } = params;
   const { data } = trpc.getUserFormSubmission.useQuery({ id });
-  console.log(data?.submissionData);
 
   return (
     <div className="text-white mt-32">
