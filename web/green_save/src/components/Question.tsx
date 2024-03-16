@@ -40,7 +40,9 @@ export function Question({
         <div className="flex flex-col justify-center">
           <div className="">{children}</div>
         </div>
-        <div className="flex gap-4 w-full justify-around mt-12 ">
+        <div
+          className={`flex gap-4 w-full mt-12 ${moveToPreviousQuestion ? "justify-around" : "justify-start"}`}
+        >
           {moveToPreviousQuestion && (
             <Button
               variant="filled"

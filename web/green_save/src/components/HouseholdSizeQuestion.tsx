@@ -2,6 +2,8 @@ import { HouseholdSizeEnum } from "@/schema/questionsSchema";
 import { Button } from "@material-tailwind/react";
 import { Controller, useFormContext } from "react-hook-form";
 import { Question } from "./Question";
+import Select, { StylesConfig } from "react-select";
+import { useId } from "react";
 
 export function HouseholdSizeQuestion({
   moveToNextQuestion,
@@ -18,8 +20,28 @@ export function HouseholdSizeQuestion({
     watch,
   } = useFormContext();
 
-  const handleHouseholdSizeClick = (choice: HouseholdSizeEnum) => {
+  const handleHouseholdSizeClick = (choice: number) => {
     setValue("householdSize", choice);
+  };
+
+  const sizeOptions = [
+    { label: "1", value: 1 },
+    { label: "2", value: 2 },
+    { label: "3", value: 3 },
+    { label: "4", value: 4 },
+    { label: "5", value: 5 },
+    { label: "6", value: 6 },
+    { label: "7+", value: 7 },
+  ];
+
+  const colourStyles: StylesConfig = {
+    control: (styles) => ({ ...styles, backgroundColor: "white" }),
+    option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+      return {
+        ...styles,
+        backgroundColor: "",
+      };
+    },
   };
 
   const householdSize = watch("householdSize");
@@ -41,35 +63,32 @@ export function HouseholdSizeQuestion({
             name="householdSize"
             control={control}
             render={({ field }) => (
-              <div className="flex flex-col justify-around gap-4 py-4 ">
-                <Button
-                  onClick={() => handleHouseholdSizeClick("1-2")}
-                  placeholder="1-2"
-                  className={`py-4 hover:shadow-xl ${householdSize === "1-2" ? "bg-standard-green text-white" : "bg-stone-50 text-black"}`}
-                >
-                  1 to 2 people
-                </Button>
-                <Button
-                  onClick={() => handleHouseholdSizeClick("2-4")}
-                  placeholder="2-4"
-                  className={`py-4 hover:shadow-xl ${householdSize === "2-4" ? "bg-standard-green text-white" : "bg-stone-50 text-black"}`}
-                >
-                  2 to 4 people
-                </Button>
-                <Button
-                  onClick={() => handleHouseholdSizeClick("5-6")}
-                  placeholder="5-6"
-                  className={`py-4 hover:shadow-xl ${householdSize === "5-6" ? "bg-standard-green text-white" : "bg-stone-50 text-black"}`}
-                >
-                  5 to 6 people
-                </Button>
-                <Button
-                  onClick={() => handleHouseholdSizeClick("7+")}
-                  placeholder="7+"
-                  className={`py-4 hover:shadow-xl ${householdSize === "7+" ? "bg-standard-green text-white" : "bg-stone-50 text-black"}`}
-                >
-                  7+ people
-                </Button>
+              <div className="flex flex-col justify-around gap-4 py-4 w-1/6 h-20 mb-32">
+                <Select
+                  options={sizeOptions}
+                  value={sizeOptions.find((s) => s.value === householdSize)}
+                  onChange={(s) => {
+                    if (s) {
+                      handleHouseholdSizeClick(s.value);
+                    }
+                  }}
+                  instanceId={useId()}
+                  styles={{
+                    input: (base) => ({
+                      ...base,
+                      color: "black",
+                    }),
+                    option: (provided, { isFocused, isSelected }) => ({
+                      ...provided,
+                      color: "black",
+                      backgroundColor: isFocused ? "green" : "white",
+                    }),
+                    control: (baseStyles, state) => ({
+                      ...baseStyles,
+                      borderColor: "green",
+                    }),
+                  }}
+                ></Select>
               </div>
             )}
           />
