@@ -17,8 +17,18 @@ import { trpc } from "../_trpc/client";
 export default function ApplianceFinderForm() {
   const { data } = trpc.greeting.useQuery();
   console.log(data);
-  const mutationFn = trpc.submitUserFormSubmission.useMutation({
-    onError: () => {
+  // const mutationFn = trpc.submitUserFormSubmission.useMutation({
+  //   onError: (err) => {
+  //     console.log(err);
+  //     console.log("error");
+  //   },
+  //   onSuccess: (data) => {
+  //     console.log(data);
+  //   },
+  // });
+  const mutationFn = trpc.testMutation.useMutation({
+    onError: (err) => {
+      console.log(err);
       console.log("error");
     },
     onSuccess: (data) => {
@@ -40,7 +50,9 @@ export default function ApplianceFinderForm() {
   });
 
   const onSubmit: SubmitHandler<ApplianceFinderType> = (data) => {
-    mutationFn.mutate(data);
+    console.log(typeof data);
+    console.log(data);
+    mutationFn.mutate({ name: "hello" });
   };
 
   const supportedEnergyTypes = methods.watch("supportedEnergyTypes");
