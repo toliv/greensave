@@ -21,7 +21,6 @@ export const appRouter = router({
   submitUserFormSubmission: publicProcedure
     .input(ApplianceFinderSchema)
     .mutation(async (opts) => {
-      console.log("HERE");
       const { input } = opts;
       const { id } = await prisma.userFormSubmission.create({
         data: {
@@ -29,7 +28,6 @@ export const appRouter = router({
           createdAt: new Date(),
         },
       });
-      console.log("RETURNING ID");
       return { id };
     }),
   getUserFormSubmission: publicProcedure
