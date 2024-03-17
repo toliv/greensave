@@ -1,9 +1,6 @@
-import { HouseholdSizeEnum } from "@/schema/questionsSchema";
-import { Button } from "@material-tailwind/react";
 import { Controller, useFormContext } from "react-hook-form";
 import { Question } from "./Question";
 import Select, { StylesConfig } from "react-select";
-import { useId } from "react";
 
 export function HouseholdSizeQuestion({
   moveToNextQuestion,
@@ -72,7 +69,7 @@ export function HouseholdSizeQuestion({
                       handleHouseholdSizeClick(s.value);
                     }
                   }}
-                  instanceId={useId()}
+                  instanceId={"123"}
                   styles={{
                     input: (base) => ({
                       ...base,

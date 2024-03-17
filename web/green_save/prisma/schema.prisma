@@ -39,6 +39,8 @@ model WaterHeater {
   inputVoltageHPWH       Int?    @map("input_voltage_hpwh")
   tankHeightInches       Float?  @map("tank_height_inches")
   tankDiameterInches     Float?  @map("tank_diameter_inches")
+  electricUsageKWHyear   Int?    @map("electric_usage_kwh_year")
+  thermsPerYear          Int?    @map("therms_per_year")
 
   priceRecords WaterHeaterPriceRecord[]
 

@@ -52,6 +52,12 @@ export const main = async () => {
             inputVoltageHPWH: parseInt(row["Input Voltage for HPWH (V)"]),
             tankHeightInches: parseFloat(row["Tank Height (inches)"]),
             tankDiameterInches: parseFloat(row["Tank Diameter (inches)"]),
+            electricUsageKWHyear: row["Electric Usage (kWh/yr)"]
+              ? parseInt(row["Electric Usage (kWh/yr)"])
+              : null,
+            thermsPerYear: row["Therms/year for Natural Gas"]
+              ? parseInt(row["Therms/year for Natural Gas"])
+              : null,
           };
           // Upsert the water Heater record
           const { id: waterHeaterId } = await prisma.waterHeater.upsert({

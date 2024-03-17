@@ -7,11 +7,13 @@ export default function ApplianceFinderResults({
   params: { id: string };
 }) {
   let { id } = params;
-  const { data } = trpc.getUserFormSubmission.useQuery({ id });
-
+  const { data } = trpc.getRecommendedHeaters.useQuery({ id });
+  console.log(data);
   return (
-    <div className="text-white mt-32">
-      <h1>ID: {id}</h1>
+    <div className="w-screen h-screen bg-white">
+      <div className="text-black mt-32">
+        <h1>ID: {id}</h1>
+      </div>
     </div>
   );
 }
