@@ -25,9 +25,6 @@ export const qualifiedGasHeaters = async ({
 }): Promise<HeaterRecommendationType[]> => {
   const filteredVentType = ventType ? heaterVentFilter(ventType) : {};
   const sizeRestrictionsQuery = sizeRestrictionsFilter(sizeRestrictions);
-  console.log(filteredVentType);
-  console.log(sizeRestrictionsQuery);
-  console.log(minGallonsPerMinute);
   // Gas Tankless uses gallons per minute metric
   const gasTanklessHeaters = await prisma.waterHeater.findMany({
     where: {
@@ -39,7 +36,6 @@ export const qualifiedGasHeaters = async ({
       ...sizeRestrictionsQuery,
     },
   });
-  console.log(gasTanklessHeaters);
   // Storage heaters rely on peak first hour rating
   const gasStorageHeaters = await prisma.waterHeater.findMany({
     where: {
@@ -53,8 +49,8 @@ export const qualifiedGasHeaters = async ({
       ...filteredVentType,
     },
   });
-  // TODO: Store price directly on water heater record to avoid this
-  const allGasHeaters = gasTanklessHeaters.concat(gasStorageHeaters);
+  console.log(gasTanklessHeaters.length);
+  const allGasHeaters = [...gasTanklessHeaters, ...gasStorageHeaters];
 
   // Convert this into a HeaterSummary
   const gasHeaterRecommendations: HeaterRecommendationType[] =
@@ -83,7 +79,6 @@ export const qualifiedGasHeaters = async ({
         annualSavingsInCents,
       };
     });
-  console.log(gasHeaterRecommendations);
   return gasHeaterRecommendations;
 };
 
