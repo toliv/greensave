@@ -58,6 +58,10 @@ export const main = async () => {
             thermsPerYear: row["Therms/year for Natural Gas"]
               ? parseInt(row["Therms/year for Natural Gas"])
               : null,
+            priceInCents:
+              !row["Price"] || row["Price"] === "Unable to find"
+                ? null
+                : convertDollarStrToCents(row["Price"]),
           };
           // Upsert the water Heater record
           const { id: waterHeaterId } = await prisma.waterHeater.upsert({

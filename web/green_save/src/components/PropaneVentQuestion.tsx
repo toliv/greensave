@@ -1,4 +1,4 @@
-import { HouseholdSizeEnum, PropaneVentEnum } from "@/schema/questionsSchema";
+import { PropaneVentEnum } from "@/schema/questionsSchema";
 import { Button } from "@material-tailwind/react";
 import { Controller, useFormContext } from "react-hook-form";
 import { Question } from "./Question";

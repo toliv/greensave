@@ -10,19 +10,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { MutableRefObject, useEffect, useRef, useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { PropaneVentQuestion } from "@/components/PropaneVentQuestion";
-import { ElectricitySupplyQuestion } from "@/components/ElectricitySupplyQuestion";
 import { HeaterSizeQuestion } from "@/components/HeaterSizeQuestion";
 import { trpc } from "../_trpc/client";
+import { useRouter } from "next/navigation";
 
 export default function ApplianceFinderForm() {
-  const { data } = trpc.greeting.useQuery();
+  const router = useRouter();
   const mutationFn = trpc.submitUserFormSubmission.useMutation({
-    onError: (err) => {
-      console.log(err);
-      console.log("error");
-    },
+    onError: (err) => {},
     onSuccess: (data) => {
-      console.log(data);
+      router.push(`/appliance-finder/results/${data.id}`);
     },
   });
 
@@ -74,7 +71,7 @@ export default function ApplianceFinderForm() {
     const userHasGas =
       supportedEnergyTypes.includes("Natural Gas") ||
       supportedEnergyTypes.includes("Propane");
-    const userHasElectricity = supportedEnergyTypes.includes("Electricity");
+    const userHasElectricity = supportedEnergyTypes.includes("Electric");
     if (userHasGas && userHasElectricity) {
       setQuestionRefs([
         ...defaultQuestions,

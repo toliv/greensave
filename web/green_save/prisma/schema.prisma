@@ -42,6 +42,9 @@ model WaterHeater {
   electricUsageKWHyear   Int?    @map("electric_usage_kwh_year")
   thermsPerYear          Int?    @map("therms_per_year")
 
+  // For now, just store the price directly on the heater.
+  priceInCents Int? @map("price_in_cents")
+
   priceRecords WaterHeaterPriceRecord[]
 
   @@map("water_heaters")

@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const EnergyTypeEnumSchema = z.enum([
-  "Electricity",
+  "Electric",
   "Natural Gas",
   "Propane",
   "Solar Panels",

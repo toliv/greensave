@@ -1,22 +1,20 @@
 import {
-  HeaterInfoSchemaType,
   HeaterRecommendationsSchema,
-  HeaterRecommendationsSchemaType,
+  HeaterRecommendationType,
 } from "@/schema/heaterRecommendations";
-import {
-  ApplianceFinderSchema,
-  ApplianceFinderType,
-} from "@/schema/questionsSchema";
-import { match } from "assert";
+import { ApplianceFinderSchema } from "@/schema/questionsSchema";
 import { z } from "zod";
 import { prisma } from "./prisma";
 
 import { publicProcedure, router } from "./trpc";
 import {
-  electricHeaterToInfoRecord,
   peakFirstHourRatings,
+  peakFlowRates,
   stateTemperatureFactors,
 } from "./utils/heaterPriceUtils";
+import { qualifiedElectricHeaters } from "./utils/qualifiedElectricHeaters";
+import { qualifiedGasHeaters } from "./utils/qualifiedGasHeaters";
+import { qualifiedPropaneHeaters } from "./utils/qualifiedPropaneHeaters";
 
 export const appRouter = router({
   greeting: publicProcedure.query(async () => {
@@ -71,166 +69,94 @@ export const appRouter = router({
       const {
         input: { id },
       } = opts;
-
+      // Pull up the survey result we saved in the DB
       const result = await prisma.userFormSubmission.findFirstOrThrow({
         where: {
           id,
         },
       });
-      console.log(result);
-
       const survey = ApplianceFinderSchema.parse(
         result.submissionData as object,
       );
-      console.log(`Survey: ${survey}`);
-      console.log(`ZIPCODE: ${survey.zipcode}`);
-
+      // Find the geographic info for this zip code
       const zipCodeInfo = await prisma.zipCodeReference.findFirstOrThrow({
         where: {
-          zipCode: "11211",
+          // TODO: Pull the survey zipcode, validate zipcode on form submission?
+          zipCode: survey.zipcode,
         },
       });
-
-      console.log(zipCodeInfo);
-
       const stateFactor = await prisma.stateInputFactor.findFirstOrThrow({
         where: {
           state: zipCodeInfo.stateName,
         },
       });
+      // Find the region-specific cost parameters.
+      const {
+        electricFactor,
+        annualWaterHeaterBillCents,
+        temperatureFactor,
+        gasFactor,
+        propaneFactor,
+      } = stateTemperatureFactors({ stateFactor });
+      const minPeakFirstHourRating =
+        peakFirstHourRatings[survey.householdSize] * temperatureFactor;
+      const minGallonsPerMinute =
+        peakFlowRates[survey.householdSize] * temperatureFactor;
 
-      // This is region-specific cost parameters.
-      const factors = stateTemperatureFactors({ stateFactor });
-      console.log(factors);
-      const peakFirstHourRating = peakFirstHourRatings[survey.householdSize];
-
-      // Build the filter query for heaters
-      let filters = {};
-      if (survey.supportedEnergyTypes) {
-        const energyTypes: Set<string> = new Set();
-        survey.supportedEnergyTypes.forEach((energyType) => {
-          // TODO: Rename this in the question schema
-          if (energyType === "Electricity") {
-            energyTypes.add("Electric");
+      let electricHeaters: HeaterRecommendationType[] = [];
+      let gasHeaters: HeaterRecommendationType[] = [];
+      let propaneHeaters: HeaterRecommendationType[] = [];
+      // Fetch all relevant kinds of data.
+      await Promise.all(
+        survey.supportedEnergyTypes.map(async (energyType) => {
+          if (energyType === "Electric") {
+            electricHeaters = await qualifiedElectricHeaters({
+              minPeakFirstHourRating,
+              localizedElectricCostFactor: electricFactor,
+              localizedAnnualWaterHeaterBillCents: annualWaterHeaterBillCents,
+              sizeRestrictions: survey.heaterSpaceRestrictions,
+            });
+          } else if (energyType === "Natural Gas") {
+            gasHeaters = await qualifiedGasHeaters({
+              minPeakFirstHourRating,
+              minGallonsPerMinute,
+              localizedGasCostFactor: gasFactor,
+              localizedAnnualWaterHeaterBillCents: annualWaterHeaterBillCents,
+              sizeRestrictions: survey.heaterSpaceRestrictions,
+              // The survey requires this question if Natural Gas selected
+              ventType: survey.ventType ? survey.ventType : undefined,
+            });
+          } else if (energyType === "Propane") {
+            propaneHeaters = await qualifiedPropaneHeaters({
+              minPeakFirstHourRating,
+              localizedPropaneCostFactor: propaneFactor,
+              localizedAnnualWaterHeaterBillCents: annualWaterHeaterBillCents,
+              sizeRestrictions: survey.heaterSpaceRestrictions,
+              ventType: survey.ventType ? survey.ventType : undefined,
+            });
           }
-          if (energyType === "Natural Gas") {
-            energyTypes.add("Natural Gas");
-            energyTypes.add("Natural Gas, Propane");
-          }
-          if (energyType === "Propane") {
-            energyTypes.add("Propane");
-            energyTypes.add("Natural Gas, Propane");
-          }
-        });
-
-        filters = { ...filters, fuelType: { in: Array.from(energyTypes) } };
-      }
-
-      if (survey.ventType) {
-        filters = { ...filters, ventType: "Direct Vent" };
-      }
-
-      // Find all electric heaters, order by electricUsage
-      const matchingElectricHeaters = await prisma.waterHeater.findMany({
-        where: {
-          fuelType: "Electric",
-          firstHourRatingGallons: {
-            gte: peakFirstHourRating,
-          },
-          // Need a price record associated
-          priceRecords: {
-            some: {},
-          },
-          // We need this
-          electricUsageKWHyear: { not: null },
-        },
-        include: {
-          priceRecords: true,
-        },
-        orderBy: [
-          {
-            electricUsageKWHyear: "desc",
-          },
-        ],
-      });
-      // TODO: Change schema such that most recent record is auto-linked to heater
-      const matchingHeatersWithMostRecentRecord = matchingElectricHeaters.map(
-        (wh) => ({
-          ...wh,
-          priceRecord: wh.priceRecords.sort((a, b) => {
-            return b.dateRecorded.valueOf() - a.dateRecorded.valueOf();
-          })[0], // Keeps the most recent record based on date_recorded
         }),
       );
-
-      const electricHeaterInfoRecords = matchingHeatersWithMostRecentRecord.map(
-        (heater) =>
-          electricHeaterToInfoRecord({
-            stateInputFactor: factors,
-            waterHeaterWithPriceRecord: heater,
-          }),
-      );
-
-      electricHeaterInfoRecords.sort((a, b) => {
-        return a.costInCentsAfterCredits - b.costInCentsAfterCredits;
+      // Combine all results together
+      const allHeaters: HeaterRecommendationType[] = [
+        ...electricHeaters,
+        ...gasHeaters,
+        ...propaneHeaters,
+      ];
+      // Find the cheapest heater with upfront cost.
+      allHeaters.sort((a, b) => {
+        return a.upfrontCostInCents - b.upfrontCostInCents;
       });
-
-      console.log(electricHeaterInfoRecords.length);
-      console.log(electricHeaterInfoRecords[0]);
-      console.log(electricHeaterInfoRecords.at(-1));
-
-      const matchingGasHeaters = await prisma.waterHeater.findMany({
-        where: {
-          fuelType: { in: ["Natural Gas", "Natural Gas, Propane"] },
-          firstHourRatingGallons: {
-            gte: peakFirstHourRating,
-          },
-          // Need a price record associated
-          priceRecords: {
-            some: {},
-          },
-          // We need this
-          thermsPerYear: { not: null },
-        },
-        include: {
-          priceRecords: true,
-        },
-        orderBy: [
-          {
-            thermsPerYear: "desc",
-          },
-        ],
+      const bestValueChoice = allHeaters[0];
+      // Find the choice with the highest annual savings
+      allHeaters.sort((a, b) => {
+        return b.annualSavingsInCents - a.annualSavingsInCents;
       });
-
-      const matchingPropaneHeaters = await prisma.waterHeater.findMany({
-        where: {
-          fuelType: { in: ["Propane", "Natural Gas, Propane"] },
-          firstHourRatingGallons: {
-            gte: peakFirstHourRating,
-          },
-          // Need a price record associated
-          priceRecords: {
-            some: {},
-          },
-          // We need this
-          thermsPerYear: { not: null },
-        },
-        include: {
-          priceRecords: true,
-        },
-        orderBy: [
-          {
-            thermsPerYear: "desc",
-          },
-        ],
-      });
-
-      const heater = electricHeaterInfoRecords[0];
-
+      const ourRecommendation = allHeaters[0];
       return {
-        bestValueChoice: heater,
-        ourRecommendation: heater,
-        ecoFriendly: heater,
+        bestValueChoice,
+        ourRecommendation,
+        ecoFriendly: bestValueChoice,
       };
     }),
 });

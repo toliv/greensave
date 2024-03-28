@@ -7,6 +7,7 @@ export type StateTemperatureFactorType = {
   gasFactor: number;
   propaneFactor: number;
   annualWaterHeaterBillCents: number;
+  temperatureFactor: number;
 };
 
 export const stateTemperatureFactors = ({
@@ -41,101 +42,14 @@ export const stateTemperatureFactors = ({
     gasFactor: stateFactor.gasPricePerThousandCubicFeetCents * factor,
     propaneFactor: stateFactor.propanePricePerGallonCents * factor,
     annualWaterHeaterBillCents: annualWaterHeaterBillCents * 0.19,
+    temperatureFactor: factor,
   };
 };
 
+// Based on number of people, the Peak First Hour Rating they need.
+// The array is set up such that peakFirstHourRatings[number_of_people] = needed peak hour rating
 export const peakFirstHourRatings = [0, 39, 49, 62, 72, 85, 95, 105];
 
-export const electricHeaterToInfoRecord = ({
-  stateInputFactor,
-  waterHeaterWithPriceRecord,
-}: {
-  stateInputFactor: StateTemperatureFactorType;
-  waterHeaterWithPriceRecord: WaterHeaterWithPriceRecord;
-}): HeaterInfoSchemaType => {
-  if (!waterHeaterWithPriceRecord.electricUsageKWHyear) {
-    throw new Error("heater has no electric usage");
-  }
-  const energyUsage = waterHeaterWithPriceRecord.electricUsageKWHyear;
-  const annualCostInCents = stateInputFactor.electricFactor * energyUsage;
-  const upfrontCostInCents =
-    waterHeaterWithPriceRecord.priceRecord.priceInCents;
-  const costInCentsAfterCredits =
-    upfrontCostInCents -
-    Math.min(600 * 100 /*$600 in cents*/, 0.3 * upfrontCostInCents);
-  const taxCreditSavings = upfrontCostInCents - costInCentsAfterCredits;
-  const annualSavingsInCents =
-    stateInputFactor.annualWaterHeaterBillCents - annualCostInCents;
-  return {
-    energyStarPartner: waterHeaterWithPriceRecord.energyStarPartner,
-    brandName: waterHeaterWithPriceRecord.brandName,
-    modelName: waterHeaterWithPriceRecord.modelName,
-    modelNumber: waterHeaterWithPriceRecord.modelNumber,
-    upfrontCostInCents,
-    costInCentsAfterCredits,
-    annualSavingsInCents,
-  };
-};
-
-export const gasHeaterToInfoRecord = ({
-  stateInputFactor,
-  waterHeaterWithPriceRecord,
-}: {
-  stateInputFactor: StateTemperatureFactorType;
-  waterHeaterWithPriceRecord: WaterHeaterWithPriceRecord;
-}): HeaterInfoSchemaType => {
-  if (!waterHeaterWithPriceRecord.thermsPerYear) {
-    throw new Error("heater has no gas usage");
-  }
-  const energyUsage = waterHeaterWithPriceRecord.thermsPerYear;
-  const annualCostInCents = stateInputFactor.gasFactor * energyUsage;
-  const upfrontCostInCents =
-    waterHeaterWithPriceRecord.priceRecord.priceInCents;
-  const costInCentsAfterCredits =
-    upfrontCostInCents -
-    Math.min(600 * 100 /*$600 in cents*/, 0.3 * upfrontCostInCents);
-  const taxCreditSavings = upfrontCostInCents - costInCentsAfterCredits;
-  const annualSavingsInCents =
-    annualCostInCents - stateInputFactor.annualWaterHeaterBillCents;
-  return {
-    energyStarPartner: waterHeaterWithPriceRecord.energyStarPartner,
-    brandName: waterHeaterWithPriceRecord.brandName,
-    modelName: waterHeaterWithPriceRecord.modelName,
-    modelNumber: waterHeaterWithPriceRecord.modelNumber,
-    upfrontCostInCents,
-    costInCentsAfterCredits,
-    annualSavingsInCents,
-  };
-};
-
-// Need gallons per year for propane
-export const propaneHeaterToInfoRecord = ({
-  stateInputFactor,
-  waterHeaterWithPriceRecord,
-}: {
-  stateInputFactor: StateTemperatureFactorType;
-  waterHeaterWithPriceRecord: WaterHeaterWithPriceRecord;
-}): HeaterInfoSchemaType => {
-  if (!waterHeaterWithPriceRecord.thermsPerYear) {
-    throw new Error("heater has no gas usage");
-  }
-  const energyUsage = waterHeaterWithPriceRecord.thermsPerYear;
-  const annualCostInCents = stateInputFactor.gasFactor * energyUsage;
-  const upfrontCostInCents =
-    waterHeaterWithPriceRecord.priceRecord.priceInCents;
-  const costInCentsAfterCredits =
-    upfrontCostInCents -
-    Math.min(600 * 100 /*$600 in cents*/, 0.3 * upfrontCostInCents);
-  const taxCreditSavings = upfrontCostInCents - costInCentsAfterCredits;
-  const annualSavingsInCents =
-    annualCostInCents - stateInputFactor.annualWaterHeaterBillCents;
-  return {
-    energyStarPartner: waterHeaterWithPriceRecord.energyStarPartner,
-    brandName: waterHeaterWithPriceRecord.brandName,
-    modelName: waterHeaterWithPriceRecord.modelName,
-    modelNumber: waterHeaterWithPriceRecord.modelNumber,
-    upfrontCostInCents,
-    costInCentsAfterCredits,
-    annualSavingsInCents,
-  };
-};
+// Based on number of people, the Peak flow rate in gallons/m they need.
+// The array is set up such that peakFlowRates[number_of_people] = needed gallons /m
+export const peakFlowRates = [0, 1.8, 3.3, 5.0, 7.3, 8.8, 10.5, 12.0];
