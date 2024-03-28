@@ -10,12 +10,14 @@ import { heaterVentFilter } from "./heaterVentUtils";
 // Returns a list of qualified electric heaters with their estimated area-specific usage costs
 export const qualifiedPropaneHeaters = async ({
   minPeakFirstHourRating,
+  minGallonsPerMinute,
   localizedPropaneCostFactor,
   localizedAnnualWaterHeaterBillCents,
   sizeRestrictions,
   ventType,
 }: {
   minPeakFirstHourRating: number;
+  minGallonsPerMinute: number;
   localizedPropaneCostFactor: number;
   localizedAnnualWaterHeaterBillCents: number;
   sizeRestrictions: WaterHeaterSpaceRestrictionsEnum[];
@@ -26,8 +28,11 @@ export const qualifiedPropaneHeaters = async ({
   const propaneHeaters = await prisma.waterHeater.findMany({
     where: {
       fuelType: { in: ["Propane", "Natural Gas, Propane"] },
-      firstHourRatingGallons: { gte: minPeakFirstHourRating },
-      // We require that at least one price record is present
+      // Adjust to also include max gallons per minute for these
+      OR: [
+        { firstHourRatingGallons: { gte: minPeakFirstHourRating } },
+        { maxGallonsPerMinute: { gte: minGallonsPerMinute } },
+      ],
       priceInCents: { not: null },
       thermsPerYear: { not: null },
       ...filteredVentType,

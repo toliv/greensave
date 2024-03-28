@@ -129,6 +129,7 @@ export const appRouter = router({
           } else if (energyType === "Propane") {
             propaneHeaters = await qualifiedPropaneHeaters({
               minPeakFirstHourRating,
+              minGallonsPerMinute,
               localizedPropaneCostFactor: propaneFactor,
               localizedAnnualWaterHeaterBillCents: annualWaterHeaterBillCents,
               sizeRestrictions: survey.heaterSpaceRestrictions,
@@ -144,15 +145,13 @@ export const appRouter = router({
         ...propaneHeaters,
       ];
       // Find the cheapest heater with upfront cost.
-      allHeaters.sort((a, b) => {
+      const bestValueChoice = allHeaters.sort((a, b) => {
         return a.upfrontCostInCents - b.upfrontCostInCents;
-      });
-      const bestValueChoice = allHeaters[0];
+      })[0];
       // Find the choice with the highest annual savings
-      allHeaters.sort((a, b) => {
+      const ourRecommendation = [...allHeaters].sort((a, b) => {
         return b.annualSavingsInCents - a.annualSavingsInCents;
-      });
-      const ourRecommendation = allHeaters[0];
+      })[0];
       return {
         bestValueChoice,
         ourRecommendation,

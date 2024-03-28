@@ -49,7 +49,6 @@ export const qualifiedGasHeaters = async ({
       ...filteredVentType,
     },
   });
-  console.log(gasTanklessHeaters.length);
   const allGasHeaters = [...gasTanklessHeaters, ...gasStorageHeaters];
 
   // Convert this into a HeaterSummary
