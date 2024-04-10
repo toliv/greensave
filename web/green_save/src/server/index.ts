@@ -144,6 +144,7 @@ export const appRouter = router({
         ...gasHeaters,
         ...propaneHeaters,
       ];
+      console.log(allHeaters.slice(0, 10));
       // Find the cheapest heater with upfront cost.
       const bestValueChoice = allHeaters.sort((a, b) => {
         return a.upfrontCostInCents - b.upfrontCostInCents;

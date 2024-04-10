@@ -1,7 +1,11 @@
 "use client";
 import { trpc } from "@/app/_trpc/client";
 import { HeaterInfoSchemaType } from "@/schema/heaterRecommendations";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button, Checkbox, Input } from "@material-tailwind/react";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 const RECOMMENDATION_TYPE = {
   BEST_VALUE_TODAY: 0,
@@ -9,26 +13,37 @@ const RECOMMENDATION_TYPE = {
   ECO_FRIENDLY: 2,
 };
 
+const emailSchema = z.object({
+  email: z.string().email({ message: "Invalid email address" }),
+});
+
 export default function ApplianceFinderResults({
   params,
 }: {
   params: { id: string };
 }) {
+  const { id } = params;
+  const { data } = trpc.getRecommendedHeaters.useQuery({ id });
   const [selectedOption, setSelectedOption] = useState<number>(
     RECOMMENDATION_TYPE.OUR_RECOMMENDATION,
   );
+  const [sendEmailChoice, setSendEmailChoice] = useState<boolean>(false);
+  const [allowContact, setAllowContact] = useState<boolean>(false);
+  const { register, handleSubmit, formState } = useForm({
+    resolver: zodResolver(emailSchema),
+    mode: "onBlur",
+  });
 
-  let { id } = params;
-  const { data } = trpc.getRecommendedHeaters.useQuery({ id });
-  console.log(data);
+  console.log(formState.errors.email);
+
   return (
-    <div className="w-screen h-screen bg-white">
-      <div className="text-black mt-20 p-4">
-        <div className="border-2">
+    <div className="w-screen min-h-screen h-full bg-white">
+      <div className="text-black mt-20 px-8 pb-8">
+        <div className="">
           {/* TODO: Suspense + wait for load */}
           {data && (
             <>
-              <div className="flex flex-col md:flex-row p-2">
+              <div className="flex flex-col md:flex-row ">
                 <HeaterCard
                   heater={data.bestValueChoice}
                   title={"Best value today"}
@@ -64,6 +79,63 @@ export default function ApplianceFinderResults({
             </>
           )}
         </div>
+        <div className="ml-4 mt-4 ">
+          <div className="text-2xl">{`Want to save these recommendations for later?`}</div>
+          <div className="flex gap-2 items-center py-2 ml-4">
+            <div>
+              <Checkbox
+                crossOrigin={""}
+                checked={sendEmailChoice}
+                onChange={() => setSendEmailChoice((choice) => !choice)}
+              ></Checkbox>
+            </div>
+            <div className="text-sm">
+              Send me an email with all the water heater details
+            </div>
+          </div>
+          <div className="flex gap-2 items-center py-2 ml-4">
+            <div>
+              <Checkbox
+                crossOrigin={""}
+                checked={allowContact}
+                onChange={() =>
+                  setAllowContact((allowContact) => !allowContact)
+                }
+              ></Checkbox>
+            </div>
+            <div className="text-sm">
+              I want Green<span className="text-standard-green">$ave</span> to
+              contact me regarding purchase and installation
+            </div>
+          </div>
+          <form onSubmit={handleSubmit((data) => console.log(data))}>
+            <div className="flex gap-4 justify-between items-center py-6 w-1/2">
+              <div className="w-2/3">
+                <Input
+                  {...register("email")}
+                  crossOrigin=""
+                  variant="outlined"
+                  size="lg"
+                  placeholder="Enter your email"
+                  autoComplete="off"
+                  className={`text-black font-thin rounded-lg p-4 text-center border-2 border-slate-400 ${formState.errors.email ? "border-red-400" : ""}`}
+                />
+              </div>
+              <div className="text-sm">
+                <Button
+                  type={"submit"}
+                  variant="filled"
+                  placeholder="something"
+                  onClick={() => {}}
+                  disabled={false}
+                  className={`h-14 text-black px-12 ${formState.isValid ? "bg-standard-green hover:cursor-pointer" : "bg-dark-green hover:cursor-not-allowed"}`}
+                >
+                  Submit
+                </Button>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
@@ -87,22 +159,22 @@ const HeaterCard = ({
       className={`flex-1 border-1 rounded-md m-2 p-4 shadow-md  hover:cursor-pointer ${selected ? "bg-gray-100 shadow-lg border-standard-green" : "bg-white border-black"}`}
       onClick={setSelected}
     >
-      <div className="text-4xl text-standard-green mb-12">{title}</div>
+      <div className="text-3xl text-standard-green mb-4">{title}</div>
       <div className="text-xl text-black mb-4">{`${heater.energyStarPartner} ${heater.modelName} Water Heater`}</div>
-      <div className="text-xs text-gray-300 font-thin mb-8">
+      <div className="text-xs text-gray-300 font-thin mb-4">
         {`Model Number: ${heater.modelNumber}`}
       </div>
       <div className="text-lg font-thin text-standard-green mb-2">
         Upfront Cost
       </div>
-      <div className="text-2xl mb-4">
+      <div className="text-xl mb-4">
         {`${displayDollar(heater.costInCentsAfterCredits)}`}
         <span className="ml-2 text-sm">{`with tax credits applied`}</span>
       </div>
       <div className="text-lg font-thin text-standard-green mb-2">
         Annual water heater energy cost savings
       </div>
-      <div className="text-2xl mb-8">
+      <div className="text-xl mb-4">
         {`Save ${displayDollar(heater.annualSavingsInCents)}`}
         <span className="ml-2 text-sm">{`/ year`}</span>
       </div>

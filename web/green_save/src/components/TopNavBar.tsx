@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import "../app/globals.css";
 
 export const metadata: Metadata = {
@@ -13,14 +14,16 @@ export function TopBarNav() {
       className="fixed top-0 left-0 w-full bg-stone-50 min-h-20 xl:min-h-25 flex justify-between items-center text-black px-4 border-b-2 border-default-gray"
     >
       <div className="text-2xl lg:text-4xl">
-        Green<span className="text-standard-green">$ave</span>
+        <Link href="/">
+          Green<span className="text-standard-green">$ave</span>
+        </Link>
       </div>
       <div className="flex justify-right items-center px-2 lg:px-4 xl:px-16 text-md lg:text-xl">
         <div className="hover:bg-light-green p-2 lg:p-4 rounded-md">
-          <a href="#home">Home</a>
+          <Link href="/">Home</Link>
         </div>
         <div className="hover:bg-light-green p-2 lg:p-4 rounded-md">
-          <a href="#news ">Questionnaire</a>
+          <Link href="/appliance-finder">Questionnaire</Link>
         </div>
         <div className="hover:bg-light-green p-2 lg:p-4 rounded-md">
           <a href="#contact">About</a>

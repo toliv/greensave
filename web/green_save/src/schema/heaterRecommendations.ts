@@ -28,9 +28,9 @@ export type HeaterRecommendationType = z.infer<
 export type HeaterInfoSchemaType = z.infer<typeof HeaterInfoSchema>;
 
 export const HeaterRecommendationsSchema = z.object({
-  bestValueChoice: HeaterInfoSchema,
-  ourRecommendation: HeaterInfoSchema,
-  ecoFriendly: HeaterInfoSchema,
+  bestValueChoice: HeaterRecommendationSchema,
+  ourRecommendation: HeaterRecommendationSchema,
+  ecoFriendly: HeaterRecommendationSchema,
 });
 
 export type HeaterRecommendationsSchemaType = z.infer<
