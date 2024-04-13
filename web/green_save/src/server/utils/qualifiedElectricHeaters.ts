@@ -1,5 +1,6 @@
 import { HeaterRecommendationType } from "@/schema/heaterRecommendations";
 import { WaterHeaterSpaceRestrictionsEnum } from "@/schema/questionsSchema";
+import { WaterHeater } from "@prisma/client";
 import { prisma } from "../prisma";
 import { sizeRestrictionsFilter } from "./heaterSizeUtils";
 

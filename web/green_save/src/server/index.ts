@@ -1,3 +1,4 @@
+import { EmailRequestSchema } from "@/schema/emailRequest";
 import {
   HeaterRecommendationsSchema,
   HeaterRecommendationType,
@@ -7,6 +8,7 @@ import { z } from "zod";
 import { prisma } from "./prisma";
 
 import { publicProcedure, router } from "./trpc";
+import { sendEmailToUser } from "./utils/emails";
 import {
   peakFirstHourRatings,
   peakFlowRates,
@@ -57,6 +59,37 @@ export const appRouter = router({
           id,
         },
       });
+    }),
+  submitUserEmailRequest: publicProcedure
+    .input(EmailRequestSchema)
+    .mutation(async ({ input }) => {
+      const {
+        userEmail,
+        contactAllowed,
+        selectedHeater,
+        userFormSubmissionId,
+      } = input;
+
+      const { data, error } = await sendEmailToUser({
+        userEmail,
+        selectedHeater,
+      });
+      if (error) {
+        console.error(error);
+      }
+      // Store in the DB for our records
+      const dataRec = {
+        waterHeaterId: selectedHeater.id,
+        contactAllowed,
+        userFormSubmissionId,
+        createdAt: new Date(),
+        resendEmailId: data?.id,
+      };
+      console.log(dataRec);
+      await prisma.userEmailRequest.create({
+        data: dataRec,
+      });
+      return;
     }),
   getRecommendedHeaters: publicProcedure
     .input(

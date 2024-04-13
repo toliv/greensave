@@ -60,7 +60,7 @@ export function Question({
               placeholder="something"
               onClick={() => moveToNextQuestion()}
               disabled={!moveToNextQuestionEnabled()}
-              className={`h-14 w-1/3 bg-standard-green text-black p-4 ${!moveToNextQuestionEnabled ? "hover:cursor-not-allowed" : ""}`}
+              className={`h-14 w-1/2 lg:w-1/3 bg-standard-green text-black p-4 ${!moveToNextQuestionEnabled ? "hover:cursor-not-allowed" : ""}`}
             >
               {isLastQuestion ? "Submit" : "Next"}
             </Button>

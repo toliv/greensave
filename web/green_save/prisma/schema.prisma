@@ -45,7 +45,8 @@ model WaterHeater {
   // For now, just store the price directly on the heater.
   priceInCents Int? @map("price_in_cents")
 
-  priceRecords WaterHeaterPriceRecord[]
+  priceRecords     WaterHeaterPriceRecord[]
+  UserEmailRequest UserEmailRequest[]
 
   @@map("water_heaters")
 }
@@ -92,9 +93,25 @@ model StateInputFactor {
 
 model UserFormSubmission {
   // NOTE: this matches zod schema, we're using strings for now
-  id             String   @id @default(uuid())
-  submissionData Json     @map("submission_data")
-  createdAt      DateTime @map("created_at")
+  id               String             @id @default(uuid())
+  submissionData   Json               @map("submission_data")
+  createdAt        DateTime           @map("created_at")
+  UserEmailRequest UserEmailRequest[]
 
   @@map("user_form_submission")
+}
+
+model UserEmailRequest {
+  // Records an instance of a user submitting a form for email contact
+  id                   String             @id @default(uuid())
+  // Whether they consent to be contacted regarding purchase
+  contactAllowed       Boolean            @map("contact_allowed")
+  // The water heater we recommended
+  waterHeaterId        String             @map("water_heater_id")
+  waterHeater          WaterHeater        @relation(fields: [waterHeaterId], references: [id])
+  // The original user form submission 
+  userFormSubmissionId String             @map("user_form_submission_id")
+  userFormSubmission   UserFormSubmission @relation(fields: [userFormSubmissionId], references: [id])
+  createdAt            DateTime           @map("created_at")
+  resendEmailId        String?            @map("resend_email_id")
 }

@@ -1,10 +1,12 @@
 "use client";
+import { displayDollar } from "@/app/utils/displayDollar";
 import { trpc } from "@/app/_trpc/client";
 import { HeaterInfoSchemaType } from "@/schema/heaterRecommendations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Checkbox, Input } from "@material-tailwind/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
 const RECOMMENDATION_TYPE = {
@@ -13,15 +15,18 @@ const RECOMMENDATION_TYPE = {
   ECO_FRIENDLY: 2,
 };
 
-const emailSchema = z.object({
+const EmailFormSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
 });
+
+type EmailFormSchemaType = z.infer<typeof EmailFormSchema>;
 
 export default function ApplianceFinderResults({
   params,
 }: {
   params: { id: string };
 }) {
+  const router = useRouter();
   const { id } = params;
   const { data } = trpc.getRecommendedHeaters.useQuery({ id });
   const [selectedOption, setSelectedOption] = useState<number>(
@@ -29,12 +34,38 @@ export default function ApplianceFinderResults({
   );
   const [sendEmailChoice, setSendEmailChoice] = useState<boolean>(false);
   const [allowContact, setAllowContact] = useState<boolean>(false);
-  const { register, handleSubmit, formState } = useForm({
-    resolver: zodResolver(emailSchema),
+  const { register, handleSubmit, formState } = useForm<EmailFormSchemaType>({
+    resolver: zodResolver(EmailFormSchema),
     mode: "onBlur",
   });
 
-  console.log(formState.errors.email);
+  const emailMutationFn = trpc.submitUserEmailRequest.useMutation({
+    onSuccess: () => {
+      router.push(`/appliance-finder/success`);
+    },
+  });
+
+  const onSubmit: SubmitHandler<EmailFormSchemaType> = async (formData) => {
+    if (data) {
+      let selectedHeater;
+      switch (selectedOption) {
+        case RECOMMENDATION_TYPE.BEST_VALUE_TODAY:
+          selectedHeater = data.bestValueChoice;
+        case RECOMMENDATION_TYPE.OUR_RECOMMENDATION:
+          selectedHeater = data.ourRecommendation;
+        case RECOMMENDATION_TYPE.ECO_FRIENDLY:
+          selectedHeater = data.ecoFriendly;
+      }
+      if (selectedHeater) {
+        await emailMutationFn.mutate({
+          userEmail: formData.email,
+          contactAllowed: allowContact,
+          selectedHeater,
+          userFormSubmissionId: id,
+        });
+      }
+    }
+  };
 
   return (
     <div className="w-screen min-h-screen h-full bg-white">
@@ -108,7 +139,7 @@ export default function ApplianceFinderResults({
               contact me regarding purchase and installation
             </div>
           </div>
-          <form onSubmit={handleSubmit((data) => console.log(data))}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex gap-4 justify-between items-center py-6 w-1/2">
               <div className="w-2/3">
                 <Input
@@ -186,6 +217,8 @@ const HeaterCard = ({
   );
 };
 
+const HeaterCardInfo = ({ heater }: { heater: HeaterInfoSchemaType }) => {};
+
 const Reasons = ({
   recommendationType,
   heater,
@@ -251,8 +284,4 @@ const Reasons = ({
     default:
       return <></>;
   }
-};
-
-const displayDollar = (valueInCents: number): string => {
-  return `$${Math.round(valueInCents / 100).toLocaleString()}`;
 };

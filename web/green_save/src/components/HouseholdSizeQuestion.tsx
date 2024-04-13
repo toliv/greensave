@@ -60,7 +60,7 @@ export function HouseholdSizeQuestion({
             name="householdSize"
             control={control}
             render={({ field }) => (
-              <div className="flex flex-col justify-around gap-4 py-4 w-1/6 h-20 mb-32">
+              <div className="flex flex-col justify-around gap-4 py-4 w-1/2 lg:w-1/3 h-20 mb-32">
                 <Select
                   options={sizeOptions}
                   value={sizeOptions.find((s) => s.value === householdSize)}
