@@ -66,17 +66,23 @@ export function Question({
                 }
               }}
               disabled={!moveToNextQuestionEnabled()}
-              className={`h-14 w-1/2 lg:w-1/3 bg-standard-green text-black p-4 ${!moveToNextQuestionEnabled ? "hover:cursor-not-allowed" : ""}`}
+              className={`h-14 w-1/2 lg:w-1/3 bg-standard-green text-black p-4 ${!moveToNextQuestionEnabled || submitIsLoading ? "hover:cursor-not-allowed" : ""}`}
             >
               {!isLastQuestion ? (
                 "Next"
               ) : submitIsLoading ? (
-                <Spinner></Spinner>
+                <div className="flex px-4 justify-center gap-4">
+                  <div>
+                    <Spinner className="h-4 w-4 text-gray-100/50" />
+                  </div>
+                  <div>Loading ..</div>
+                </div>
               ) : (
-                <Spinner></Spinner>
+                "Submit"
               )}
             </Button>
           )}
+          {/* <Spinner color="amber"></Spinner> */}
         </div>
       </div>
     </div>
