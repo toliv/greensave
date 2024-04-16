@@ -1,4 +1,4 @@
-import { Button } from "@material-tailwind/react";
+import { Button, Spinner } from "@material-tailwind/react";
 
 export interface QuestionHeading {
   heading: string;
@@ -15,6 +15,7 @@ export function Question({
   questionId,
   children,
   isLastQuestion,
+  submitIsLoading,
 }: {
   moveToNextQuestion: () => void;
   moveToPreviousQuestion?: () => void;
@@ -24,6 +25,7 @@ export function Question({
   questionId?: string;
   children: React.ReactNode;
   isLastQuestion?: boolean;
+  submitIsLoading?: boolean;
 }) {
   return (
     <div
@@ -58,11 +60,21 @@ export function Question({
               type={isLastQuestion ? "submit" : undefined}
               variant="filled"
               placeholder="something"
-              onClick={() => moveToNextQuestion()}
+              onClick={() => {
+                if (!isLastQuestion) {
+                  moveToNextQuestion();
+                }
+              }}
               disabled={!moveToNextQuestionEnabled()}
               className={`h-14 w-1/2 lg:w-1/3 bg-standard-green text-black p-4 ${!moveToNextQuestionEnabled ? "hover:cursor-not-allowed" : ""}`}
             >
-              {isLastQuestion ? "Submit" : "Next"}
+              {!isLastQuestion ? (
+                "Next"
+              ) : submitIsLoading ? (
+                <Spinner></Spinner>
+              ) : (
+                <Spinner></Spinner>
+              )}
             </Button>
           )}
         </div>

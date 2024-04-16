@@ -5,9 +5,11 @@ import { Question } from "./Question";
 export function ZipCodeQuestion({
   moveToNextQuestion,
   moveToPreviousQuestion,
+  submitIsLoading,
 }: {
   moveToNextQuestion: any;
   moveToPreviousQuestion: any;
+  submitIsLoading: boolean;
 }) {
   const {
     control,
@@ -27,6 +29,7 @@ export function ZipCodeQuestion({
           questionHeading={`What is your zip code?`}
           questionSubheading={`This will help us localize your results`}
           isLastQuestion={true}
+          submitIsLoading={submitIsLoading}
         >
           <Controller
             name="zipcode"

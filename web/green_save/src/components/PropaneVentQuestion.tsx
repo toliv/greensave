@@ -76,7 +76,7 @@ export function PropaneVentQuestion({
                   placeholder="unknown"
                   className={`p-4 hover:shadow-xl ${ventType === "Unknown/Other" ? "bg-standard-green text-white" : "bg-stone-50 text-black"}`}
                 >
-                  {`I don't know / I don't have this type of water heater.`}
+                  {`I don't know / I don't have this type of water heater`}
                 </Button>
               </div>
             )}

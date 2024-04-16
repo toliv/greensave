@@ -114,4 +114,6 @@ model UserEmailRequest {
   userFormSubmission   UserFormSubmission @relation(fields: [userFormSubmissionId], references: [id])
   createdAt            DateTime           @map("created_at")
   resendEmailId        String?            @map("resend_email_id")
+
+  @@map("user_email_request")
 }

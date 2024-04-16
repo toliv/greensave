@@ -3,7 +3,7 @@ import { displayDollar } from "@/app/utils/displayDollar";
 import { trpc } from "@/app/_trpc/client";
 import { HeaterInfoSchemaType } from "@/schema/heaterRecommendations";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Checkbox, Input } from "@material-tailwind/react";
+import { Button, Checkbox, Input, Spinner } from "@material-tailwind/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -161,7 +161,7 @@ export default function ApplianceFinderResults({
                   disabled={false}
                   className={`h-14 text-black px-12 ${formState.isValid ? "bg-standard-green hover:cursor-pointer" : "bg-slate-400 hover:cursor-not-allowed"}`}
                 >
-                  Submit
+                  {emailMutationFn.isPending ? <Spinner></Spinner> : "Submit"}
                 </Button>
               </div>
             </div>

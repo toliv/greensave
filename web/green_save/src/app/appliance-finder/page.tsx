@@ -166,6 +166,7 @@ export default function ApplianceFinderForm() {
                   <ZipCodeQuestion
                     moveToNextQuestion={moveToNextQuestion}
                     moveToPreviousQuestion={moveToPreviousQuestion}
+                    submitIsLoading={mutationFn.isPending}
                   ></ZipCodeQuestion>
                 </div>
               </form>
