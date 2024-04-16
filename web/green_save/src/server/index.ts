@@ -29,7 +29,6 @@ export const appRouter = router({
       }),
     )
     .mutation(async (opts) => {
-      console.log(opts);
       return "mutation";
     }),
   submitUserFormSubmission: publicProcedure
@@ -85,7 +84,6 @@ export const appRouter = router({
         createdAt: new Date(),
         resendEmailId: data?.id,
       };
-      console.log(dataRec);
       await prisma.userEmailRequest.create({
         data: dataRec,
       });
@@ -177,7 +175,6 @@ export const appRouter = router({
         ...gasHeaters,
         ...propaneHeaters,
       ];
-      console.log(allHeaters.slice(0, 10));
       // Find the cheapest heater with upfront cost.
       const bestValueChoice = allHeaters.sort((a, b) => {
         return a.upfrontCostInCents - b.upfrontCostInCents;

@@ -1,0 +1,15 @@
+{
+  "name": "email",
+  "version": "1.0.0",
+  "description": "react email folder",
+  "private": true,
+  "scripts": {
+    "dev": "email dev -p 3001"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@react-email/components": "0.0.16",
+    "react-email": "2.1.1"
+  }
+}
