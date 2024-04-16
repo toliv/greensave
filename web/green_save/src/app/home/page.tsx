@@ -11,7 +11,7 @@ export default function Home() {
       </div>
       <div className="text-lg lg:text-2xl py-2">
         Our simple questionnaire will recommend the right water heater for you
-        in 2 minutes or less.
+        in <span className="text-standard-green">2 minutes or less!</span>
       </div>
       <div className="text-md lg:text-2xl py-6 min-w-[200px]">
         <Link href={`/appliance-finder`}>
@@ -34,8 +34,7 @@ export default function Home() {
               What fuel types you already use
             </li>
             <li className="py-1 lg:py-2 font-thin">
-              How your hot water heater already ventilates and the power outlets
-              it uses
+              How your hot water heater already ventilates
             </li>
             <li className="py-1 lg:py-2 font-thin">
               Local considerations like climate and energy costs

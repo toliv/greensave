@@ -140,8 +140,8 @@ export default function ApplianceFinderResults({
             </div>
           </div>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex gap-4 justify-between items-center py-6 w-1/2">
-              <div className="w-2/3">
+            <div className="flex flex-col gap-4 justify-between items-center py-6 w-full lg:w-1/2 ">
+              <div className="w-full lg:w-2/3">
                 <Input
                   {...register("email")}
                   crossOrigin=""
@@ -152,14 +152,14 @@ export default function ApplianceFinderResults({
                   className={`text-black font-thin rounded-lg p-4 text-center border-2 border-slate-400 ${formState.errors.email ? "border-red-400" : ""}`}
                 />
               </div>
-              <div className="text-sm">
+              <div className="w-full lg:w-1/3 text-sm">
                 <Button
                   type={"submit"}
                   variant="filled"
                   placeholder="something"
                   onClick={() => {}}
                   disabled={false}
-                  className={`h-14 text-black px-12 ${formState.isValid ? "bg-standard-green hover:cursor-pointer" : "bg-dark-green hover:cursor-not-allowed"}`}
+                  className={`h-14 text-black px-12 ${formState.isValid ? "bg-standard-green hover:cursor-pointer" : "bg-slate-400 hover:cursor-not-allowed"}`}
                 >
                   Submit
                 </Button>
