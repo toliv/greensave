@@ -18,6 +18,7 @@ import { qualifiedElectricHeaters } from "./utils/qualifiedElectricHeaters";
 import { qualifiedGasHeaters } from "./utils/qualifiedGasHeaters";
 import { qualifiedPropaneHeaters } from "./utils/qualifiedPropaneHeaters";
 import { qualifiedSolarHeaters } from "./utils/qualifiedSolarHeaters";
+import { createCallerFactory } from "./trpc";
 
 export const appRouter = router({
   greeting: publicProcedure.query(async () => {
@@ -206,3 +207,5 @@ export const appRouter = router({
 });
 
 export type AppRouter = typeof appRouter;
+
+export const createCaller = createCallerFactory(appRouter);
