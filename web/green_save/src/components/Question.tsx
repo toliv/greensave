@@ -82,7 +82,6 @@ export function Question({
               )}
             </Button>
           )}
-          {/* <Spinner color="amber"></Spinner> */}
         </div>
       </div>
     </div>

@@ -21,12 +21,9 @@ export const main = async () => {
     await Promise.allSettled(
       rows.map(async (row: any) => {
         const id = row["ENERGY STAR Unique ID"];
-        const uniformEnergyFactor = parseFloat(
-          row["Uniform Energy Factor (UEF)"],
-        );
-        if (!uniformEnergyFactor) {
-          return;
-        }
+        const uniformEnergyFactor = row["Uniform Energy Factor (UEF)"]
+          ? parseFloat(row["Uniform Energy Factor (UEF)"])
+          : null;
         try {
           const data = {
             energyStarUniqueId: row["ENERGY STAR Unique ID"] as string,
@@ -62,6 +59,25 @@ export const main = async () => {
               !row["Price"] || row["Price"] === "Unable to find"
                 ? null
                 : convertDollarStrToCents(row["Price"]),
+            solarSystemType: row["Solar System Type"]
+              ? row["Solar System Type"]
+              : null,
+            solarTankVolumeGallons: row["Solar Tank Volume (gallons)"]
+              ? parseInt(row["Solar Tank Volume (gallons)"])
+              : null,
+            solarCollectorPanelAreaSqFt: row[
+              "Solar Collector Panel Area (sq feet)"
+            ]
+              ? parseFloat(row["Solar Collector Panel Area (sq feet)"])
+              : null,
+            solarFreezeToleranceLimitFahrenheit: row[
+              "Freeze Tolerance Limit (F)"
+            ]
+              ? parseInt(row["Freeze Tolerance Limit (F)"])
+              : null,
+            solarUniformEnergyFactor: row["Solar Uniform Energy Factor (SUEF)"]
+              ? parseFloat(row["Solar Uniform Energy Factor (SUEF)"])
+              : null,
           };
           // Upsert the water Heater record
           const { id: waterHeaterId } = await prisma.waterHeater.upsert({

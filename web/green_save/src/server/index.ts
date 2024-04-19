@@ -17,6 +17,7 @@ import {
 import { qualifiedElectricHeaters } from "./utils/qualifiedElectricHeaters";
 import { qualifiedGasHeaters } from "./utils/qualifiedGasHeaters";
 import { qualifiedPropaneHeaters } from "./utils/qualifiedPropaneHeaters";
+import { qualifiedSolarHeaters } from "./utils/qualifiedSolarHeaters";
 
 export const appRouter = router({
   greeting: publicProcedure.query(async () => {
@@ -175,6 +176,15 @@ export const appRouter = router({
         ...gasHeaters,
         ...propaneHeaters,
       ];
+
+      const solarHeaters = await qualifiedSolarHeaters({
+        householdSize: survey.householdSize,
+        locatedInSunBelt: zipCodeInfo.isSunBeltLocation,
+        averageWinterTemperature: stateFactor.averageWinterTemperature,
+        solarTankVolumeMultiplier: stateFactor.solarTankVolumeFactor,
+        totalAnnualWaterHeaterCostInCents: annualWaterHeaterBillCents,
+      });
+
       // Find the cheapest heater with upfront cost.
       const bestValueChoice = allHeaters.sort((a, b) => {
         return a.upfrontCostInCents - b.upfrontCostInCents;
@@ -183,10 +193,14 @@ export const appRouter = router({
       const ourRecommendation = [...allHeaters].sort((a, b) => {
         return b.annualSavingsInCents - a.annualSavingsInCents;
       })[0];
+      const ecoFriendly = solarHeaters.sort((a, b) => {
+        return b.annualSavingsInCents - a.annualSavingsInCents;
+      })[0];
+
       return {
         bestValueChoice,
         ourRecommendation,
-        ecoFriendly: bestValueChoice,
+        ecoFriendly,
       };
     }),
 });

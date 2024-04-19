@@ -14,36 +14,40 @@ datasource db {
 }
 
 model WaterHeater {
-  id                     String  @id @default(uuid()) @map("id")
-  energyStarUniqueId     String  @unique @map("energy_star_unique_id")
-  energyStarPartner      String  @map("energy_star_partner")
-  brandName              String  @map("brand_name")
-  modelName              String  @map("model_name")
-  modelNumber            String  @map("model_number")
+  id                                  String  @id @default(uuid()) @map("id")
+  energyStarUniqueId                  String  @unique @map("energy_star_unique_id")
+  energyStarPartner                   String  @map("energy_star_partner")
+  brandName                           String  @map("brand_name")
+  modelName                           String  @map("model_name")
+  modelNumber                         String  @map("model_number")
   // TODO: Make an enum
-  heaterType             String  @map("heater_type")
-  uniformEnergyFactor    Float   @map("uniform_energy_factor")
-  upc                    String? @map("upc")
-  ratingOutOf5           Float?  @map("rating_out_of_5")
-  reviewCount            Int?    @map("review_count")
-  heatPumpType           String? @map("heat_pump_type")
+  heaterType                          String  @map("heater_type")
+  uniformEnergyFactor                 Float?  @map("uniform_energy_factor")
+  upc                                 String? @map("upc")
+  ratingOutOf5                        Float?  @map("rating_out_of_5")
+  reviewCount                         Int?    @map("review_count")
+  heatPumpType                        String? @map("heat_pump_type")
   // TODO: Can this become required? Rows missing this seem to all be solar 
-  fuelType               String? @map("fuel_type")
-  ventType               String? @map("vent_type")
-  storageVolumeGallons   Int?    @map("storage_volume_gallons")
-  firstHourRatingGallons Int?    @map("first_hour_rating_gallons")
-  maxGallonsPerMinute    Float?  @map("max_gallons_per_minute")
+  fuelType                            String? @map("fuel_type")
+  ventType                            String? @map("vent_type")
+  storageVolumeGallons                Int?    @map("storage_volume_gallons")
+  firstHourRatingGallons              Int?    @map("first_hour_rating_gallons")
+  maxGallonsPerMinute                 Float?  @map("max_gallons_per_minute")
   // Some water heaters are duplicates, make sure we store this relationship
-  parentEnergyStarId     String? @map("parent_energy_star_id")
+  parentEnergyStarId                  String? @map("parent_energy_star_id")
   // TODO: Make this into an enum ?
-  inputVoltageHPWH       Int?    @map("input_voltage_hpwh")
-  tankHeightInches       Float?  @map("tank_height_inches")
-  tankDiameterInches     Float?  @map("tank_diameter_inches")
-  electricUsageKWHyear   Int?    @map("electric_usage_kwh_year")
-  thermsPerYear          Int?    @map("therms_per_year")
-
+  inputVoltageHPWH                    Int?    @map("input_voltage_hpwh")
+  tankHeightInches                    Float?  @map("tank_height_inches")
+  tankDiameterInches                  Float?  @map("tank_diameter_inches")
+  electricUsageKWHyear                Int?    @map("electric_usage_kwh_year")
+  thermsPerYear                       Int?    @map("therms_per_year")
+  solarSystemType                     String? @map("solar_system_type")
+  solarTankVolumeGallons              Int?    @map("solar_tank_volume_gallons")
+  solarCollectorPanelAreaSqFt         Float?  @map("solar_collector_panel_area_sq_ft")
+  solarFreezeToleranceLimitFahrenheit Int?    @map("solar_freeze_tolerance_limit_fahrenheit")
+  solarUniformEnergyFactor            Float?  @map("solar_uniform_energy_factor")
   // For now, just store the price directly on the heater.
-  priceInCents Int? @map("price_in_cents")
+  priceInCents                        Int?    @map("price_in_cents")
 
   priceRecords     WaterHeaterPriceRecord[]
   UserEmailRequest UserEmailRequest[]
