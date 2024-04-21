@@ -46,6 +46,7 @@ export const qualifiedPropaneHeaters = async ({
         upfrontCostInCents,
         costInCentsAfterCredits,
         annualSavingsInCents,
+        tenYearSavingsInCents,
       } = calculatePropaneHeaterCosts({
         // We filtered for this being non-null
         // just in case, set price arbitrarily high
@@ -57,6 +58,7 @@ export const qualifiedPropaneHeaters = async ({
       });
       return {
         id: heater.id,
+        energyStarUniqueId: heater.energyStarUniqueId,
         energyStarPartner: heater.energyStarPartner,
         brandName: heater.brandName,
         modelName: heater.modelName,
@@ -64,6 +66,7 @@ export const qualifiedPropaneHeaters = async ({
         upfrontCostInCents,
         costInCentsAfterCredits,
         annualSavingsInCents,
+        tenYearSavingsInCents,
       };
     });
   return propaneHeaterRecommendations;
@@ -88,9 +91,15 @@ const calculatePropaneHeaterCosts = ({
   const taxCreditSavings = upfrontCostInCents - costInCentsAfterCredits;
   const annualSavingsInCents =
     localizedAnnualWaterHeaterBillCents - annualCostInCents;
+  const savingsRate =
+    1 - annualCostInCents / localizedAnnualWaterHeaterBillCents;
+  const tenYearSavingsInCents =
+    10 * localizedAnnualWaterHeaterBillCents * savingsRate -
+    costInCentsAfterCredits;
   return {
     upfrontCostInCents,
     costInCentsAfterCredits,
     annualSavingsInCents,
+    tenYearSavingsInCents,
   };
 };

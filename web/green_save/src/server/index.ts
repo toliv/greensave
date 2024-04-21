@@ -131,8 +131,11 @@ export const appRouter = router({
         gasFactor,
         propaneFactor,
       } = stateTemperatureFactors({ stateFactor });
+      // Match precision from the sheet
       const minPeakFirstHourRating =
-        peakFirstHourRatings[survey.householdSize] * temperatureFactor;
+        Math.round(
+          10 * peakFirstHourRatings[survey.householdSize] * temperatureFactor,
+        ) / 10;
       const minGallonsPerMinute =
         peakFlowRates[survey.householdSize] * temperatureFactor;
 
@@ -187,13 +190,18 @@ export const appRouter = router({
       });
 
       // Find the cheapest heater with upfront cost.
-      const bestValueChoice = allHeaters.sort((a, b) => {
+      const bestValueChoices = [...allHeaters];
+      bestValueChoices.sort((a, b) => {
         return a.upfrontCostInCents - b.upfrontCostInCents;
-      })[0];
-      // Find the choice with the highest annual savings
-      const ourRecommendation = [...allHeaters].sort((a, b) => {
-        return b.annualSavingsInCents - a.annualSavingsInCents;
-      })[0];
+      });
+      const bestValueChoice = bestValueChoices[0];
+      // Find the choice with the highest ten year savings
+      const ourRecommendations = [...allHeaters];
+      ourRecommendations.sort((a, b) => {
+        return b.tenYearSavingsInCents - a.tenYearSavingsInCents;
+      });
+      const ourRecommendation = ourRecommendations[0];
+
       const ecoFriendly = solarHeaters.sort((a, b) => {
         return b.annualSavingsInCents - a.annualSavingsInCents;
       })[0];

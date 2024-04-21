@@ -27,18 +27,18 @@ export const qualifiedSolarHeaters = async ({
   // Filter Solar w Gas Backup, Solar w Electric Backup
   const forcedCirculationHeaters = await prisma.waterHeater.findMany({
     where: {
-      solarCollectorPanelAreaSqFt: {
-        gte: minSolarCollectorPanelArea,
-      },
-      solarFreezeToleranceLimitFahrenheit: {
-        gte: solarFreezeToleranceLimit,
-      },
-      solarSystemType: {
-        in: ["Direct Forced Circulation", "Indirect Forced Circulation"],
-      },
-      solarTankVolumeGallons: {
-        gte: activeSolarTankVolume,
-      },
+      // solarCollectorPanelAreaSqFt: {
+      //   gte: minSolarCollectorPanelArea,
+      // },
+      // solarFreezeToleranceLimitFahrenheit: {
+      //   gte: solarFreezeToleranceLimit,
+      // },
+      // solarSystemType: {
+      //   in: ["Direct Forced Circulation", "Indirect Forced Circulation"],
+      // },
+      // solarTankVolumeGallons: {
+      //   gte: activeSolarTankVolume,
+      // },
       priceInCents: { not: null },
     },
   });
@@ -60,6 +60,7 @@ export const qualifiedSolarHeaters = async ({
       priceInCents: { not: null },
     },
   });
+
   const recs = [
     ...forcedCirculationHeaters,
     ...nonForcedCirculationHeaters,
@@ -68,6 +69,7 @@ export const qualifiedSolarHeaters = async ({
       upfrontCostInCents,
       costInCentsAfterCredits,
       annualSavingsInCents,
+      tenYearSavingsInCents,
     } = calculateSolarHeaterCosts({
       // We filtered for this being non-null
       // just in case, set price arbitrarily high
@@ -78,6 +80,7 @@ export const qualifiedSolarHeaters = async ({
     });
     return {
       id: heater.id,
+      energyStarUniqueId: heater.energyStarUniqueId,
       energyStarPartner: heater.energyStarPartner,
       brandName: heater.brandName,
       modelName: heater.modelName,
@@ -85,12 +88,12 @@ export const qualifiedSolarHeaters = async ({
       upfrontCostInCents,
       costInCentsAfterCredits,
       annualSavingsInCents,
+      tenYearSavingsInCents,
     };
   });
 
   // Filter Direct Forced Circulation, Indirect Forced Circulation, Direct Thermosyphon, Indirect Thermosyphon, Direct ICS
   return recs;
-  return [];
 };
 
 // This is a version of spreadsheet forumla
@@ -120,9 +123,12 @@ const calculateSolarHeaterCosts = ({
   const savings = 1 - 1 / solarEnergyFactor;
   const costInCentsAfterCredits = priceInCents - priceInCents * 0.3;
   const annualSavingsInCents = savings * totalAnnualWaterHeaterCostInCents;
+  const tenYearSavingsInCents =
+    10 * totalAnnualWaterHeaterCostInCents * savings - costInCentsAfterCredits;
   return {
     upfrontCostInCents: priceInCents,
     costInCentsAfterCredits,
     annualSavingsInCents,
+    tenYearSavingsInCents,
   };
 };

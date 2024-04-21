@@ -17,10 +17,11 @@ export const qualifiedElectricHeaters = async ({
   sizeRestrictions: WaterHeaterSpaceRestrictionsEnum[];
 }): Promise<HeaterRecommendationType[]> => {
   const sizeRestrictionsQuery = sizeRestrictionsFilter(sizeRestrictions);
+
   const electricHeaters = await prisma.waterHeater.findMany({
     where: {
       fuelType: "Electric",
-      firstHourRatingGallons: { gte: minPeakFirstHourRating },
+      firstHourRatingGallons: { gt: minPeakFirstHourRating },
       // We require that at least one price record is present
       priceInCents: { not: null },
       electricUsageKWHyear: { not: null },
@@ -35,6 +36,7 @@ export const qualifiedElectricHeaters = async ({
         upfrontCostInCents,
         costInCentsAfterCredits,
         annualSavingsInCents,
+        tenYearSavingsInCents,
       } = calculateElectricHeaterCosts({
         // We filtered for this being non-null
         // just in case, set price arbitrarily high
@@ -46,6 +48,7 @@ export const qualifiedElectricHeaters = async ({
       });
       return {
         id: heater.id,
+        energyStarUniqueId: heater.energyStarUniqueId,
         energyStarPartner: heater.energyStarPartner,
         brandName: heater.brandName,
         modelName: heater.modelName,
@@ -53,6 +56,7 @@ export const qualifiedElectricHeaters = async ({
         upfrontCostInCents,
         costInCentsAfterCredits,
         annualSavingsInCents,
+        tenYearSavingsInCents,
       };
     });
   return electricHeaterInfoRecords;
@@ -74,12 +78,18 @@ const calculateElectricHeaterCosts = ({
   const costInCentsAfterCredits =
     upfrontCostInCents -
     Math.min(600 * 100 /*$600 in cents*/, 0.3 * upfrontCostInCents);
+  const savingsRate =
+    1 - annualCostInCents / localizedAnnualWaterHeaterBillCents;
   const taxCreditSavings = upfrontCostInCents - costInCentsAfterCredits;
   const annualSavingsInCents =
     localizedAnnualWaterHeaterBillCents - annualCostInCents;
+  const tenYearSavingsInCents =
+    10 * localizedAnnualWaterHeaterBillCents * savingsRate -
+    costInCentsAfterCredits;
   return {
     upfrontCostInCents,
     costInCentsAfterCredits,
     annualSavingsInCents,
+    tenYearSavingsInCents,
   };
 };

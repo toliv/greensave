@@ -12,6 +12,7 @@ export const HeaterInfoSchema = z.object({
 
 export const HeaterRecommendationSchema = z.object({
   id: z.string(),
+  energyStarUniqueId: z.string(),
   energyStarPartner: z.string(),
   brandName: z.string(),
   modelName: z.string(),
@@ -19,6 +20,7 @@ export const HeaterRecommendationSchema = z.object({
   upfrontCostInCents: z.number().nonnegative(),
   costInCentsAfterCredits: z.number().nonnegative(),
   annualSavingsInCents: z.number(),
+  tenYearSavingsInCents: z.number(),
 });
 
 export type HeaterRecommendationType = z.infer<

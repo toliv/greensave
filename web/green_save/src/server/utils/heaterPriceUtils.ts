@@ -39,7 +39,7 @@ export const stateTemperatureFactors = ({
   // Need to divide electricity price by 100 for units
   return {
     electricFactor: (stateFactor.electricityPriceCentsPerKwh / 100) * factor,
-    gasFactor: (stateFactor.gasPricePerThousandCubicFeetCents / 100) * factor,
+    gasFactor: (stateFactor.gasPricePerThousandCubicFeetCents / 10.38) * factor,
     propaneFactor: (stateFactor.propanePricePerGallonCents / 100) * factor,
     annualWaterHeaterBillCents: annualWaterHeaterBillCents * 0.19,
     temperatureFactor: factor,

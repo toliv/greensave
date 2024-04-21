@@ -32,6 +32,7 @@ export const qualifiedGasHeaters = async ({
       // We require that at least one price record is present
       heaterType: "Gas Tankless",
       priceInCents: { not: null },
+      thermsPerYear: { not: null },
       ...filteredVentType,
       ...sizeRestrictionsQuery,
     },
@@ -58,6 +59,7 @@ export const qualifiedGasHeaters = async ({
         upfrontCostInCents,
         costInCentsAfterCredits,
         annualSavingsInCents,
+        tenYearSavingsInCents,
       } = calculateGasHeaterCosts({
         // We filtered for this being non-null
         // just in case, set price arbitrarily high
@@ -69,6 +71,7 @@ export const qualifiedGasHeaters = async ({
       });
       return {
         id: heater.id,
+        energyStarUniqueId: heater.energyStarUniqueId,
         energyStarPartner: heater.energyStarPartner,
         brandName: heater.brandName,
         modelName: heater.modelName,
@@ -76,6 +79,7 @@ export const qualifiedGasHeaters = async ({
         upfrontCostInCents,
         costInCentsAfterCredits,
         annualSavingsInCents,
+        tenYearSavingsInCents,
       };
     });
   return gasHeaterRecommendations;
@@ -100,9 +104,16 @@ const calculateGasHeaterCosts = ({
   const taxCreditSavings = upfrontCostInCents - costInCentsAfterCredits;
   const annualSavingsInCents =
     localizedAnnualWaterHeaterBillCents - annualCostInCents;
+  const savingsRate =
+    1 - annualCostInCents / localizedAnnualWaterHeaterBillCents;
+  const tenYearSavingsInCents =
+    10 * localizedAnnualWaterHeaterBillCents * savingsRate -
+    costInCentsAfterCredits;
+
   return {
     upfrontCostInCents,
     costInCentsAfterCredits,
     annualSavingsInCents,
+    tenYearSavingsInCents,
   };
 };
