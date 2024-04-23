@@ -41,6 +41,7 @@ model WaterHeater {
   tankDiameterInches                  Float?  @map("tank_diameter_inches")
   electricUsageKWHyear                Int?    @map("electric_usage_kwh_year")
   thermsPerYear                       Int?    @map("therms_per_year")
+  gallonsPerYearPropane               Float?  @map("gallons_per_year_propane")
   solarSystemType                     String? @map("solar_system_type")
   solarTankVolumeGallons              Int?    @map("solar_tank_volume_gallons")
   solarCollectorPanelAreaSqFt         Float?  @map("solar_collector_panel_area_sq_ft")

@@ -40,7 +40,7 @@ export const stateTemperatureFactors = ({
   return {
     electricFactor: (stateFactor.electricityPriceCentsPerKwh / 100) * factor,
     gasFactor: (stateFactor.gasPricePerThousandCubicFeetCents / 10.38) * factor,
-    propaneFactor: (stateFactor.propanePricePerGallonCents / 100) * factor,
+    propaneFactor: stateFactor.propanePricePerGallonCents * factor,
     annualWaterHeaterBillCents: annualWaterHeaterBillCents * 0.19,
     temperatureFactor: factor,
   };

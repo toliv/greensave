@@ -73,7 +73,6 @@ describe("testHeaterRecommendations", () => {
       recs.bestValueChoice.energyStarUniqueId === "2408815" ||
         recs.bestValueChoice.energyStarUniqueId === "2408805",
     ).toBeTruthy();
-    console.log(recs.ourRecommendation.energyStarUniqueId);
     expect(
       recs.ourRecommendation.energyStarUniqueId === "2408585" ||
         recs.ourRecommendation.energyStarUniqueId === "2408591",
@@ -107,6 +106,198 @@ describe("testHeaterRecommendations", () => {
     // These are duplicated
     expect(recs.bestValueChoice.energyStarUniqueId).toEqual("3387616");
     expect(recs.ourRecommendation.energyStarUniqueId).toEqual("3387616");
+    // expect(recs.ecoFriendly.energyStarUniqueId).toEqual("2408797");
+  });
+
+  it("6-person household recommendation tests", async () => {
+    const userFormSubmission: ApplianceFinderType = {
+      zipcode: "11215",
+      householdSize: 6,
+      supportedEnergyTypes: ["Electric", "Natural Gas"],
+      ventType: null,
+      heaterSpaceRestrictions: ["NONE"],
+    };
+    // We'll use this and manipulate
+    const formSubmission = await prisma.userFormSubmission.create({
+      data: {
+        submissionData: userFormSubmission,
+        createdAt: new Date(),
+      },
+    });
+
+    const recs = await caller.getRecommendedHeaters({ id: formSubmission.id });
+    await prisma.userFormSubmission.delete({
+      where: {
+        id: formSubmission.id,
+      },
+    });
+
+    // These are duplicated
+    expect(recs.bestValueChoice.energyStarUniqueId).toEqual("2408762");
+    expect(recs.ourRecommendation.energyStarUniqueId).toEqual("2408762");
+    // expect(recs.ecoFriendly.energyStarUniqueId).toEqual("2408797");
+  });
+
+  it("Handles a FL zip code", async () => {
+    const userFormSubmission: ApplianceFinderType = {
+      zipcode: "33101",
+      householdSize: 3,
+      supportedEnergyTypes: ["Electric", "Natural Gas"],
+      ventType: null,
+      heaterSpaceRestrictions: ["NONE"],
+    };
+    // We'll use this and manipulate
+    const formSubmission = await prisma.userFormSubmission.create({
+      data: {
+        submissionData: userFormSubmission,
+        createdAt: new Date(),
+      },
+    });
+
+    const recs = await caller.getRecommendedHeaters({ id: formSubmission.id });
+    await prisma.userFormSubmission.delete({
+      where: {
+        id: formSubmission.id,
+      },
+    });
+
+    // These are duplicated
+    expect(
+      recs.bestValueChoice.energyStarUniqueId === "2408815" ||
+        recs.bestValueChoice.energyStarUniqueId === "2408805",
+    ).toBeTruthy();
+    expect(
+      recs.ourRecommendation.energyStarUniqueId === "2408585" ||
+        recs.ourRecommendation.energyStarUniqueId === "2408591",
+    ).toBeTruthy();
+    // expect(recs.ecoFriendly.energyStarUniqueId).toEqual("2408797");
+  });
+
+  it("Handles a CA zip code", async () => {
+    const userFormSubmission: ApplianceFinderType = {
+      zipcode: "99801",
+      householdSize: 3,
+      supportedEnergyTypes: ["Electric", "Natural Gas"],
+      ventType: null,
+      heaterSpaceRestrictions: ["NONE"],
+    };
+    // We'll use this and manipulate
+    const formSubmission = await prisma.userFormSubmission.create({
+      data: {
+        submissionData: userFormSubmission,
+        createdAt: new Date(),
+      },
+    });
+
+    const recs = await caller.getRecommendedHeaters({ id: formSubmission.id });
+    await prisma.userFormSubmission.delete({
+      where: {
+        id: formSubmission.id,
+      },
+    });
+
+    // These are duplicated
+    expect(recs.bestValueChoice.energyStarUniqueId).toEqual("3387616");
+    expect(recs.ourRecommendation.energyStarUniqueId).toEqual("3387616");
+    // expect(recs.ecoFriendly.energyStarUniqueId).toEqual("2408797");
+  });
+
+  it("Handles a low ceiling", async () => {
+    // TODO: Check this case ?
+    const userFormSubmission: ApplianceFinderType = {
+      zipcode: "11215",
+      householdSize: 3,
+      supportedEnergyTypes: ["Electric", "Natural Gas"],
+      ventType: null,
+      heaterSpaceRestrictions: ["LOW_CEILINGS"],
+    };
+    // We'll use this and manipulate
+    const formSubmission = await prisma.userFormSubmission.create({
+      data: {
+        submissionData: userFormSubmission,
+        createdAt: new Date(),
+      },
+    });
+
+    const recs = await caller.getRecommendedHeaters({ id: formSubmission.id });
+    await prisma.userFormSubmission.delete({
+      where: {
+        id: formSubmission.id,
+      },
+    });
+
+    // These are duplicated
+    expect(recs.bestValueChoice.energyStarUniqueId).toEqual("2408797");
+    expect(
+      recs.ourRecommendation.energyStarUniqueId === "2408585" ||
+        recs.ourRecommendation.energyStarUniqueId === "2408591",
+    ).toBeTruthy();
+    // expect(recs.ecoFriendly.energyStarUniqueId).toEqual("2408797");
+  });
+
+  it("Handles a low ceiling and narrow width", async () => {
+    // TODO: Check this case ?
+    const userFormSubmission: ApplianceFinderType = {
+      zipcode: "11215",
+      householdSize: 3,
+      supportedEnergyTypes: ["Electric", "Natural Gas"],
+      ventType: null,
+      heaterSpaceRestrictions: ["LOW_CEILINGS", "NARROW_WIDTH"],
+    };
+    // We'll use this and manipulate
+    const formSubmission = await prisma.userFormSubmission.create({
+      data: {
+        submissionData: userFormSubmission,
+        createdAt: new Date(),
+      },
+    });
+
+    const recs = await caller.getRecommendedHeaters({ id: formSubmission.id });
+    await prisma.userFormSubmission.delete({
+      where: {
+        id: formSubmission.id,
+      },
+    });
+
+    // These are duplicated
+    expect(recs.bestValueChoice.energyStarUniqueId).toEqual("2408797");
+    expect(
+      recs.ourRecommendation.energyStarUniqueId === "2408585" ||
+        recs.ourRecommendation.energyStarUniqueId === "2408591",
+    ).toBeTruthy();
+    // expect(recs.ecoFriendly.energyStarUniqueId).toEqual("2408797");
+  });
+
+  it("Handles all energy types", async () => {
+    const userFormSubmission: ApplianceFinderType = {
+      zipcode: "11215",
+      householdSize: 3,
+      supportedEnergyTypes: ["Electric", "Natural Gas", "Propane"],
+      ventType: null,
+      heaterSpaceRestrictions: ["NONE"],
+    };
+    // We'll use this and manipulate
+    const formSubmission = await prisma.userFormSubmission.create({
+      data: {
+        submissionData: userFormSubmission,
+        createdAt: new Date(),
+      },
+    });
+
+    const recs = await caller.getRecommendedHeaters({ id: formSubmission.id });
+    await prisma.userFormSubmission.delete({
+      where: {
+        id: formSubmission.id,
+      },
+    });
+
+    // These are duplicated
+    expect(recs.bestValueChoice.energyStarUniqueId).toEqual("2408797");
+    console.log(recs.ourRecommendation);
+    expect(
+      recs.ourRecommendation.energyStarUniqueId === "2408585" ||
+        recs.ourRecommendation.energyStarUniqueId === "2408591",
+    ).toBeTruthy();
     // expect(recs.ecoFriendly.energyStarUniqueId).toEqual("2408797");
   });
 });

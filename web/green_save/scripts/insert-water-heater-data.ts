@@ -78,6 +78,9 @@ export const main = async () => {
             solarUniformEnergyFactor: row["Solar Uniform Energy Factor (SUEF)"]
               ? parseFloat(row["Solar Uniform Energy Factor (SUEF)"])
               : null,
+            gallonsPerYearPropane: row["Gallons/year for Propane"]
+              ? parseFloat(row["Gallons/year for Propane"])
+              : null,
           };
           // Upsert the water Heater record
           const { id: waterHeaterId } = await prisma.waterHeater.upsert({

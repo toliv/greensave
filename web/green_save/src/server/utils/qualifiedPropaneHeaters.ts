@@ -34,7 +34,7 @@ export const qualifiedPropaneHeaters = async ({
         { maxGallonsPerMinute: { gte: minGallonsPerMinute } },
       ],
       priceInCents: { not: null },
-      thermsPerYear: { not: null },
+      gallonsPerYearPropane: { not: null },
       ...filteredVentType,
       ...sizeRestrictionsQuery,
     },
@@ -52,7 +52,7 @@ export const qualifiedPropaneHeaters = async ({
         // just in case, set price arbitrarily high
         priceInCents: heater.priceInCents ?? 10 * 1000 * 100,
         // The query prevents us from getting records where thermsPerYear is null, but TS doesn't realize it
-        thermsPerYear: heater.thermsPerYear ?? 0,
+        gallonsPerYearPropane: heater.gallonsPerYearPropane ?? 0,
         localizedPropaneCostFactor,
         localizedAnnualWaterHeaterBillCents,
       });
@@ -74,16 +74,16 @@ export const qualifiedPropaneHeaters = async ({
 
 const calculatePropaneHeaterCosts = ({
   priceInCents,
-  thermsPerYear,
+  gallonsPerYearPropane,
   localizedPropaneCostFactor,
   localizedAnnualWaterHeaterBillCents,
 }: {
   priceInCents: number;
-  thermsPerYear: number;
+  gallonsPerYearPropane: number;
   localizedPropaneCostFactor: number;
   localizedAnnualWaterHeaterBillCents: number;
 }) => {
-  const annualCostInCents = localizedPropaneCostFactor * thermsPerYear;
+  const annualCostInCents = localizedPropaneCostFactor * gallonsPerYearPropane;
   const upfrontCostInCents = priceInCents;
   const costInCentsAfterCredits =
     upfrontCostInCents -
