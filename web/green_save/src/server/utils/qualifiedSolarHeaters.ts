@@ -70,6 +70,7 @@ export const qualifiedSolarHeaters = async ({
       costInCentsAfterCredits,
       annualSavingsInCents,
       tenYearSavingsInCents,
+      savingsRate,
     } = calculateSolarHeaterCosts({
       // We filtered for this being non-null
       // just in case, set price arbitrarily high
@@ -90,6 +91,7 @@ export const qualifiedSolarHeaters = async ({
       costInCentsAfterCredits,
       annualSavingsInCents,
       tenYearSavingsInCents,
+      savingsRate,
     };
   });
 
@@ -121,15 +123,17 @@ const calculateSolarHeaterCosts = ({
   solarEnergyFactor: number;
   totalAnnualWaterHeaterCostInCents: number;
 }) => {
-  const savings = 1 - 1 / solarEnergyFactor;
+  const savingsRate = 1 - 1 / solarEnergyFactor;
   const costInCentsAfterCredits = priceInCents - priceInCents * 0.3;
-  const annualSavingsInCents = savings * totalAnnualWaterHeaterCostInCents;
+  const annualSavingsInCents = savingsRate * totalAnnualWaterHeaterCostInCents;
   const tenYearSavingsInCents =
-    10 * totalAnnualWaterHeaterCostInCents * savings - costInCentsAfterCredits;
+    10 * totalAnnualWaterHeaterCostInCents * savingsRate -
+    costInCentsAfterCredits;
   return {
     upfrontCostInCents: priceInCents,
     costInCentsAfterCredits,
     annualSavingsInCents,
     tenYearSavingsInCents,
+    savingsRate,
   };
 };

@@ -198,7 +198,7 @@ const HeaterCard = ({
   setSelected,
   recType,
 }: {
-  heater: HeaterInfoSchemaType;
+  heater: HeaterRecommendationType;
   title: string;
   selected: boolean;
   setSelected: () => void;
@@ -243,7 +243,7 @@ const Reasons = ({
   heater,
 }: {
   recommendationType: number;
-  heater: HeaterInfoSchemaType;
+  heater: HeaterRecommendationType;
 }) => {
   const taxCreditSavingsInCents =
     heater.upfrontCostInCents - heater.costInCentsAfterCredits;
@@ -259,10 +259,10 @@ const Reasons = ({
             </div>
           </li>
           <li className="pt-2">
-            <div className="text-lg">
-              Low installation costs with no big changes needed{" "}
+            <div className="text-lg">Low installation costs </div>
+            <div className="text-sm">
+              No major changes needed to your heating system
             </div>
-            <div className="text-sm">Save over $500</div>
           </li>
         </ul>
       );
@@ -281,26 +281,68 @@ const Reasons = ({
               {`Save over ${displayDollar(taxCreditSavingsInCents)} upfront by using eligible tax credits`}
             </div>
           </li>
+          <li className="pt-2">
+            <div className="text-lg">Low installation costs </div>
+            <div className="text-sm">
+              No major changes needed to your heating system
+            </div>
+          </li>
         </ul>
       );
     case RECOMMENDATION_TYPE.ECO_FRIENDLY:
       return (
         <ul className="list-disc ml-6 mt-2 ">
           <li className="pt-2">
+            <EcoFriendlyReason heaterType={heater.heaterType} />
+          </li>
+          <li className="pt-2">
+            <div className="text-lg">{`Lower your monthly energy bill.`}</div>
+            <div className="text-sm">{`Reduce your water heater energy spend by ${(heater.savingsRate * 100).toFixed(2) + "%"}`}</div>
+          </li>
+          <li className="pt-2">
             <div className="text-lg">Eligible for federal tax credits</div>
             <div className="text-sm">
               {`Save over ${displayDollar(taxCreditSavingsInCents)} upfront by using eligible tax credits`}
             </div>
           </li>
-          <li className="pt-2">
-            <div className="text-lg">
-              Low installation costs with no big changes needed{" "}
-            </div>
-            <div className="text-sm">Save over $500</div>
-          </li>
         </ul>
       );
     default:
       return <></>;
+  }
+};
+
+const EcoFriendlyReason = ({ heaterType }: { heaterType: string }) => {
+  if (
+    heaterType === "Solar with Electric Backup" ||
+    heaterType === "Solar with Gas Backup"
+  ) {
+    return (
+      <>
+        <div className="text-lg">{`Reduce your carbon footprint. `}</div>
+        <div className="text-sm">{`This water heater uses solar energy to efficiently heat your water.`}</div>
+      </>
+    );
+  } else if (heaterType === "Gas Tankless") {
+    return (
+      <>
+        <div className="text-lg">{`Environmentally conscious water heater.`}</div>
+        <div className="text-sm">{` This tankless water heater only heats water on demand, meaning zero energy waste.`}</div>
+      </>
+    );
+  } else if (heaterType === "Hybrid/Electric Heat Pump") {
+    return (
+      <>
+        <div className="text-lg">{`Reduce your carbon footprint`}</div>
+        <div className="text-sm">{`Reduce your carbon footprint. This water heater generates a percentage of its heat from the air around it, reducing your reliance on fossil fuels`}</div>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <div className="text-lg">{`Reduce your carbon footprint`}</div>
+        <div className="text-sm">{`Reduce your carbon footprint. This water heater generates a percentage of its heat from the air around it, reducing your reliance on fossil fuels`}</div>
+      </>
+    );
   }
 };

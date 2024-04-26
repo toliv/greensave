@@ -22,6 +22,7 @@ export const HeaterRecommendationSchema = z.object({
   costInCentsAfterCredits: z.number().nonnegative(),
   annualSavingsInCents: z.number(),
   tenYearSavingsInCents: z.number(),
+  savingsRate: z.number(), // Note: not a percentage
 });
 
 export type HeaterRecommendationType = z.infer<

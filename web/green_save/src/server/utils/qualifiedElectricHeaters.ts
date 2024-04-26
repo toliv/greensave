@@ -37,6 +37,7 @@ export const qualifiedElectricHeaters = async ({
         costInCentsAfterCredits,
         annualSavingsInCents,
         tenYearSavingsInCents,
+        savingsRate,
       } = calculateElectricHeaterCosts({
         // We filtered for this being non-null
         // just in case, set price arbitrarily high
@@ -58,6 +59,7 @@ export const qualifiedElectricHeaters = async ({
         costInCentsAfterCredits,
         annualSavingsInCents,
         tenYearSavingsInCents,
+        savingsRate,
       };
     });
   return electricHeaterInfoRecords;
@@ -92,5 +94,6 @@ const calculateElectricHeaterCosts = ({
     costInCentsAfterCredits,
     annualSavingsInCents,
     tenYearSavingsInCents,
+    savingsRate,
   };
 };
