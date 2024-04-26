@@ -11,6 +11,8 @@ export const heaterVentFilter = (ventType: PropaneVentEnum) => {
     ventType === "Power Vent"
   ) {
     return { ventType: ventType };
+  } else if (ventType === "Traditional Atmospheric Vent") {
+    return { ventType: "" };
   }
   return {};
 };

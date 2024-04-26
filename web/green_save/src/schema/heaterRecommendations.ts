@@ -14,6 +14,7 @@ export const HeaterRecommendationSchema = z.object({
   id: z.string(),
   energyStarUniqueId: z.string(),
   energyStarPartner: z.string(),
+  heaterType: z.string(),
   brandName: z.string(),
   modelName: z.string(),
   modelNumber: z.string(),

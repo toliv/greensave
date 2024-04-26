@@ -42,7 +42,7 @@ describe("testHeaterRecommendations", () => {
       recs.ourRecommendation.energyStarUniqueId === "2408585" ||
         recs.ourRecommendation.energyStarUniqueId === "2408591",
     ).toBeTruthy();
-    // expect(recs.ecoFriendly.energyStarUniqueId).toEqual("2408797");
+    expect(recs.ecoFriendly.energyStarUniqueId).toEqual("2408797");
   });
 
   it("2-person household recommendation tests", async () => {
@@ -77,7 +77,10 @@ describe("testHeaterRecommendations", () => {
       recs.ourRecommendation.energyStarUniqueId === "2408585" ||
         recs.ourRecommendation.energyStarUniqueId === "2408591",
     ).toBeTruthy();
-    // expect(recs.ecoFriendly.energyStarUniqueId).toEqual("2408797");
+    expect(
+      recs.bestValueChoice.energyStarUniqueId === "2408815" ||
+        recs.bestValueChoice.energyStarUniqueId === "2408805",
+    ).toBeTruthy();
   });
 
   it("4-person household recommendation tests", async () => {
@@ -106,7 +109,7 @@ describe("testHeaterRecommendations", () => {
     // These are duplicated
     expect(recs.bestValueChoice.energyStarUniqueId).toEqual("3387616");
     expect(recs.ourRecommendation.energyStarUniqueId).toEqual("3387616");
-    // expect(recs.ecoFriendly.energyStarUniqueId).toEqual("2408797");
+    expect(recs.ecoFriendly.energyStarUniqueId).toEqual("2408542");
   });
 
   it("6-person household recommendation tests", async () => {
@@ -135,7 +138,7 @@ describe("testHeaterRecommendations", () => {
     // These are duplicated
     expect(recs.bestValueChoice.energyStarUniqueId).toEqual("2408762");
     expect(recs.ourRecommendation.energyStarUniqueId).toEqual("2408762");
-    // expect(recs.ecoFriendly.energyStarUniqueId).toEqual("2408797");
+    expect(recs.ecoFriendly.energyStarUniqueId).toEqual("2508327");
   });
 
   it("Handles a FL zip code", async () => {
@@ -170,7 +173,10 @@ describe("testHeaterRecommendations", () => {
       recs.ourRecommendation.energyStarUniqueId === "2408585" ||
         recs.ourRecommendation.energyStarUniqueId === "2408591",
     ).toBeTruthy();
-    // expect(recs.ecoFriendly.energyStarUniqueId).toEqual("2408797");
+    expect(
+      recs.bestValueChoice.energyStarUniqueId === "2408815" ||
+        recs.bestValueChoice.energyStarUniqueId === "2408805",
+    ).toBeTruthy();
   });
 
   it("Handles a CA zip code", async () => {
@@ -196,10 +202,13 @@ describe("testHeaterRecommendations", () => {
       },
     });
 
-    // These are duplicated
     expect(recs.bestValueChoice.energyStarUniqueId).toEqual("3387616");
     expect(recs.ourRecommendation.energyStarUniqueId).toEqual("3387616");
-    // expect(recs.ecoFriendly.energyStarUniqueId).toEqual("2408797");
+    expect(
+      recs.ecoFriendly.energyStarUniqueId === "2408549" ||
+        recs.ecoFriendly.energyStarUniqueId === "2408599" ||
+        recs.ecoFriendly.energyStarUniqueId === "2408542",
+    ).toBeTruthy();
   });
 
   it("Handles a low ceiling", async () => {
@@ -293,11 +302,268 @@ describe("testHeaterRecommendations", () => {
 
     // These are duplicated
     expect(recs.bestValueChoice.energyStarUniqueId).toEqual("2408797");
-    console.log(recs.ourRecommendation);
     expect(
       recs.ourRecommendation.energyStarUniqueId === "2408585" ||
         recs.ourRecommendation.energyStarUniqueId === "2408591",
     ).toBeTruthy();
+    expect(recs.ecoFriendly.energyStarUniqueId).toEqual("2408797");
+  });
+
+  it("Handles electricity only", async () => {
+    const userFormSubmission: ApplianceFinderType = {
+      zipcode: "11215",
+      householdSize: 3,
+      supportedEnergyTypes: ["Electric"],
+      ventType: null,
+      heaterSpaceRestrictions: ["NONE"],
+    };
+    // We'll use this and manipulate
+    const formSubmission = await prisma.userFormSubmission.create({
+      data: {
+        submissionData: userFormSubmission,
+        createdAt: new Date(),
+      },
+    });
+
+    const recs = await caller.getRecommendedHeaters({ id: formSubmission.id });
+    await prisma.userFormSubmission.delete({
+      where: {
+        id: formSubmission.id,
+      },
+    });
+
+    // These are duplicated
+    expect(recs.bestValueChoice.energyStarUniqueId).toEqual("2408904");
+    expect(
+      recs.ourRecommendation.energyStarUniqueId === "2408585" ||
+        recs.ourRecommendation.energyStarUniqueId === "2408591",
+    ).toBeTruthy();
+    expect(
+      recs.ecoFriendly.energyStarUniqueId === "2408585" ||
+        recs.ecoFriendly.energyStarUniqueId === "2408591",
+    ).toBeTruthy();
+  });
+
+  it("Handles natural gas only", async () => {
+    const userFormSubmission: ApplianceFinderType = {
+      zipcode: "11215",
+      householdSize: 3,
+      supportedEnergyTypes: ["Natural Gas"],
+      ventType: null,
+      heaterSpaceRestrictions: ["NONE"],
+    };
+    // We'll use this and manipulate
+    const formSubmission = await prisma.userFormSubmission.create({
+      data: {
+        submissionData: userFormSubmission,
+        createdAt: new Date(),
+      },
+    });
+
+    const recs = await caller.getRecommendedHeaters({ id: formSubmission.id });
+    await prisma.userFormSubmission.delete({
+      where: {
+        id: formSubmission.id,
+      },
+    });
+
+    // These are duplicated
+    expect(recs.bestValueChoice.energyStarUniqueId).toEqual("2408797");
+    expect(recs.ourRecommendation.energyStarUniqueId).toEqual("2408797");
+    expect(recs.ecoFriendly.energyStarUniqueId).toEqual("2408797");
+  });
+
+  it("Handles propane only", async () => {
+    const userFormSubmission: ApplianceFinderType = {
+      zipcode: "11215",
+      householdSize: 3,
+      supportedEnergyTypes: ["Propane"],
+      ventType: null,
+      heaterSpaceRestrictions: ["NONE"],
+    };
+    // We'll use this and manipulate
+    const formSubmission = await prisma.userFormSubmission.create({
+      data: {
+        submissionData: userFormSubmission,
+        createdAt: new Date(),
+      },
+    });
+
+    const recs = await caller.getRecommendedHeaters({ id: formSubmission.id });
+    await prisma.userFormSubmission.delete({
+      where: {
+        id: formSubmission.id,
+      },
+    });
+
+    // These are duplicated
+    expect(
+      recs.bestValueChoice.energyStarUniqueId === "2408796" ||
+        recs.bestValueChoice.energyStarUniqueId === "2408794" ||
+        recs.bestValueChoice.energyStarUniqueId === "2408784",
+    ).toBeTruthy();
+    // Need to find the "correct" answer here.
+    // expect(recs.ourRecommendation.energyStarUniqueId).toEqual("2408825");
     // expect(recs.ecoFriendly.energyStarUniqueId).toEqual("2408797");
+  });
+
+  it("Handles electric + solar", async () => {
+    const userFormSubmission: ApplianceFinderType = {
+      zipcode: "11215",
+      householdSize: 3,
+      supportedEnergyTypes: ["Electric", "Solar Panels"],
+      ventType: null,
+      heaterSpaceRestrictions: ["NONE"],
+    };
+    // We'll use this and manipulate
+    const formSubmission = await prisma.userFormSubmission.create({
+      data: {
+        submissionData: userFormSubmission,
+        createdAt: new Date(),
+      },
+    });
+
+    const recs = await caller.getRecommendedHeaters({ id: formSubmission.id });
+    await prisma.userFormSubmission.delete({
+      where: {
+        id: formSubmission.id,
+      },
+    });
+
+    // These are duplicated
+    expect(recs.bestValueChoice.energyStarUniqueId).toEqual("2408904");
+    expect(
+      recs.ourRecommendation.energyStarUniqueId === "2408585" ||
+        recs.ourRecommendation.energyStarUniqueId === "2408591",
+    ).toBeTruthy();
+    // expect(recs.ecoFriendly.energyStarUniqueId).toEqual("2408185");
+  });
+
+  it("Handles traditional vent", async () => {
+    const userFormSubmission: ApplianceFinderType = {
+      zipcode: "11215",
+      householdSize: 3,
+      supportedEnergyTypes: ["Electric", "Natural Gas"],
+      ventType: "Traditional Atmospheric Vent",
+      heaterSpaceRestrictions: ["NONE"],
+    };
+    // We'll use this and manipulate
+    const formSubmission = await prisma.userFormSubmission.create({
+      data: {
+        submissionData: userFormSubmission,
+        createdAt: new Date(),
+      },
+    });
+
+    const recs = await caller.getRecommendedHeaters({ id: formSubmission.id });
+    await prisma.userFormSubmission.delete({
+      where: {
+        id: formSubmission.id,
+      },
+    });
+
+    // These are duplicated
+    expect(recs.bestValueChoice.energyStarUniqueId).toEqual("2408825");
+    expect(
+      recs.ourRecommendation.energyStarUniqueId === "2408585" ||
+        recs.ourRecommendation.energyStarUniqueId === "2408591",
+    ).toBeTruthy();
+    expect(recs.ecoFriendly.energyStarUniqueId).toEqual("2408825");
+  });
+
+  it("Handles direct vent", async () => {
+    const userFormSubmission: ApplianceFinderType = {
+      zipcode: "11215",
+      householdSize: 3,
+      supportedEnergyTypes: ["Electric", "Natural Gas"],
+      ventType: "Direct Vent",
+      heaterSpaceRestrictions: ["NONE"],
+    };
+    // We'll use this and manipulate
+    const formSubmission = await prisma.userFormSubmission.create({
+      data: {
+        submissionData: userFormSubmission,
+        createdAt: new Date(),
+      },
+    });
+
+    const recs = await caller.getRecommendedHeaters({ id: formSubmission.id });
+    await prisma.userFormSubmission.delete({
+      where: {
+        id: formSubmission.id,
+      },
+    });
+
+    // These are duplicated
+    expect(recs.bestValueChoice.energyStarUniqueId).toEqual("2472807");
+    expect(
+      recs.ourRecommendation.energyStarUniqueId === "2408585" ||
+        recs.ourRecommendation.energyStarUniqueId === "2408591",
+    ).toBeTruthy();
+    expect(recs.ecoFriendly.energyStarUniqueId).toEqual("2472807");
+  });
+
+  it("Handles power vent", async () => {
+    const userFormSubmission: ApplianceFinderType = {
+      zipcode: "11215",
+      householdSize: 3,
+      supportedEnergyTypes: ["Electric", "Natural Gas"],
+      ventType: "Power Vent",
+      heaterSpaceRestrictions: ["NONE"],
+    };
+    // We'll use this and manipulate
+    const formSubmission = await prisma.userFormSubmission.create({
+      data: {
+        submissionData: userFormSubmission,
+        createdAt: new Date(),
+      },
+    });
+
+    const recs = await caller.getRecommendedHeaters({ id: formSubmission.id });
+    await prisma.userFormSubmission.delete({
+      where: {
+        id: formSubmission.id,
+      },
+    });
+
+    // These are duplicated
+    expect(recs.bestValueChoice.energyStarUniqueId).toEqual("2408667");
+    expect(
+      recs.ourRecommendation.energyStarUniqueId === "2408585" ||
+        recs.ourRecommendation.energyStarUniqueId === "2408591",
+    ).toBeTruthy();
+    expect(recs.ecoFriendly.energyStarUniqueId).toEqual("2408667");
+  });
+
+  it("Handles power direct vent", async () => {
+    const userFormSubmission: ApplianceFinderType = {
+      zipcode: "11215",
+      householdSize: 3,
+      supportedEnergyTypes: ["Electric", "Natural Gas"],
+      ventType: "Power Direct Vent",
+      heaterSpaceRestrictions: ["NONE"],
+    };
+    // We'll use this and manipulate
+    const formSubmission = await prisma.userFormSubmission.create({
+      data: {
+        submissionData: userFormSubmission,
+        createdAt: new Date(),
+      },
+    });
+
+    const recs = await caller.getRecommendedHeaters({ id: formSubmission.id });
+    await prisma.userFormSubmission.delete({
+      where: {
+        id: formSubmission.id,
+      },
+    });
+
+    // These are duplicated
+    expect(recs.bestValueChoice.energyStarUniqueId).toEqual("2408797");
+    expect(
+      recs.ourRecommendation.energyStarUniqueId === "2408585" ||
+        recs.ourRecommendation.energyStarUniqueId === "2408591",
+    ).toBeTruthy();
+    expect(recs.ecoFriendly.energyStarUniqueId).toEqual("2408797");
   });
 });

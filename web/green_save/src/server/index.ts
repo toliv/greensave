@@ -142,6 +142,7 @@ export const appRouter = router({
       let electricHeaters: HeaterRecommendationType[] = [];
       let gasHeaters: HeaterRecommendationType[] = [];
       let propaneHeaters: HeaterRecommendationType[] = [];
+      let solarHeaters: HeaterRecommendationType[] = [];
       // Fetch all relevant kinds of data.
       await Promise.all(
         survey.supportedEnergyTypes.map(async (energyType) => {
@@ -171,6 +172,14 @@ export const appRouter = router({
               sizeRestrictions: survey.heaterSpaceRestrictions,
               ventType: survey.ventType ? survey.ventType : undefined,
             });
+          } else if (energyType === "Solar Panels") {
+            solarHeaters = await qualifiedSolarHeaters({
+              householdSize: survey.householdSize,
+              locatedInSunBelt: zipCodeInfo.isSunBeltLocation,
+              averageWinterTemperature: stateFactor.averageWinterTemperature,
+              solarTankVolumeMultiplier: stateFactor.solarTankVolumeFactor,
+              totalAnnualWaterHeaterCostInCents: annualWaterHeaterBillCents,
+            });
           }
         }),
       );
@@ -179,15 +188,8 @@ export const appRouter = router({
         ...electricHeaters,
         ...gasHeaters,
         ...propaneHeaters,
+        ...solarHeaters,
       ];
-
-      const solarHeaters = await qualifiedSolarHeaters({
-        householdSize: survey.householdSize,
-        locatedInSunBelt: zipCodeInfo.isSunBeltLocation,
-        averageWinterTemperature: stateFactor.averageWinterTemperature,
-        solarTankVolumeMultiplier: stateFactor.solarTankVolumeFactor,
-        totalAnnualWaterHeaterCostInCents: annualWaterHeaterBillCents,
-      });
 
       // Find the cheapest heater with upfront cost.
       const bestValueChoices = [...allHeaters];
@@ -201,10 +203,49 @@ export const appRouter = router({
         return b.tenYearSavingsInCents - a.tenYearSavingsInCents;
       });
       const ourRecommendation = ourRecommendations[0];
+      // Eco-friendly defined as the best ten-year savings if solar, tankless if natural gas, or else heat pump
 
-      const ecoFriendly = solarHeaters.sort((a, b) => {
-        return b.annualSavingsInCents - a.annualSavingsInCents;
-      })[0];
+      // We require independent scans for the most eco-friendly option.
+      // If no Solar option is found, proceed to look for Gas Tankless, then Heat Pump
+      let ecoFriendly = null;
+      const energyTypes = new Set(survey.supportedEnergyTypes);
+      if (energyTypes.has("Solar Panels")) {
+        for (let heater of ourRecommendations) {
+          if (
+            heater.heaterType === "Solar with Electric Backup" ||
+            heater.heaterType === "Solar with Gas Backup"
+          ) {
+            console.log(ecoFriendly);
+            ecoFriendly = heater;
+            break;
+          }
+        }
+      }
+      // If we already found a solar, no need to look for a tankless
+      if (
+        (!ecoFriendly && energyTypes.has("Natural Gas")) ||
+        energyTypes.has("Propane")
+      ) {
+        for (let heater of ourRecommendations) {
+          if (heater.heaterType === "Gas Tankless") {
+            ecoFriendly = heater;
+            break;
+          }
+        }
+      }
+      // If we already found a solar or a tankless, no need to look for a heat pump
+      if (!ecoFriendly && energyTypes.has("Electric")) {
+        for (let heater of ourRecommendations) {
+          if (heater.heaterType === "Hybrid/Electric Heat Pump") {
+            ecoFriendly = heater;
+            break;
+          }
+        }
+      }
+
+      if (!ecoFriendly) {
+        ecoFriendly = ourRecommendation;
+      }
 
       return {
         bestValueChoice,

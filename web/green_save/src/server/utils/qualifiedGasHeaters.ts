@@ -24,6 +24,7 @@ export const qualifiedGasHeaters = async ({
   ventType?: PropaneVentEnum;
 }): Promise<HeaterRecommendationType[]> => {
   const filteredVentType = ventType ? heaterVentFilter(ventType) : {};
+
   const sizeRestrictionsQuery = sizeRestrictionsFilter(sizeRestrictions);
   // Gas Tankless uses gallons per minute metric
   const gasTanklessHeaters = await prisma.waterHeater.findMany({
@@ -73,6 +74,7 @@ export const qualifiedGasHeaters = async ({
         id: heater.id,
         energyStarUniqueId: heater.energyStarUniqueId,
         energyStarPartner: heater.energyStarPartner,
+        heaterType: heater.heaterType,
         brandName: heater.brandName,
         modelName: heater.modelName,
         modelNumber: heater.modelNumber,

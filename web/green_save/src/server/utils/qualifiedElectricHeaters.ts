@@ -50,6 +50,7 @@ export const qualifiedElectricHeaters = async ({
         id: heater.id,
         energyStarUniqueId: heater.energyStarUniqueId,
         energyStarPartner: heater.energyStarPartner,
+        heaterType: heater.heaterType,
         brandName: heater.brandName,
         modelName: heater.modelName,
         modelNumber: heater.modelNumber,

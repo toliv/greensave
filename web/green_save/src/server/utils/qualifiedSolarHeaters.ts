@@ -22,23 +22,23 @@ export const qualifiedSolarHeaters = async ({
   const solarFreezeToleranceLimit = averageWinterTemperature;
   const activeSolarTankVolume =
     minSolarCollectorPanelArea * solarTankVolumeMultiplier;
-  const passiveSolarTankVolume = solarTankVolumeMultiplier * 12;
+  const passiveSolarTankVolume = householdSize * 20;
 
   // Filter Solar w Gas Backup, Solar w Electric Backup
   const forcedCirculationHeaters = await prisma.waterHeater.findMany({
     where: {
-      // solarCollectorPanelAreaSqFt: {
-      //   gte: minSolarCollectorPanelArea,
-      // },
-      // solarFreezeToleranceLimitFahrenheit: {
-      //   gte: solarFreezeToleranceLimit,
-      // },
-      // solarSystemType: {
-      //   in: ["Direct Forced Circulation", "Indirect Forced Circulation"],
-      // },
-      // solarTankVolumeGallons: {
-      //   gte: activeSolarTankVolume,
-      // },
+      solarCollectorPanelAreaSqFt: {
+        gte: minSolarCollectorPanelArea,
+      },
+      solarFreezeToleranceLimitFahrenheit: {
+        gte: solarFreezeToleranceLimit,
+      },
+      solarSystemType: {
+        in: ["Direct Forced Circulation", "Indirect Forced Circulation"],
+      },
+      solarTankVolumeGallons: {
+        gte: activeSolarTankVolume,
+      },
       priceInCents: { not: null },
     },
   });
@@ -82,6 +82,7 @@ export const qualifiedSolarHeaters = async ({
       id: heater.id,
       energyStarUniqueId: heater.energyStarUniqueId,
       energyStarPartner: heater.energyStarPartner,
+      heaterType: heater.heaterType,
       brandName: heater.brandName,
       modelName: heater.modelName,
       modelNumber: heater.modelNumber,

@@ -63,6 +63,7 @@ export const qualifiedPropaneHeaters = async ({
         brandName: heater.brandName,
         modelName: heater.modelName,
         modelNumber: heater.modelNumber,
+        heaterType: heater.heaterType,
         upfrontCostInCents,
         costInCentsAfterCredits,
         annualSavingsInCents,
