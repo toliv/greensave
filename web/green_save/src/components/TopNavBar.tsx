@@ -26,7 +26,8 @@ export function TopBarNav() {
           <Link href="/appliance-finder">Questionnaire</Link>
         </div>
         <div className="hover:bg-light-green p-2 lg:p-4 rounded-md">
-          <a href="#contact">About</a>
+          <Link href="/about">About</Link>
+          {/* <a href="#contact">About</a> */}
         </div>
       </div>
     </div>
