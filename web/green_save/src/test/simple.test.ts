@@ -395,16 +395,21 @@ describe("testHeaterRecommendations", () => {
         id: formSubmission.id,
       },
     });
-
-    // These are duplicated
     expect(
       recs.bestValueChoice.energyStarUniqueId === "2408796" ||
         recs.bestValueChoice.energyStarUniqueId === "2408794" ||
         recs.bestValueChoice.energyStarUniqueId === "2408784",
     ).toBeTruthy();
-    // Need to find the "correct" answer here.
-    // expect(recs.ourRecommendation.energyStarUniqueId).toEqual("2408825");
-    // expect(recs.ecoFriendly.energyStarUniqueId).toEqual("2408797");
+    expect(
+      recs.ourRecommendation.energyStarUniqueId === "2408796" ||
+        recs.ourRecommendation.energyStarUniqueId === "2408794" ||
+        recs.ourRecommendation.energyStarUniqueId === "2408784",
+    ).toBeTruthy();
+    expect(
+      recs.ecoFriendly.energyStarUniqueId === "2408796" ||
+        recs.ecoFriendly.energyStarUniqueId === "2408794" ||
+        recs.ecoFriendly.energyStarUniqueId === "2408784",
+    ).toBeTruthy();
   });
 
   it("Handles electric + solar", async () => {
