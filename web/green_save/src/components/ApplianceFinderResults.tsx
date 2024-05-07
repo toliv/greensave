@@ -206,7 +206,7 @@ const HeaterCard = ({
 }) => {
   return (
     <div
-      className={`flex-1 border-1 rounded-md m-2 p-4 shadow-md  hover:cursor-pointer ${selected ? "bg-gray-100 shadow-lg border-standard-green" : "bg-white border-black"}`}
+      className={`flex-1 border-1 rounded-md m-2 p-4 shadow-md hover:cursor-pointer ${selected ? "bg-gray-100 shadow-lg border-standard-green" : "bg-white border-black"}`}
       onClick={setSelected}
     >
       <div className="text-3xl text-standard-green mb-4">{title}</div>
@@ -229,7 +229,9 @@ const HeaterCard = ({
         <span className="ml-2 text-sm">{`/ year`}</span>
       </div>
       <div className="text-lg font-thin text-standard-green mb-2">
-        {`Why you'll love it`}
+        {heater.tenYearSavingsInCents > 0
+          ? `Why you'll love it`
+          : "Why it's our recommendation"}
       </div>
       <Reasons recommendationType={recType} heater={heater} />
     </div>
@@ -268,16 +270,40 @@ const Reasons = ({
       return (
         <ul className="list-disc ml-6 mt-2 ">
           <li className="pt-2">
-            <div className="text-lg">
-              This water heater will more than pay for itself
-            </div>
-            <div className="text-sm">{`Over ten years, you'll save ${displayDollar(tenYearSavings)}`}</div>
+            {heater.tenYearSavingsInCents > 0 ? (
+              <>
+                <div className="text-lg">
+                  This water heater will more than pay for itself
+                </div>
+                <div className="text-sm">{`Over ten years, you'll save ${displayDollar(tenYearSavings)}`}</div>
+              </>
+            ) : (
+              <>
+                <div className="text-lg">
+                  This water heater is the least expensive long-term option
+                </div>
+                <div className="text-sm">{`All water heaters with your setup will cost you more in annual energy bills than is average for your location`}</div>
+              </>
+            )}
           </li>
           <li className="pt-2">
-            <div className="text-lg">Eligible for federal tax credits</div>
-            <div className="text-sm">
-              {`Save over ${displayDollar(taxCreditSavingsInCents)} upfront by using eligible tax credits`}
-            </div>
+            {heater.tenYearSavingsInCents > 0 ? (
+              <>
+                <div className="text-lg">Eligible for federal tax credits</div>
+                <div className="text-sm">
+                  {`Save over ${displayDollar(taxCreditSavingsInCents)} upfront by using eligible tax credits`}
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="text-lg">
+                  Consider choosing different fuel and ventilation options
+                </div>
+                <div className="text-sm">
+                  {`Water heaters with options you’ve chosen will cause you to spend more money on energy bills over the long-term`}
+                </div>
+              </>
+            )}
           </li>
           <li className="pt-2">
             <div className="text-lg">Low installation costs </div>
