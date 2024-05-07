@@ -23,6 +23,7 @@ export const HeaterRecommendationSchema = z.object({
   annualSavingsInCents: z.number(),
   tenYearSavingsInCents: z.number(),
   savingsRate: z.number(), // Note: not a percentage
+  fuelType: z.string(),
 });
 
 export type HeaterRecommendationType = z.infer<

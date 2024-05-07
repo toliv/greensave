@@ -60,6 +60,7 @@ export const qualifiedElectricHeaters = async ({
         annualSavingsInCents,
         tenYearSavingsInCents,
         savingsRate,
+        fuelType: "Electricity",
       };
     });
   return electricHeaterInfoRecords;

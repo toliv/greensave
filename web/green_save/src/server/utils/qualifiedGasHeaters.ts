@@ -84,6 +84,7 @@ export const qualifiedGasHeaters = async ({
         annualSavingsInCents,
         tenYearSavingsInCents,
         savingsRate,
+        fuelType: "Natural Gas",
       };
     });
   return gasHeaterRecommendations;

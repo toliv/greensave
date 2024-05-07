@@ -151,7 +151,7 @@ export function ApplianceFinderResults({
           </div>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-4 justify-between items-center py-6 w-full lg:w-1/2 ">
-              <div className="w-full lg:w-2/3">
+              <div className="w-full">
                 <Input
                   {...register("email")}
                   crossOrigin=""
@@ -162,7 +162,7 @@ export function ApplianceFinderResults({
                   className={`text-black font-thin rounded-lg p-4 text-center border-2 border-slate-400 ${formState.errors.email ? "border-red-400" : ""}`}
                 />
               </div>
-              <div className="w-full lg:w-1/3 text-sm">
+              <div className=" text-sm">
                 <Button
                   type={"submit"}
                   variant="filled"
@@ -211,8 +211,11 @@ const HeaterCard = ({
     >
       <div className="text-3xl text-standard-green mb-4">{title}</div>
       <div className="text-xl text-black mb-4">{`${heater.energyStarPartner} ${heater.modelName} Water Heater`}</div>
-      <div className="text-xs text-gray-300 font-thin mb-4">
+      <div className="text-xs text-gray-400 font-thin mb-2">
         {`Model Number: ${heater.modelNumber}`}
+      </div>
+      <div className="text-xs text-gray-400 font-thin mb-4">
+        {`Runs on: ${heater.fuelType}`}
       </div>
       <div className="text-lg font-thin text-standard-green mb-2">
         Upfront Cost
@@ -358,7 +361,7 @@ const EcoFriendlyReason = ({ heaterType }: { heaterType: string }) => {
     return (
       <>
         <div className="text-lg">{`Reduce your carbon footprint`}</div>
-        <div className="text-sm">{`Reduce your carbon footprint. This water heater generates a percentage of its heat from the air around it, reducing your reliance on fossil fuels`}</div>
+        <div className="text-sm">{`This water heater generates a percentage of its heat from the air around it, reducing your reliance on fossil fuels`}</div>
       </>
     );
   } else {

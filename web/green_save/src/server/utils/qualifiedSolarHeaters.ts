@@ -73,6 +73,7 @@ export const qualifiedSolarHeaters = async ({
       annualSavingsInCents,
       tenYearSavingsInCents,
       savingsRate,
+      fuelType: "Solar",
     };
   });
 };
@@ -168,6 +169,7 @@ export const qualifiedSolarHeaters___old = async ({
       annualSavingsInCents,
       tenYearSavingsInCents,
       savingsRate,
+      fuelType: "Solar",
     };
   });
 

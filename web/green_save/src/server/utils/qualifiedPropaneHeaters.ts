@@ -70,6 +70,7 @@ export const qualifiedPropaneHeaters = async ({
         annualSavingsInCents,
         tenYearSavingsInCents,
         savingsRate,
+        fuelType: "Propane",
       };
     });
   return propaneHeaterRecommendations;
