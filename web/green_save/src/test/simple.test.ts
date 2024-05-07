@@ -441,7 +441,7 @@ describe("testHeaterRecommendations", () => {
       recs.ourRecommendation.energyStarUniqueId === "2408585" ||
         recs.ourRecommendation.energyStarUniqueId === "2408591",
     ).toBeTruthy();
-    // expect(recs.ecoFriendly.energyStarUniqueId).toEqual("2408185");
+    expect(recs.ecoFriendly.energyStarUniqueId).toEqual("2407988");
   });
 
   it("Handles traditional vent", async () => {

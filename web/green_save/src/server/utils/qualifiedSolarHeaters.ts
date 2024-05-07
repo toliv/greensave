@@ -14,6 +14,85 @@ export const qualifiedSolarHeaters = async ({
   solarTankVolumeMultiplier: number;
   totalAnnualWaterHeaterCostInCents: number;
 }): Promise<HeaterRecommendationType[]> => {
+  // We are hardcoding solar heaters based on household size for now.
+
+  let energyStarId = "2408185";
+  switch (householdSize) {
+    case 1:
+      energyStarId = "2408185";
+      break;
+    case 2:
+      energyStarId = "2407986";
+      break;
+    case 3:
+      energyStarId = "2407988";
+      break;
+    case 4:
+      energyStarId = "2407988";
+      break;
+    case 5:
+      energyStarId = "2409760";
+      break;
+    case 6:
+      energyStarId = "2409760";
+      break;
+    default:
+      energyStarId = "2409760";
+      break;
+  }
+
+  // This should be unique, but haven't bothered to put the unique constraint in DB
+  const heaters = await prisma.waterHeater.findMany({
+    where: {
+      energyStarUniqueId: energyStarId,
+    },
+  });
+
+  return heaters.map((heater) => {
+    const {
+      upfrontCostInCents,
+      costInCentsAfterCredits,
+      annualSavingsInCents,
+      tenYearSavingsInCents,
+      savingsRate,
+    } = calculateSolarHeaterCosts({
+      // We filtered for this being non-null
+      // just in case, set price arbitrarily high
+      priceInCents: heater.priceInCents ?? 10 * 1000 * 100,
+      // The query prevents us from getting records where solarEnergyFactor is null, but TS doesn't realize it
+      solarEnergyFactor: heater.solarUniformEnergyFactor ?? 0,
+      totalAnnualWaterHeaterCostInCents,
+    });
+    return {
+      id: heater.id,
+      energyStarUniqueId: heater.energyStarUniqueId,
+      energyStarPartner: heater.energyStarPartner,
+      heaterType: heater.heaterType,
+      brandName: heater.brandName,
+      modelName: heater.modelName,
+      modelNumber: heater.modelNumber,
+      upfrontCostInCents,
+      costInCentsAfterCredits,
+      annualSavingsInCents,
+      tenYearSavingsInCents,
+      savingsRate,
+    };
+  });
+};
+
+export const qualifiedSolarHeaters___old = async ({
+  householdSize,
+  locatedInSunBelt,
+  averageWinterTemperature,
+  solarTankVolumeMultiplier,
+  totalAnnualWaterHeaterCostInCents,
+}: {
+  householdSize: number;
+  locatedInSunBelt: boolean;
+  averageWinterTemperature: number;
+  solarTankVolumeMultiplier: number;
+  totalAnnualWaterHeaterCostInCents: number;
+}): Promise<HeaterRecommendationType[]> => {
   // when is solar tank vol false ?
   const minSolarCollectorPanelArea = solarCollectorPanelArea(
     householdSize,

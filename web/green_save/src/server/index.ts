@@ -215,6 +215,7 @@ export const appRouter = router({
             heater.heaterType === "Solar with Electric Backup" ||
             heater.heaterType === "Solar with Gas Backup"
           ) {
+            console.log("Got an eco friendly heater");
             ecoFriendly = heater;
             break;
           }

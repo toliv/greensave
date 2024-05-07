@@ -236,8 +236,6 @@ const HeaterCard = ({
   );
 };
 
-const HeaterCardInfo = ({ heater }: { heater: HeaterInfoSchemaType }) => {};
-
 const Reasons = ({
   recommendationType,
   heater,
