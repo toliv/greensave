@@ -15,7 +15,6 @@ export const qualifiedSolarHeaters = async ({
   totalAnnualWaterHeaterCostInCents: number;
 }): Promise<HeaterRecommendationType[]> => {
   // We are hardcoding solar heaters based on household size for now.
-
   let energyStarId = "2408185";
   switch (householdSize) {
     case 1:
@@ -40,14 +39,12 @@ export const qualifiedSolarHeaters = async ({
       energyStarId = "2409760";
       break;
   }
-
   // This should be unique, but haven't bothered to put the unique constraint in DB
   const heaters = await prisma.waterHeater.findMany({
     where: {
       energyStarUniqueId: energyStarId,
     },
   });
-
   return heaters.map((heater) => {
     const {
       upfrontCostInCents,

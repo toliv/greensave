@@ -20,14 +20,10 @@ export function TopBarNav() {
       </div>
       <div className="flex justify-right items-center px-2 lg:px-4 xl:px-16 text-md lg:text-xl">
         <div className="hover:bg-light-green p-2 lg:p-4 rounded-md">
-          <Link href="/">Home</Link>
-        </div>
-        <div className="hover:bg-light-green p-2 lg:p-4 rounded-md">
-          <Link href="/appliance-finder">Questionnaire</Link>
+          <Link href="/appliance-finder">Find a Heater</Link>
         </div>
         <div className="hover:bg-light-green p-2 lg:p-4 rounded-md">
           <Link href="/about">About</Link>
-          {/* <a href="#contact">About</a> */}
         </div>
       </div>
     </div>
