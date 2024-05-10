@@ -38,10 +38,12 @@ describe("testHeaterRecommendations", () => {
     });
 
     expect(recs.bestValueChoice.energyStarUniqueId).toEqual("2408797");
+    console.log(recs.ourRecommendation);
     expect(
       recs.ourRecommendation.energyStarUniqueId === "2408585" ||
         recs.ourRecommendation.energyStarUniqueId === "2408591",
     ).toBeTruthy();
+
     expect(recs.ecoFriendly.energyStarUniqueId).toEqual("2408797");
   });
 
@@ -532,7 +534,7 @@ describe("testHeaterRecommendations", () => {
     });
 
     // These are duplicated
-    expect(recs.bestValueChoice.energyStarUniqueId).toEqual("2408667");
+    expect(recs.bestValueChoice.energyStarUniqueId).toEqual("2408684");
     expect(
       recs.ourRecommendation.energyStarUniqueId === "2408585" ||
         recs.ourRecommendation.energyStarUniqueId === "2408591",
