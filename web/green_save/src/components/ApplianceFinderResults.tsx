@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
-const RECOMMENDATION_TYPE = {
+export const RECOMMENDATION_TYPE = {
   BEST_VALUE_TODAY: 0,
   OUR_RECOMMENDATION: 1,
   ECO_FRIENDLY: 2,
@@ -241,7 +241,7 @@ const HeaterCard = ({
   );
 };
 
-const Reasons = ({
+export const Reasons = ({
   recommendationType,
   heater,
 }: {

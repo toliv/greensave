@@ -1,6 +1,7 @@
 import { displayDollar } from "@/app/utils/displayDollar";
 import { HeaterRecommendationType } from "@/schema/heaterRecommendations";
 import * as React from "react";
+import { Reasons, RECOMMENDATION_TYPE } from "./ApplianceFinderResults";
 
 interface HeaterEmailCardProps {
   heater: HeaterRecommendationType;
@@ -38,18 +39,10 @@ export const HeaterEmailCard: React.FC<Readonly<HeaterEmailCardProps>> = ({
       <div className="text-lg font-thin text-standard-green mb-2">
         {`Why you'll love it`}
       </div>
-      <ul className="list-disc ml-6 mt-2 ">
-        <li className="pt-2">
-          <div className="text-lg">Eligible for federal tax credits</div>
-          <div className="text-sm">
-            {`Save over ${displayDollar(taxCreditSavingsInCents)} upfront by using eligible tax credits`}
-          </div>
-        </li>
-        <li className="pt-2">
-          <div className="text-lg">Over 10 years save</div>
-          <div className="text-sm">{`Over ten years, you'll save ${displayDollar(tenYearSavings)}`}</div>
-        </li>
-      </ul>
+      <Reasons
+        recommendationType={RECOMMENDATION_TYPE.OUR_RECOMMENDATION}
+        heater={heater}
+      />
     </div>
   );
 };

@@ -101,7 +101,7 @@ const calculateGasHeaterCosts = ({
   localizedGasCostFactor: number;
   localizedAnnualWaterHeaterBillCents: number;
 }) => {
-  const annualCostInCents = localizedGasCostFactor * thermsPerYear;
+  const annualCostInCents = Math.round(localizedGasCostFactor * thermsPerYear);
   const upfrontCostInCents = priceInCents;
   const costInCentsAfterCredits =
     upfrontCostInCents -
@@ -112,7 +112,7 @@ const calculateGasHeaterCosts = ({
   const savingsRate =
     1 - annualCostInCents / localizedAnnualWaterHeaterBillCents;
   const tenYearSavingsInCents =
-    10 * localizedAnnualWaterHeaterBillCents * savingsRate -
+    Math.round(10 * localizedAnnualWaterHeaterBillCents * savingsRate) -
     costInCentsAfterCredits;
 
   return {

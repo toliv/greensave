@@ -87,7 +87,9 @@ const calculatePropaneHeaterCosts = ({
   localizedPropaneCostFactor: number;
   localizedAnnualWaterHeaterBillCents: number;
 }) => {
-  const annualCostInCents = localizedPropaneCostFactor * gallonsPerYearPropane;
+  const annualCostInCents = Math.round(
+    localizedPropaneCostFactor * gallonsPerYearPropane,
+  );
   const upfrontCostInCents = priceInCents;
   const costInCentsAfterCredits =
     upfrontCostInCents -
@@ -98,7 +100,7 @@ const calculatePropaneHeaterCosts = ({
   const savingsRate =
     1 - annualCostInCents / localizedAnnualWaterHeaterBillCents;
   const tenYearSavingsInCents =
-    10 * localizedAnnualWaterHeaterBillCents * savingsRate -
+    Math.round(10 * localizedAnnualWaterHeaterBillCents * savingsRate) -
     costInCentsAfterCredits;
   return {
     upfrontCostInCents,

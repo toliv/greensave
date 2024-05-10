@@ -202,10 +202,10 @@ const calculateSolarHeaterCosts = ({
   totalAnnualWaterHeaterCostInCents: number;
 }) => {
   const savingsRate = 1 - 1 / solarEnergyFactor;
-  const costInCentsAfterCredits = priceInCents - priceInCents * 0.3;
+  const costInCentsAfterCredits = Math.round(priceInCents - priceInCents * 0.3);
   const annualSavingsInCents = savingsRate * totalAnnualWaterHeaterCostInCents;
   const tenYearSavingsInCents =
-    10 * totalAnnualWaterHeaterCostInCents * savingsRate -
+    Math.round(10 * totalAnnualWaterHeaterCostInCents * savingsRate) -
     costInCentsAfterCredits;
   return {
     upfrontCostInCents: priceInCents,
