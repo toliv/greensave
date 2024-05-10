@@ -19,10 +19,10 @@ export default function Home() {
           <ul className="list-disc ml-6 mt-2">
             <li className="py-1 lg:py-2 font-thin">Local energy bill costs</li>
             <li className="py-1 lg:py-2 font-thin">
-              {`How much hot water you'll need at any given time`}
+              {`How much hot water you'll need`}
             </li>
             <li className="py-1 lg:py-2 font-thin">
-              What fuel types you have available in your home
+              What fuel types you have available
             </li>
             <li className="py-1 lg:py-2 font-thin">
               How your current hot water heater is ventilated
@@ -34,7 +34,7 @@ export default function Home() {
               Estimated water heater pricing
             </li>
             <li className="py-1 lg:py-2 font-thin">
-              And any tax rebates that may be available to you
+              And any tax rebates that may be available
             </li>
           </ul>
           <Link href={`/appliance-finder`}>
