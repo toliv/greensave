@@ -27,7 +27,7 @@ export function ZipCodeQuestion({
           moveToPreviousQuestion={moveToPreviousQuestion}
           moveToNextQuestionEnabled={() => !getFieldState("zipcode").invalid}
           questionHeading={`What is your zip code?`}
-          questionSubheading={`This will help us localize your results`}
+          questionSubheading={`This will help us localize your results.`}
           isLastQuestion={true}
           submitIsLoading={submitIsLoading}
         >

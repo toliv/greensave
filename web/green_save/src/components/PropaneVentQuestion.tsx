@@ -34,7 +34,7 @@ export function PropaneVentQuestion({
           moveToPreviousQuestion={moveToPreviousQuestion}
           moveToNextQuestionEnabled={() => !getFieldState("ventType").invalid}
           questionHeading={`If you have a gas water heater today, which type of vent does it have?`}
-          questionSubheading={`This will help us help us keep installation costs down by using your existing electrical setup.`}
+          questionSubheading={`This will help us help us keep installation costs down by using your existing ventilation setup.`}
         >
           <Controller
             name="ventType"

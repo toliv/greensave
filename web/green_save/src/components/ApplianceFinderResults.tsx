@@ -7,8 +7,15 @@ import {
   HeaterRecommendationType,
 } from "@/schema/heaterRecommendations";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Checkbox, Input, Spinner } from "@material-tailwind/react";
+import {
+  Button,
+  Checkbox,
+  Input,
+  Spinner,
+  Tooltip,
+} from "@material-tailwind/react";
 import { useRouter } from "next/navigation";
+import { Info } from "phosphor-react";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -120,7 +127,7 @@ export function ApplianceFinderResults({
             </>
           )}
         </div>
-        <div className="ml-4 mt-4 ">
+        <div className="px-4 mt-4 ">
           <div className="text-2xl">{`Want to save these recommendations for later?`}</div>
           <div className="flex gap-2 items-center py-2 ml-2 lg:ml-4">
             <div>
@@ -150,7 +157,7 @@ export function ApplianceFinderResults({
             </div>
           </div>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex flex-col gap-4 justify-between items-center py-6 w-full lg:w-1/2 ">
+            <div className="flex flex-col gap-4 justify-between items-start py-6 w-full lg:w-1/2 ">
               <div className="w-full">
                 <Input
                   {...register("email")}
@@ -162,14 +169,14 @@ export function ApplianceFinderResults({
                   className={`text-black font-thin rounded-lg p-4 text-center border-2 border-slate-400 ${formState.errors.email ? "border-red-400" : ""}`}
                 />
               </div>
-              <div className=" text-sm">
+              <div className="text-sm">
                 <Button
                   type={"submit"}
                   variant="filled"
                   placeholder="something"
                   onClick={() => {}}
                   disabled={false}
-                  className={`h-14 text-black px-12 ${formState.isValid && !emailMutationFn.isPending ? "bg-standard-green hover:cursor-pointer" : "bg-slate-300 hover:cursor-not-allowed"}`}
+                  className={`w-48 h-14 text-black px-12 ${formState.isValid && !emailMutationFn.isPending ? "bg-standard-green hover:cursor-pointer" : "bg-slate-300 hover:cursor-not-allowed"}`}
                 >
                   {emailMutationFn.isPending ? (
                     <div className="flex px-4 justify-center gap-4">
@@ -204,12 +211,36 @@ const HeaterCard = ({
   setSelected: () => void;
   recType: number;
 }) => {
+  let tooltipMessage;
+  switch (recType) {
+    case RECOMMENDATION_TYPE.BEST_VALUE_TODAY:
+      tooltipMessage =
+        "The lowest price water heater that meets your specifications";
+      break;
+    case RECOMMENDATION_TYPE.OUR_RECOMMENDATION:
+      tooltipMessage =
+        "The water heater with the highest long term energy bill savings over 10 years";
+      break;
+    case RECOMMENDATION_TYPE.ECO_FRIENDLY:
+      tooltipMessage =
+        "The most environmentally friendly option that meets your specifications";
+      break;
+  }
   return (
     <div
       className={`flex-1 border-1 rounded-md m-2 p-4 shadow-md hover:cursor-pointer ${selected ? "bg-gray-100 shadow-lg border-standard-green" : "bg-white border-black"}`}
       onClick={setSelected}
     >
-      <div className="text-3xl text-standard-green mb-4">{title}</div>
+      <div className="flex items-center gap-2 text-3xl text-standard-green mb-4">
+        <div>{title}</div>
+        <Tooltip
+          content={tooltipMessage}
+          placement="bottom"
+          className="bg-white text-xs text-black p-4 border border-black"
+        >
+          <Info className="text-black" size={20} />
+        </Tooltip>
+      </div>
       <div className="text-xl text-black mb-4">{`${heater.energyStarPartner} ${heater.modelName} Water Heater`}</div>
       <div className="text-xs text-gray-400 font-thin mb-2">
         {`Model Number: ${heater.modelNumber}`}
@@ -225,7 +256,7 @@ const HeaterCard = ({
         <span className="ml-2 text-sm">{`with tax credits applied`}</span>
       </div>
       <div className="text-lg font-thin text-standard-green mb-2">
-        Annual water heater energy cost savings
+        Annual water heater energy bill savings
       </div>
       <div className="text-xl mb-4">
         {`Save ${displayDollar(heater.annualSavingsInCents)}`}
@@ -323,7 +354,7 @@ export const Reasons = ({
             <EcoFriendlyReason heaterType={heater.heaterType} />
           </li>
           <li className="pt-2">
-            <div className="text-lg">{`Lower your monthly energy bill.`}</div>
+            <div className="text-lg">{`Lower your monthly energy bill`}</div>
             <div className="text-sm">{`Reduce your water heater energy spend by ${(heater.savingsRate * 100).toFixed(2) + "%"}`}</div>
           </li>
           <li className="pt-2">
@@ -353,7 +384,7 @@ const EcoFriendlyReason = ({ heaterType }: { heaterType: string }) => {
   } else if (heaterType === "Gas Tankless") {
     return (
       <>
-        <div className="text-lg">{`Environmentally conscious water heater.`}</div>
+        <div className="text-lg">{`Environmentally conscious water heater`}</div>
         <div className="text-sm">{` This tankless water heater only heats water on demand, meaning zero energy waste.`}</div>
       </>
     );

@@ -8,10 +8,10 @@ export default function About() {
             <span className="text-standard-green">$ave</span> guys!
           </div>
           <div className="py-4">
-            {`We've been following the water heater market for some time now and have noticed that there isn't any great way for customers to find the product that best fits their needs online.`}
+            {`We've been following the water heater market for some time now and have noticed that there isn't any great way for customers to find the product that best fits their needs.`}
           </div>
           <div className="py-4">
-            {`Data around expected water heating capacity, estimated price, and potential for long-term energy bill savings is hard to come by. Add in the new tax credits from the Inflation Reduction Act, and this becomes even more complicated.`}
+            {`Data around expected water heating capacity, estimated price, and potential for long-term energy bill savings is hard to come by. Add in the new tax credits from the Inflation Reduction Act, and choosing which product to purchase becomes even more complicated.`}
           </div>
           <div className="py-4">
             So a few months ago, we decided to create our own project - Green
@@ -20,7 +20,18 @@ export default function About() {
             suit their needs!
           </div>
           <div className="py-4">
-            {`With just a 5 question survey, we recommend 3 types of water heaters: the best value today, our recommendation for the best long term value, and the best for the environment.`}
+            {`With just a 5 question survey, we recommend 3 types of water heaters:`}
+          </div>
+          <div className="py-4 px-6">
+            <ol className="list-decimal">
+              <li className="list-decimal">{`The best value today given a person's current setup`}</li>
+              <li>
+                {`The best water heater based on long term energy bill savings`}
+              </li>
+              <li>
+                {`The best for the environment given a person's current setup`}
+              </li>
+            </ol>
           </div>
           <div className="py-4">{`Please use the tool entirely free of charge!`}</div>
           <div className="py-4">
@@ -28,6 +39,7 @@ export default function About() {
             <span className="text-standard-green">
               <a href="mailto:info@trygreensave.com">info@trygreensave.com</a>
             </span>
+            .
           </div>
           <div className="py-4">Cheers!</div>
         </div>

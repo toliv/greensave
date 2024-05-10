@@ -13,31 +13,25 @@ export default function Home() {
         Our simple questionnaire will recommend the right water heater for you
         in <span className="text-standard-green">2 minutes or less!</span>
       </div>
-      <div className="text-md lg:text-2xl py-6 min-w-[200px]">
-        <Link href={`/appliance-finder`}>
-          <Button
-            placeholder="Get started"
-            className={`cursor-pointer w-32 h-12 text-standard-green bg-white font-light hover:bg-standard-green hover:text-white`}
-          >
-            Get Started
-          </Button>
-        </Link>
-      </div>
       <div className="flex text-sm lg:text-xl mt-4">
         <div>
-          {`We'll help you take into account for the following factors:`}
+          {`We provide personalized recommendations by accounting for the following factors:`}
           <ul className="list-disc ml-6 mt-2">
+            <li className="py-1 lg:py-2 font-thin">Local energy bill costs</li>
             <li className="py-1 lg:py-2 font-thin">
-              {` How much hot water you'll need at any given time`}
+              {`How much hot water you'll need at any given time`}
             </li>
             <li className="py-1 lg:py-2 font-thin">
-              What fuel types you already use
+              What fuel types you have available in your home
             </li>
             <li className="py-1 lg:py-2 font-thin">
-              How your hot water heater already ventilates
+              How your current hot water heater is ventilated
             </li>
             <li className="py-1 lg:py-2 font-thin">
-              Local considerations like climate and energy costs
+              The groundwater temperature in your area
+            </li>
+            <li className="py-1 lg:py-2 font-thin">
+              Estimated water heater pricing
             </li>
             <li className="py-1 lg:py-2 font-thin">
               And any tax rebates that may be available to you
@@ -46,7 +40,7 @@ export default function Home() {
           <Link href={`/appliance-finder`}>
             <Button
               placeholder="Get started"
-              className={`cursor-pointer mt-6 w-32 h-12 text-standard-green bg-white font-light hover:bg-standard-green hover:text-white`}
+              className={`cursor-pointer mt-6 w-48 h-16 text-standard-green bg-white font-light hover:bg-standard-green hover:text-white`}
             >
               Get Started
             </Button>

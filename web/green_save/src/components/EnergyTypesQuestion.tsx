@@ -44,8 +44,8 @@ export function EnergyTypesQuestion({
           moveToNextQuestionEnabled={() =>
             !getFieldState("supportedEnergyTypes").invalid
           }
-          questionHeading={`What types of energy does your house have? (Select all)`}
-          questionSubheading={`This will help us ensure that our recommendations can handle your expected fuel type.`}
+          questionHeading={`What types of energy are availabe in your house? (Select all)`}
+          questionSubheading={`This will help us ensure that our recommendations can be easily installed in your home.`}
         >
           <Controller
             name="supportedEnergyTypes"

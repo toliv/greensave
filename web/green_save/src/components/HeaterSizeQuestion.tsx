@@ -39,7 +39,7 @@ export function HeaterSizeQuestion({
           moveToNextQuestionEnabled={() =>
             !getFieldState("heaterSpaceRestrictions").invalid
           }
-          questionHeading={`Does the space where you would put your water heater have any size constraints?`}
+          questionHeading={`Do you have any space constraints?`}
           questionSubheading={`This will help us ensure our recommendations can fit in your existing space.`}
         >
           <Controller
@@ -52,7 +52,7 @@ export function HeaterSizeQuestion({
                   placeholder="none"
                   className={`p-4 hover:shadow-xl ${spaceRestrictions.includes("NONE") ? "bg-standard-green text-white" : "bg-stone-50 text-black"}`}
                 >
-                  {`My space is unconstrained (most common for basements)`}
+                  {`No, my space is unconstrained (most common for basements)`}
                 </Button>
                 <Button
                   onClick={() => handleSpaceRestrictionsClick(["LOW_CEILINGS"])}
