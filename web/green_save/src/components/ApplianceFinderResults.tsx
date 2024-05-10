@@ -79,7 +79,7 @@ export function ApplianceFinderResults({
 
   return (
     <div className="w-screen min-h-screen h-full bg-white">
-      <div className="text-black mt-20 px-8 pb-8">
+      <div className="text-black mt-20 px-2 lg:px-8 pb-8">
         <div className="">
           {/* TODO: Suspense + wait for load */}
           {data && (
@@ -122,7 +122,7 @@ export function ApplianceFinderResults({
         </div>
         <div className="ml-4 mt-4 ">
           <div className="text-2xl">{`Want to save these recommendations for later?`}</div>
-          <div className="flex gap-2 items-center py-2 ml-4">
+          <div className="flex gap-2 items-center py-2 ml-2 lg:ml-4">
             <div>
               <Checkbox
                 crossOrigin={""}
@@ -134,7 +134,7 @@ export function ApplianceFinderResults({
               Send me an email with all the water heater details
             </div>
           </div>
-          <div className="flex gap-2 items-center py-2 ml-4">
+          <div className="flex gap-2 items-center py-2 ml-2 lg:ml-4">
             <div>
               <Checkbox
                 crossOrigin={""}

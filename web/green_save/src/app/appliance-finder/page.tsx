@@ -16,8 +16,12 @@ import { useRouter } from "next/navigation";
 
 export default function ApplianceFinderForm() {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const mutationFn = trpc.submitUserFormSubmission.useMutation({
     onError: (err) => {},
+    onMutate: () => {
+      setIsLoading(true);
+    },
     onSuccess: (data) => {
       router.push(`/appliance-finder/results/${data.id}`);
     },
@@ -166,7 +170,7 @@ export default function ApplianceFinderForm() {
                   <ZipCodeQuestion
                     moveToNextQuestion={moveToNextQuestion}
                     moveToPreviousQuestion={moveToPreviousQuestion}
-                    submitIsLoading={mutationFn.isPending}
+                    submitIsLoading={isLoading}
                   ></ZipCodeQuestion>
                 </div>
               </form>
