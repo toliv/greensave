@@ -20,6 +20,7 @@ import { qualifiedPropaneHeaters } from "./utils/qualifiedPropaneHeaters";
 import { qualifiedSolarHeaters } from "./utils/qualifiedSolarHeaters";
 import { createCallerFactory } from "./trpc";
 import { PassThrough } from "stream";
+import { TRPCError } from "@trpc/server";
 
 export const appRouter = router({
   greeting: publicProcedure.query(async () => {
