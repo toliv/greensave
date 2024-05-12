@@ -162,7 +162,7 @@ export const Reasons = ({
   switch (recommendationType) {
     case RECOMMENDATION_TYPE.BEST_VALUE_TODAY:
       return (
-        <div className="flex flex-col gap-2">
+        <div className="mt-2">
           <div>
             <div className="text-lg">Eligible for federal tax credits</div>
             <div className="text-sm">
@@ -183,7 +183,7 @@ export const Reasons = ({
       );
     case RECOMMENDATION_TYPE.OUR_RECOMMENDATION:
       return (
-        <div className="flex flex-col gap-2">
+        <div className="mt-2">
           <div>
             {tenYearSavingsInCents > 0 ? (
               <>
@@ -240,7 +240,7 @@ export const Reasons = ({
       );
     case RECOMMENDATION_TYPE.ECO_FRIENDLY:
       return (
-        <div className="flex flex-col gap-2">
+        <div className="mt-2">
           <div>
             <EcoFriendlyReason heaterType={heaterType} />
           </div>
