@@ -28,7 +28,7 @@ export default function GlobalError({
               <div className="flex">
                 <Link href="/home">
                   <div className="text-lg lg:text-xl py-2 ">
-                    <div className="border border-gray-400 shadow-md text-black hover:bg-light-green hover:text-white p-2 lg:p-4 rounded-md">
+                    <div className="border border-gray-400 shadow-md bg-light-green text-white p-2 lg:p-4 rounded-md">
                       Click here to return to the home page
                     </div>
                   </div>
