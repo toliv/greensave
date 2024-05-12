@@ -173,7 +173,7 @@ export const Reasons = ({
               upfront by using eligible tax credits
             </div>
           </div>
-          <div>
+          <div className="mt-2">
             <div className="text-lg">Low installation costs </div>
             <div className="text-sm">
               No major changes needed to your heating system
@@ -207,7 +207,7 @@ export const Reasons = ({
               </>
             )}
           </div>
-          <div>
+          <div className="mt-2">
             {tenYearSavingsInCents > 0 ? (
               <>
                 <div className="text-lg">Eligible for federal tax credits</div>
@@ -230,7 +230,7 @@ export const Reasons = ({
               </>
             )}
           </div>
-          <div>
+          <div className="mt-2">
             <div className="text-lg">Low installation costs </div>
             <div className="text-sm">
               No major changes needed to your heating system
@@ -244,11 +244,11 @@ export const Reasons = ({
           <div>
             <EcoFriendlyReason heaterType={heaterType} />
           </div>
-          <div>
+          <div className="mt-2">
             <div className="text-lg">{`Lower your monthly energy bill`}</div>
             <div className="text-sm">{`Reduce your water heater energy spend by ${(savingsRate * 100).toFixed(2) + "%"}`}</div>
           </div>
-          <div>
+          <div className="mt-2">
             <div className="text-lg">Eligible for federal tax credits</div>
             <div className="text-sm">
               Save over{" "}
