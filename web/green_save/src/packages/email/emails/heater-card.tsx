@@ -98,7 +98,7 @@ export const HeaterCardEmail = ({
           </Section>
           <Container className="border rounded-md my-4 mx-auto p-[20px] shadow-md border-solid border-standard-green ">
             <Section>
-              <Column align="center">
+              <Column align="left">
                 <div className="text-xl text-black mb-4">{`${energyStarPartner} ${modelName} Water Heater`}</div>
                 <div className="text-md text-gray-400 mb-4">
                   {`Model Number: ${modelNumber}`}
