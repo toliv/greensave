@@ -71,11 +71,13 @@ export const appRouter = router({
         contactAllowed,
         selectedHeater,
         userFormSubmissionId,
+        recommendationType,
       } = input;
 
       const { data, error } = await sendEmailToUser({
         userEmail,
         selectedHeater,
+        recommendationType,
       });
       if (error) {
         console.error(error);

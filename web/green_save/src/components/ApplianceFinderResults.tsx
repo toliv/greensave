@@ -79,6 +79,7 @@ export function ApplianceFinderResults({
           contactAllowed: allowContact,
           selectedHeater,
           userFormSubmissionId: id,
+          recommendationType: selectedOption, // yeah, this should be a zod schema but okay
         });
       }
     }

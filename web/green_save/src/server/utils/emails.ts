@@ -7,9 +7,11 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export const sendEmailToUser = async ({
   userEmail,
   selectedHeater,
+  recommendationType,
 }: {
   userEmail: string;
   selectedHeater: HeaterRecommendationType;
+  recommendationType: number; // Should be a zod schema
 }) => {
   return await resend.emails.send({
     from: "Green$ave <info@trygreensave.com>",
@@ -23,6 +25,10 @@ export const sendEmailToUser = async ({
       costInCentsAfterCredits: selectedHeater.costInCentsAfterCredits,
       annualSavingsInCents: selectedHeater.annualSavingsInCents,
       upfrontCostInCents: selectedHeater.upfrontCostInCents,
+      recommendationType,
+      fuelType: selectedHeater.fuelType,
+      heaterType: selectedHeater.heaterType,
+      savingsRate: selectedHeater.savingsRate,
     }) as React.ReactElement,
   });
 };

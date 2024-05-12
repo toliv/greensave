@@ -9,6 +9,7 @@ export const EmailRequestSchema = z.object({
   contactAllowed: z.boolean(),
   selectedHeater: HeaterRecommendationSchema,
   userFormSubmissionId: z.string().uuid(),
+  recommendationType: z.number(),
 });
 
 export type EmailRequestType = z.infer<typeof EmailRequestSchema>;
