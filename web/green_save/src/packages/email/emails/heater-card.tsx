@@ -1,4 +1,12 @@
-import { displayDollar } from "@/app/utils/displayDollar";
+export const displayDollar = (valueInCents: number): string => {
+  const dollars = valueInCents / 100;
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+  return formatter.format(dollars);
+};
+
 import {
   Tailwind,
   Button,
@@ -50,7 +58,7 @@ export const HeaterCardEmail = ({
           },
         }}
       >
-        <Body className="font-sans my-auto mx-4 px-8">
+        <Body className="font-sans my-auto mx-4 px-8 bg-white">
           <Section>
             <Column align="left">
               <Text className="text-lg px-8">
@@ -61,8 +69,16 @@ export const HeaterCardEmail = ({
                 >
                   {"(tyler@trygreensave.com)"}
                 </Link>{" "}
-                from Greensave following up with your water heater
-                recommendation.
+                and Tony{" "}
+                <Link
+                  href={`mailto:${"tony@trygreensave.com"}`}
+                  className="text-blue-600 no-underline"
+                >
+                  {"(tony@trygreensave.com)"}
+                </Link>{" "}
+                from Green
+                <span className="text-standard-green">$ave</span> following up
+                with your water heater recommendation.
               </Text>
             </Column>
           </Section>
@@ -95,8 +111,8 @@ export const HeaterCardEmail = ({
               and installation.`}
             </Column>
           </Section>
-          <Section className="px-8 py-4">
-            <Column align="left">Best, Tyler</Column>
+          <Section className="px-8 py-4 text-lg">
+            <Column align="left">Best, Tyler + Tony</Column>
           </Section>
           <Section>
             <Column align="center">

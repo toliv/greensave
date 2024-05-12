@@ -7,6 +7,7 @@
 .yarn/install-state.gz
 
 node_modules
+.react-email
 
 # testing
 /coverage
