@@ -16,7 +16,7 @@ export const sendEmailToUser = async ({
   return await resend.emails.send({
     from: "Green$ave <info@trygreensave.com>",
     to: [userEmail],
-    cc: ["tony@trygreensave.com, tyler@trygreensave.com"],
+    cc: ["tony@trygreensave.com", "tyler@trygreensave.com"],
     subject: "[Green$ave] Your New Water Heater",
     react: HeaterCardEmail({
       energyStarPartner: selectedHeater.energyStarPartner,
