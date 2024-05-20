@@ -26,7 +26,7 @@ export const main = async () => {
           cityName: row["city"] as string,
           stateAbbreviation: row["state_id"] as string,
           stateName: row["state_name"] as string,
-          zipCode: row["zip"] as string,
+          zipCode: (row["zip"] as string).padStart(5, "0"),
           isSunBeltLocation: row["SUN BELT?"] === "TRUE" ? true : false,
         };
       },
@@ -37,7 +37,7 @@ export const main = async () => {
     await prisma.zipCodeReference.createMany({
       data: recordsToInsert,
     });
-    const ct = prisma.zipCodeReference.count();
+    const ct = await prisma.zipCodeReference.count();
     console.log(`${ct} records inserted`);
   } catch (error) {
     console.error("Failed to download the sheet:", error);
