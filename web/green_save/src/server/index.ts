@@ -22,6 +22,7 @@ import { createCallerFactory } from "./trpc";
 import { PassThrough } from "stream";
 import { TRPCError } from "@trpc/server";
 
+// Add comment for version bump
 export const appRouter = router({
   greeting: publicProcedure.query(async () => {
     return "hello";
